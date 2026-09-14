@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "repose/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repose Spa</title>
-</head>
+{% block title %}Home | Repose Spa{% endblock %}
 
-<body>
-    <h1>Repose Spa & wellness</h1>
-    <p>Rest. Restore. Reconnect.</p>
-</body>
+{% block meta_description %}
+Discover Repose Spa & Wellness, offering relaxing spa access, treatments,
+packages and wellness memberships.
+{% endblock %}
 
-</html>
+{% block content %}
+<h1>Repose Spa & Wellness</h1>
+<p>Rest. Restore. Reconnect.</p>
+{% endblock %}
