@@ -6,3 +6,7 @@ def home(request):
 
 def about(request):
     return render(request, "repose/about.html")
+
+
+def treatments(request):
+    return render(request, "repose/treatments.html")
