@@ -10,3 +10,7 @@ def about(request):
 
 def treatments(request):
     return render(request, "repose/treatments.html")
+
+
+def packages(request):
+    return render(request, "repose/packages.html")
