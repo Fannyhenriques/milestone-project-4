@@ -37,6 +37,10 @@ Create a Repose Spa & Wellness account to manage bookings and access membership 
       {{ form.password2.errors }}
     </div>
 
+    {% if next %}
+    <input type="hidden" name="next" value="{{ next }}">
+    {% endif %}
+
     <button type="submit">Create Account</button>
   </form>
 

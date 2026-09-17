@@ -1,5 +1,6 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 
 
@@ -27,16 +28,30 @@ def register(request):
     if request.user.is_authenticated:
         return redirect("account")
 
+    next_page = request.GET.get("next")
+
     if request.method == "POST":
         form = UserCreationForm(request.POST)
 
         if form.is_valid():
-            form.save()
-            return redirect("login")
+            user = form.save()
+            auth_login(request, user)
+
+            if request.POST.get("next") == "membership":
+                return redirect("membership")
+
+            return redirect("account")
     else:
         form = UserCreationForm()
 
-    return render(request, "repose/register.html", {"form": form})
+    return render(
+        request,
+        "repose/register.html",
+        {
+            "form": form,
+            "next": next_page,
+        },
+    )
 
 
 def booking(request):
