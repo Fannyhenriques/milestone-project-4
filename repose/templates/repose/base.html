@@ -30,9 +30,16 @@
       <a href="{% url 'treatments' %}">Treatments</a>
       <a href="{% url 'packages' %}">Packages</a>
       <a href="{% url 'membership' %}">Membership</a>
+      {% if user.is_authenticated %}
       <a href="{% url 'account' %}">My Account</a>
+      <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+      </form>
+      {% else %}
       <a href="{% url 'login' %}">Login</a>
       <a href="{% url 'register' %}">Register</a>
+      {% endif %}
       <a href="{% url 'booking' %}">Book Now</a>
     </nav>
   </header>
