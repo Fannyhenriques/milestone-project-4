@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
+
 def home(request):
     return render(request, "repose/home.html")
 
@@ -23,6 +24,9 @@ def membership(request):
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect("account")
+
     if request.method == "POST":
         form = UserCreationForm(request.POST)
 
