@@ -14,3 +14,7 @@ def treatments(request):
 
 def packages(request):
     return render(request, "repose/packages.html")
+
+
+def membership(request):
+    return render(request, "repose/membership.html")
