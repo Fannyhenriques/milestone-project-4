@@ -1,0 +1,46 @@
+{% extends "repose/base.html" %}
+
+{% block title %}Book Now | Repose Spa & Wellness{% endblock %}
+
+{% block meta_description %}
+Book spa access, treatments and spa packages at Repose Spa & Wellness.
+{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Book Your Visit</h1>
+
+  <p>
+    Choose how you would like to experience Repose. Book spa access,
+    a treatment or one of our carefully curated packages.
+  </p>
+
+  <form>
+    <fieldset>
+      <legend>What would you like to book?</legend>
+
+      <label>
+        <input type="radio" name="booking_type" value="spa">
+        Spa Access
+      </label>
+
+      <label>
+        <input type="radio" name="booking_type" value="treatment">
+        Treatment
+      </label>
+
+      <label>
+        <input type="radio" name="booking_type" value="package">
+        Package
+      </label>
+    </fieldset>
+
+    <div>
+      <label for="booking-date">Choose a date</label>
+      <input type="date" id="booking-date" name="booking_date">
+    </div>
+
+    <button type="submit">Continue</button>
+  </form>
+</section>
+{% endblock %}

@@ -32,3 +32,7 @@ def register(request):
         form = UserCreationForm()
 
     return render(request, "repose/register.html", {"form": form})
+
+
+def booking(request):
+    return render(request, "repose/booking.html")

@@ -19,4 +19,5 @@ urlpatterns = [
     ),
     name="login",
 ),
+    path("book/", views.booking, name="booking"),
 ]
