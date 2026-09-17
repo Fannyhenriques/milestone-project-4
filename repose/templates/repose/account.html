@@ -1,0 +1,22 @@
+{% extends "repose/base.html" %}
+
+{% block title %}My Account | Repose Spa & Wellness{% endblock %}
+
+{% block content %}
+<section>
+  <h1>My Account</h1>
+
+  <p>Welcome, {{ user.username }}.</p>
+
+  <section>
+    <h2>My Bookings</h2>
+    <p>Your upcoming and previous bookings will appear here.</p>
+  </section>
+
+  <section>
+    <h2>Membership</h2>
+    <p>You are not currently a Repose member.</p>
+    <a href="{% url 'membership' %}">Become a Member</a>
+  </section>
+</section>
+{% endblock %}

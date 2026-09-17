@@ -19,5 +19,6 @@ urlpatterns = [
     ),
     name="login",
 ),
+    path("account/", views.account, name="account"),
     path("book/", views.booking, name="booking"),
 ]
