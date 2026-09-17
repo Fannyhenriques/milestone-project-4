@@ -1,0 +1,43 @@
+{% extends "repose/base.html" %}
+
+{% block title %}Login | Repose Spa & Wellness{% endblock %}
+
+{% block meta_description %}
+Log in to your Repose Spa & Wellness account to view bookings, manage your account and access membership benefits.
+{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Log in</h1>
+
+  <p>
+    Log in to manage your bookings, view your account and access your
+    Repose membership benefits.
+  </p>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <div>
+      <label for="{{ form.username.id_for_label }}">Username</label>
+      {{ form.username }}
+      {{ form.username.errors }}
+    </div>
+
+    <div>
+      <label for="{{ form.password.id_for_label }}">Password</label>
+      {{ form.password }}
+      {{ form.password.errors }}
+    </div>
+
+    <button type="submit">Log In</button>
+  </form>
+
+  <p>
+    Don't have an account yet?
+    <a href="#">Create an account</a>
+  </p>
+</section>
+{% endblock %}
