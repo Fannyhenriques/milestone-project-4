@@ -10,6 +10,7 @@ urlpatterns = [
     path("treatments/", views.treatments, name="treatments"),
     path("packages/", views.packages, name="packages"),
     path("membership/", views.membership, name="membership"),
+    path("register/", views.register, name="register"),
     path(
     "login/",
     auth_views.LoginView.as_view(

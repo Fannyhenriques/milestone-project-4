@@ -1,0 +1,48 @@
+{% extends "repose/base.html" %}
+
+{% block title %}Register | Repose Spa & Wellness{% endblock %}
+
+{% block meta_description %}
+Create a Repose Spa & Wellness account to manage bookings and access membership benefits.
+{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Create an Account</h1>
+
+  <p>
+    Create an account to manage your bookings and access Repose membership benefits.
+  </p>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <div>
+      <label for="{{ form.username.id_for_label }}">Username</label>
+      {{ form.username }}
+      {{ form.username.errors }}
+    </div>
+
+    <div>
+      <label for="{{ form.password1.id_for_label }}">Password</label>
+      {{ form.password1 }}
+      {{ form.password1.errors }}
+    </div>
+
+    <div>
+      <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+      {{ form.password2 }}
+      {{ form.password2.errors }}
+    </div>
+
+    <button type="submit">Create Account</button>
+  </form>
+
+  <p>
+    Already have an account?
+    <a href="{% url 'login' %}">Log in</a>
+  </p>
+</section>
+{% endblock %}
