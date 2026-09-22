@@ -1,3 +1,4 @@
+from services.models import Treatment
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -13,7 +14,13 @@ def about(request):
 
 
 def treatments(request):
-    return render(request, "repose/treatments.html")
+    treatments = Treatment.objects.filter(is_active=True)
+    
+    return render(
+        request,
+        "repose/treatments.html",
+        {"treatments": treatments},
+    )
 
 
 def packages(request):
