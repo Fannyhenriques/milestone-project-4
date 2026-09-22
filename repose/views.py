@@ -14,12 +14,18 @@ def about(request):
 
 
 def treatments(request):
-    treatments = Treatment.objects.filter(is_active=True)
-    
+    active_treatments = Treatment.objects.filter(is_active=True)
+
+    context = {
+        "massages": active_treatments.filter(category="massage"),
+        "body_treatments": active_treatments.filter(category="body"),
+        "facials": active_treatments.filter(category="facial"),
+    }
+
     return render(
         request,
         "repose/treatments.html",
-        {"treatments": treatments},
+        context,
     )
 
 

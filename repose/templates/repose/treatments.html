@@ -28,7 +28,7 @@ Explore relaxing massages, facials and body treatments available at Repose Spa &
 <section>
   <h2>Massage</h2>
 
-  {% for treatment in treatments %}
+  {% for treatment in massages %}
   <article>
     <h3>{{ treatment.name }}</h3>
     <p>{{ treatment.description }}</p>
@@ -36,18 +36,6 @@ Explore relaxing massages, facials and body treatments available at Repose Spa &
     <p>{{ treatment.price }} euros</p>
   </article>
   {% endfor %}
-
-  <article>
-    <h3>Deep Tissue Massage</h3>
-
-    <p>
-      A full-body restorative massage created to ease tired, tense and overworked muscles. Using firm pressure and
-      targeted massage techniques, the treatment focuses on areas where tension tends to build up, making it ideal after
-      physical activity or long hours spent sitting at a desk.
-    </p>
-
-    <p>60 minutes</p>
-  </article>
 
 </section>
 
