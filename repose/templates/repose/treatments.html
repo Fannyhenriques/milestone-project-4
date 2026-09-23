@@ -53,31 +53,18 @@ Explore relaxing massages, facials and body treatments available at Repose Spa &
 
 </section>
 
-
 <section>
   <h2>Facials</h2>
 
+  {% for treatment in facials %}
   <article>
-    <h3>Repose Signature Facial</h3>
-
-    <p> A personalised facial experience beginning with a professional skin analysis, followed by gentle exfoliation,
-      deep cleansing and a circulation-boosting facial massage. A nourishing mask is then applied to replenish and care
-      for the skin. The experience is completed with a relaxing arm and hand massage. Suitable for all skin types.
-    </p>
-
-    <p>60 minutes</p>
+    <h3>{{ treatment.name }}</h3>
+    <p>{{ treatment.description }}</p>
+    <p>{{ treatment.duration }} minutes</p>
+    <p>£{{ treatment.price }}</p>
   </article>
+  {% endfor %}
 
-  <article>
-    <h3>Glow Facial</h3>
-
-    <p> A deeply hydrating facial designed to restore moisture and natural radiance. Ideal for dull, tired
-      or dehydrated skin, this treatment helps revive the complexion and enhance its natural
-      glow. The treatment is tailored to your individual skin needs and combines gentle exfoliation, replenishing
-      products and targeted care to leave the complexion feeling soft, smooth and refreshed. </p>
-
-    <p>45 minutes</p>
-  </article>
 </section>
 
 {% endblock %}
