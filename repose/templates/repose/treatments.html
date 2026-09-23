@@ -33,7 +33,7 @@ Explore relaxing massages, facials and body treatments available at Repose Spa &
     <h3>{{ treatment.name }}</h3>
     <p>{{ treatment.description }}</p>
     <p>{{ treatment.duration }} minutes</p>
-    <p>{{ treatment.price }} euros</p>
+    <p>£{{ treatment.price }} </p>
   </article>
   {% endfor %}
 
@@ -42,28 +42,14 @@ Explore relaxing massages, facials and body treatments available at Repose Spa &
 <section>
   <h2>Body Treatments</h2>
 
+  {% for treatment in body_treatments %}
   <article>
-    <h3>Body Scrub</h3>
-
-    <p>
-      A full-body invigorating salt scrub designed to refresh the skin and stimulate circulation. The treatment gently
-      removes dull surface cells, leaving your skin feeling incredibly soft, smooth and radiant.
-    </p>
-
-    <p>30 minutes</p>
+    <h3>{{ treatment.name }}</h3>
+    <p>{{ treatment.description }}</p>
+    <p>{{ treatment.duration }} minutes</p>
+    <p>£{{ treatment.price }}</p>
   </article>
-
-  <article>
-    <h3>Mineral Body Wrap</h3>
-
-    <p>
-      A warming full-body wrap designed to soothe tired, stiff muscles and support recovery after physical activity.
-      While the wrap takes effect, enjoy a relaxing face and scalp massage. The treatment is completed with a
-      mineral-rich body cream blended with aromatic oils, leaving your skin soft and your body feeling restored.
-    </p>
-
-    <p>60 minutes</p>
-  </article>
+  {% endfor %}
 
 </section>
 
