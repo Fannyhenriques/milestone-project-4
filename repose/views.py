@@ -1,4 +1,4 @@
-from services.models import Treatment
+from services.models import Package, Treatment
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -30,7 +30,13 @@ def treatments(request):
 
 
 def packages(request):
-    return render(request, "repose/packages.html")
+    packages = Package.objects.filter(is_active=True)
+
+    return render(
+        request, 
+        "repose/packages.html",
+        {"packages": packages}
+    )
 
 
 def membership(request):

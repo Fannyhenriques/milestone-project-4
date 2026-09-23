@@ -16,13 +16,13 @@ Explore spa packages combining spa access with treatments, lunch or dinner at Re
 </p>
 
 <section>
+  {% for package in packages %}
   <article>
-    <h2>Repose Luxe</h2>
-    <p>
-      Combine spa access with a treatment of your choice for a complete wellness experience. Enjoy time in our spa
-      and fitness facilities before or after a 50- or 60-minute treatment.
-    </p>
+    <h2>{{ package.name }}</h2>
+    <p>{{ package.description }}</p>
+    <p>£{{ package.price }}</p>
   </article>
+  {% endfor %}
 
   <article>
     <h2>Repose for Two</h2>
