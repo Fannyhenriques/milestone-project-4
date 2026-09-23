@@ -20,6 +20,12 @@ Explore spa packages combining spa access with treatments, lunch or dinner at Re
   <article>
     <h2>{{ package.name }}</h2>
     <p>{{ package.description }}</p>
+    <h3>Includes</h3>
+    <ul>
+      {% for item in package.included_items %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
     <p>£{{ package.price }}</p>
   </article>
   {% endfor %}

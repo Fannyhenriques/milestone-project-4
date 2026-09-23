@@ -35,5 +35,13 @@ class Package(models.Model):
     )
     is_active = models.BooleanField(default=True)
 
+    @property
+    def included_items(self):
+        return [
+            item.strip()
+            for item in self.included.splitlines()
+            if item.strip()
+        ]
+
     def __str__(self):
         return self.name
