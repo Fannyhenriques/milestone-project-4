@@ -79,4 +79,10 @@ def booking(request):
 
 @login_required
 def account(request):
-    return render(request, "repose/account.html")
+    membership = getattr(request.user, "membership", None)
+
+    return render(
+        request,
+        "repose/account.html",
+        {"membership": membership},
+    )
