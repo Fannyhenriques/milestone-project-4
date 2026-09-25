@@ -1,3 +1,4 @@
+from bookings.forms import BookingForm
 from services.models import Package, Treatment
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
@@ -83,7 +84,13 @@ def register(request):
 
 
 def booking(request):
-    return render(request, "repose/booking.html")
+    form = BookingForm()
+
+    return render(
+        request,
+        "repose/booking.html",
+        {"form": form},
+    )
 
 
 @login_required
