@@ -40,7 +40,16 @@ def packages(request):
 
 
 def membership(request):
-    return render(request, "repose/membership.html")
+    membership = None
+
+    if request.user.is_authenticated:
+        membership = getattr(request.user, "membership", None)
+
+    return render(
+        request,
+        "repose/membership.html",
+        {"membership": membership},
+    )
 
 
 def register(request):
