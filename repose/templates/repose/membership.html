@@ -40,7 +40,11 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
     Enjoy full access to your member benefits throughout the entire membership period.
   </p>
 
-  {% if user.is_authenticated %}
+  {% if membership and membership.is_active %}
+  <p>You are currently a Repose member.</p>
+  <a href="{% url 'account' %}">View My Membership</a>
+
+  {% elif user.is_authenticated %}
   <a href="#">Become a Member</a>
   {% else %}
   <a href="{% url 'register' %}?next=membership">Create an Account to Join</a>
