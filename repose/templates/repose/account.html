@@ -15,8 +15,15 @@
 
   <section>
     <h2>Membership</h2>
+
+    {% if membership and membership.is_active %}
+    <p>Your Repose membership is active.</p>
+    <p>Valid from {{ membership.start_date }} to {{ membership.end_date }}.</p>
+    {% else %}
+
     <p>You are not currently a Repose member.</p>
     <a href="{% url 'membership' %}">Become a Member</a>
+    {% endif %}
   </section>
 </section>
 {% endblock %}
