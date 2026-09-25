@@ -6,6 +6,7 @@ from services.models import Package, Treatment
 
 class Booking(models.Model):
     BOOKING_TYPE_CHOICES = [
+        ("spa", "Spa Access"),
         ("treatment", "Treatment"),
         ("package", "Package"),
     ]
