@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "repose",
     "services",
     "memberships",
+    "bookings",
 ]
 
 MIDDLEWARE = [
