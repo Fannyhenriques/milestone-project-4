@@ -15,29 +15,51 @@ Book spa access, treatments and spa packages at Repose Spa & Wellness.
     a treatment or one of our carefully curated packages.
   </p>
 
-  <form>
-    <fieldset>
-      <legend>What would you like to book?</legend>
+  <form method="POST">
+    {% csrf_token %}
 
-      <label>
-        <input type="radio" name="booking_type" value="spa">
-        Spa Access
-      </label>
-
-      <label>
-        <input type="radio" name="booking_type" value="treatment">
-        Treatment
-      </label>
-
-      <label>
-        <input type="radio" name="booking_type" value="package">
-        Package
-      </label>
-    </fieldset>
+    {{ form.non_field_errors }}
 
     <div>
-      <label for="booking-date">Choose a date</label>
-      <input type="date" id="booking-date" name="booking_date">
+      {{ form.booking_type.label_tag }}
+      {{ form.booking_type }}
+      {{ form.booking_type.errors }}
+    </div>
+
+    <div>
+      {{ form.treatment.label_tag }}
+      {{ form.treatment }}
+      {{ form.treatment.errors }}
+    </div>
+
+    <div>
+      {{ form.package.label_tag }}
+      {{ form.package }}
+      {{ form.package.errors }}
+    </div>
+
+    <div>
+      {{ form.guest_name.label_tag }}
+      {{ form.guest_name }}
+      {{ form.guest_name.errors }}
+    </div>
+
+    <div>
+      {{ form.guest_email.label_tag }}
+      {{ form.guest_email }}
+      {{ form.guest_email.errors }}
+    </div>
+
+    <div>
+      {{ form.booking_date.label_tag }}
+      {{ form.booking_date }}
+      {{ form.booking_date.errors }}
+    </div>
+
+    <div>
+      {{ form.booking_time.label_tag }}
+      {{ form.booking_time }}
+      {{ form.booking_time.errors }}
     </div>
 
     <button type="submit">Continue</button>
