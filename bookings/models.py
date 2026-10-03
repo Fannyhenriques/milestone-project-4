@@ -34,6 +34,7 @@ class Booking(models.Model):
         null=True,
         blank=True,
     )
+    number_of_guests = models.PositiveIntegerField(default=1)
     guest_name = models.CharField(max_length=100)
     guest_email = models.EmailField()
     booking_date = models.DateField()
