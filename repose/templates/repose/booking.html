@@ -1,4 +1,5 @@
 {% extends "repose/base.html" %}
+{% load static %}
 
 {% block title %}Book Now | Repose Spa & Wellness{% endblock %}
 
@@ -65,4 +66,8 @@ Book spa access, treatments and spa packages at Repose Spa & Wellness.
     <button type="submit">Continue</button>
   </form>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'repose/js/booking.js' %}"></script>
 {% endblock %}
