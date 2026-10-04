@@ -157,6 +157,41 @@ def booking_guest(request):
     )
 
 
+def booking_review(request):
+    if "booking_step_three" not in request.session:
+        return redirect("booking_guest")
+
+    step_one = request.session["booking_step_one"]
+    step_two = request.session["booking_step_two"]
+    step_three = request.session["booking_step_three"]
+
+    treatment = None
+    package = None
+
+    if step_one["treatment_id"]:
+        treatment = Treatment.objects.get(id=step_one["treatment_id"])
+
+    if step_one["package_id"]:
+        package = Package.objects.get(id=step_one["package_id"])
+
+    context = {
+        "booking_type": step_one["booking_type"],
+        "treatment": treatment,
+        "package": package,
+        "number_of_guests": step_two["number_of_guests"],
+        "booking_date": step_two["booking_date"],
+        "booking_time": step_two["booking_time"],
+        "guest_name": step_three["guest_name"],
+        "guest_email": step_three["guest_email"],
+    }
+
+    return render(
+        request,
+        "repose/booking_review.html",
+        context,
+    )
+
+
 @login_required
 def account(request):
     membership = getattr(request.user, "membership", None)

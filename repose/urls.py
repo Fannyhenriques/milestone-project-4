@@ -23,5 +23,6 @@ urlpatterns = [
     path("book/", views.booking, name="booking"),
     path("book/details/", views.booking_details, name="booking_details"),
     path("book/guest/", views.booking_guest, name="booking_guest"),
+    path("book/review/", views.booking_review, name="booking_review"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
 ]
