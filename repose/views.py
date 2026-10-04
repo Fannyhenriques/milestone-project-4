@@ -1,4 +1,4 @@
-from bookings.forms import BookingForm
+from bookings.forms import BookingForm, BookingDetailsForm, BookingGuestForm
 from services.models import Package, Treatment
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
@@ -84,7 +84,22 @@ def register(request):
 
 
 def booking(request):
-    form = BookingForm()
+    if request.method == "POST":
+        form = BookingForm(request.POST)
+
+        if form.is_valid():
+            treatment = form.cleaned_data["treatment"]
+            package = form.cleaned_data["package"]
+
+            request.session["booking_step_one"] = {
+                "booking_type": form.cleaned_data["booking_type"],
+                "treatment_id": treatment.id if treatment else None,
+                "package_id": package.id if package else None,
+            }
+
+            return redirect("booking_details")
+    else:
+        form = BookingForm()
 
     return render(
         request,
