@@ -1,0 +1,39 @@
+{% extends "repose/base.html" %}
+
+{% block title %}Booking Details | Repose Spa & Wellness{% endblock %}
+
+{% block meta_description %}
+Choose the number of guests, date and time for your Repose booking.
+{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Booking Details</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <div>
+      {{ form.number_of_guests.label_tag }}
+      {{ form.number_of_guests }}
+      {{ form.number_of_guests.errors }}
+    </div>
+
+    <div>
+      {{ form.booking_date.label_tag }}
+      {{ form.booking_date }}
+      {{ form.booking_date.errors }}
+    </div>
+
+    <div>
+      {{ form.booking_time.label_tag }}
+      {{ form.booking_time }}
+      {{ form.booking_time.errors }}
+    </div>
+
+    <button type="submit">Continue</button>
+  </form>
+</section>
+{% endblock %}
