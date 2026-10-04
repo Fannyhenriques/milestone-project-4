@@ -1,0 +1,33 @@
+{% extends "repose/base.html" %}
+
+{% block title %}Guest Details | Repose Spa & Wellness{% endblock %}
+
+{% block meta_description %}
+Enter your contact details to continue your booking at Repose Spa & Wellness.
+{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Guest Details</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <div>
+      {{ form.guest_name.label_tag }}
+      {{ form.guest_name }}
+      {{ form.guest_name.errors }}
+    </div>
+
+    <div>
+      {{ form.guest_email.label_tag }}
+      {{ form.guest_email }}
+      {{ form.guest_email.errors }}
+    </div>
+
+    <button type="submit">Continue</button>
+  </form>
+</section>
+{% endblock %}
