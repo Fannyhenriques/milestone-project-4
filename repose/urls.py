@@ -22,5 +22,6 @@ urlpatterns = [
     path("account/", views.account, name="account"),
     path("book/", views.booking, name="booking"),
     path("book/details/", views.booking_details, name="booking_details"),
+    path("book/guest/", views.booking_guest, name="booking_guest"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
 ]

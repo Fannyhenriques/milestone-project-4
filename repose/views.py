@@ -132,6 +132,31 @@ def booking_details(request):
         {"form": form},
     )
 
+
+def booking_guest(request):
+    if "booking_step_two" not in request.session:
+        return redirect("booking_details")
+
+    if request.method == "POST":
+        form = BookingGuestForm(request.POST)
+
+        if form.is_valid():
+            request.session["booking_step_three"] = {
+                "guest_name": form.cleaned_data["guest_name"],
+                "guest_email": form.cleaned_data["guest_email"],
+            }
+
+            return redirect("booking_review")
+    else:
+        form = BookingGuestForm()
+
+    return render(
+        request,
+        "repose/booking_guest.html",
+        {"form": form},
+    )
+
+
 @login_required
 def account(request):
     membership = getattr(request.user, "membership", None)
