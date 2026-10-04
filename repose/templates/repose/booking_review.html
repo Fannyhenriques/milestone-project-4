@@ -10,7 +10,29 @@ Review your booking details before continuing to payment.
 <section>
   <h1>Review Your Booking</h1>
 
-  <p>Your booking summary</p>
+  <div>
+    <h2>Booking</h2>
+
+    <p>Booking type: {{ booking_type|title }}</p>
+
+    {% if treatment %}
+    <p>Treatment: {{ treatment.name }}</p>
+    {% endif %}
+
+    {% if package %}
+    <p>Package: {{ package.name }}</p>
+    {% endif %}
+  </div>
+
+  <div>
+    <h2>Details</h2>
+
+    <p>Guests: {{ number_of_guests }}</p>
+    <p>Date: {{ booking_date }}</p>
+    <p>Time: {{ booking_time }}</p>
+    <p>Name: {{ guest_name }}</p>
+    <p>Email: {{ guest_email }}</p>
+  </div>
 
   <button type="button">Continue to Payment</button>
 </section>
