@@ -1,3 +1,5 @@
+from bookings.models import Booking
+from datetime import date, time
 from bookings.forms import BookingForm, BookingDetailsForm, BookingGuestForm
 from services.models import Package, Treatment
 from django.contrib.auth import login as auth_login
@@ -173,6 +175,21 @@ def booking_review(request):
 
     if step_one["package_id"]:
         package = Package.objects.get(id=step_one["package_id"])
+
+    if request.method == "POST":
+        booking = Booking.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            booking_type=step_one["booking_type"],
+            treatment=treatment,
+            package=package,
+            number_of_guests=step_two["number_of_guests"],
+            booking_date=date.fromisoformat(step_two["booking_date"]),
+            booking_time=time.fromisoformat(step_two["booking_time"]),
+            guest_name=step_three["guest_name"],
+            guest_email=step_three["guest_email"],
+        )
+
+        request.session["pending_booking_id"] = booking.id
 
     context = {
         "booking_type": step_one["booking_type"],
