@@ -34,6 +34,9 @@ Review your booking details before continuing to payment.
     <p>Email: {{ guest_email }}</p>
   </div>
 
-  <button type="button">Continue to Payment</button>
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">Continue to Payment</button>
+  </form>
 </section>
 {% endblock %}
