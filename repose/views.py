@@ -225,3 +225,7 @@ def account(request):
         "repose/account.html",
         {"membership": membership},
     )
+
+
+def booking_success(request):
+    return render(request, "repose/booking_success.html")

@@ -1,0 +1,29 @@
+{% extends "repose/base.html" %}
+
+{% block title %}Booking Confirmed | Repose Spa & Wellness{% endblock %}
+
+{% block meta_description %}
+Your booking at Repose Spa & Wellness has been confirmed.
+{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Booking Confirmed</h1>
+
+  <p>
+    Thank you for your booking. Your payment was successful and your
+    booking has been confirmed.
+  </p>
+
+  <p>
+    A confirmation will be sent to the email address provided during
+    booking.
+  </p>
+
+  {% if user.is_authenticated %}
+  <a href="{% url 'account' %}">View My Account</a>
+  {% else %}
+  <a href="{% url 'home' %}">Return Home</a>
+  {% endif %}
+</section>
+{% endblock %}
