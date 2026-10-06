@@ -40,6 +40,7 @@ class Package(models.Model):
         max_digits=6,
         decimal_places=2,
     )
+    guests_per_package = models.PositiveIntegerField(default=1)
     duration = models.PositiveIntegerField(
         help_text="Package duration in minutes",
     )
