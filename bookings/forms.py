@@ -1,6 +1,6 @@
 from django import forms
-
 from .models import Booking
+from services.models import Package
 
 
 class BookingForm(forms.ModelForm):
@@ -23,8 +23,63 @@ class BookingDetailsForm(forms.ModelForm):
         ]
         widgets = {
             "booking_date": forms.DateInput(attrs={"type": "date"}),
-            "booking_time": forms.TimeInput(attrs={"type": "time"}),
+            "booking_time": forms.Select(),
         }
+
+    def __init__(self, *args, booking_data=None, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["booking_time"].widget.choices = []
+
+        if not booking_data:
+            return
+
+        booking_type = booking_data.get("booking_type")
+
+        if booking_type == "spa":
+            self.fields["booking_time"].widget.choices = [
+                ("09:00", "09:00 - 12:00"),
+                ("13:00", "13:00 - 16:00"),
+                ("17:00", "17:00 - 20:00"),
+            ]
+
+        elif booking_type == "treatment":
+            self.fields["booking_time"].widget.choices = [
+                ("09:00", "09:00"),
+                ("10:00", "10:00"),
+                ("11:00", "11:00"),
+                ("13:00", "13:00"),
+                ("14:00", "14:00"),
+                ("15:00", "15:00"),
+                ("16:00", "16:00"),
+                ("17:00", "17:00"),
+            ]
+
+        elif booking_type == "package":
+            package_id = booking_data.get("package_id")
+            package = Package.objects.filter(id=package_id).first()
+
+            if package:
+                if package.time_period == "morning":
+                    choices = [
+                        ("09:00", "09:00"),
+                    ]
+                elif package.time_period == "afternoon":
+                    choices = [
+                        ("13:00", "13:00"),
+                    ]
+                elif package.time_period == "evening":
+                    choices = [
+                        ("17:00", "17:00"),
+                    ]
+                else:
+                    choices = [
+                        ("09:00", "09:00"),
+                        ("13:00", "13:00"),
+                        ("17:00", "17:00"),
+                    ]
+
+                self.fields["booking_time"].widget.choices = choices
 
 
 class BookingGuestForm(forms.ModelForm):
