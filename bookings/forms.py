@@ -17,6 +17,12 @@ class BookingForm(forms.ModelForm):
 
 
 class BookingDetailsForm(forms.ModelForm):
+    number_of_guests = forms.TypedChoiceField(
+        choices=[],
+        coerce=int,
+        label="Number of guests",
+    )
+
     class Meta:
         model = Booking
         fields = [
@@ -43,6 +49,15 @@ class BookingDetailsForm(forms.ModelForm):
 
         booking_type = booking_data.get("booking_type")
 
+        self.fields["number_of_guests"].choices = [
+            (1, "1"),
+            (2, "2"),
+            (3, "3"),
+            (4, "4"),
+            (5, "5"),
+            (6, "6"),
+        ]
+
         if booking_type == "spa":
             self.fields["booking_time"].widget.choices = [
                 ("09:00", "09:00 - 12:00"),
@@ -67,6 +82,16 @@ class BookingDetailsForm(forms.ModelForm):
             package = Package.objects.filter(id=package_id).first()
 
             if package:
+                guests_per_package = package.guests_per_package
+
+                self.fields["number_of_guests"].choices = [
+                    (guests, str(guests))
+                    for guests in range(
+                        guests_per_package,
+                        guests_per_package * 4,
+                        guests_per_package,
+                    )
+                ]
                 if package.time_period == "morning":
                     choices = [
                         ("09:00", "09:00"),
