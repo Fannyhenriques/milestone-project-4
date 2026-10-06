@@ -1,5 +1,8 @@
 from django import forms
+from django.utils import timezone
+
 from .models import Booking
+
 from services.models import Package
 
 
@@ -28,6 +31,10 @@ class BookingDetailsForm(forms.ModelForm):
 
     def __init__(self, *args, booking_data=None, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.fields["booking_date"].widget.attrs["min"] = (
+            timezone.localdate().isoformat()
+        )
 
         self.fields["booking_time"].widget.choices = []
 
@@ -80,6 +87,16 @@ class BookingDetailsForm(forms.ModelForm):
                     ]
 
                 self.fields["booking_time"].widget.choices = choices
+
+    def clean_booking_date(self):
+        booking_date = self.cleaned_data["booking_date"]
+
+        if booking_date < timezone.localdate():
+            raise forms.ValidationError(
+                "Please select today or a future date."
+            )
+
+        return booking_date
 
 
 class BookingGuestForm(forms.ModelForm):
