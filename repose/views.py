@@ -114,8 +114,13 @@ def booking_details(request):
     if "booking_step_one" not in request.session:
         return redirect("booking")
 
+    booking_data = request.session["booking_step_one"]
+
     if request.method == "POST":
-        form = BookingDetailsForm(request.POST)
+        form = BookingDetailsForm(
+            request.POST,
+            booking_data=booking_data,
+        )
 
         if form.is_valid():
             request.session["booking_step_two"] = {
@@ -126,7 +131,9 @@ def booking_details(request):
 
             return redirect("booking_guest")
     else:
-        form = BookingDetailsForm()
+        form = BookingDetailsForm(
+            booking_data=booking_data,
+        )
 
     return render(
         request,
