@@ -41,5 +41,18 @@ class Booking(models.Model):
     booking_time = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def duration_minutes(self):
+        if self.booking_type == "spa":
+            return 180
+
+        if self.booking_type == "treatment" and self.treatment:
+            return self.treatment.duration
+
+        if self.booking_type == "package" and self.package:
+            return self.package.duration
+
+        return 0
+
     def __str__(self):
         return f"{self.guest_name} - {self.booking_date}"
