@@ -26,12 +26,27 @@ class Treatment(models.Model):
 
 
 class Package(models.Model):
+    TIME_PERIOD_CHOICES = [
+        ("flexible", "Flexible"),
+        ("morning", "Morning"),
+        ("afternoon", "Afternoon"),
+        ("evening", "Evening"),
+    ]
+
     name = models.CharField(max_length=100)
     description = models.TextField()
     included = models.TextField()
     price = models.DecimalField(
         max_digits=6,
         decimal_places=2,
+    )
+    duration = models.PositiveIntegerField(
+        help_text="Package duration in minutes",
+    )
+    time_period = models.CharField(
+        max_length=20,
+        choices=TIME_PERIOD_CHOICES,
+        default="flexible",
     )
     is_active = models.BooleanField(default=True)
 
