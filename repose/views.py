@@ -7,6 +7,8 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from bookings.forms import BookingForm, BookingDetailsForm, BookingGuestForm
 from bookings.models import Booking
@@ -321,3 +323,32 @@ def booking_cancelled(request):
         request,
         "repose/booking_cancelled.html",
     )
+
+
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    signature = request.META.get("HTTP_STRIPE_SIGNATURE")
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload,
+            signature,
+            settings.STRIPE_WEBHOOK_SECRET,
+        )
+    except (ValueError, stripe.error.SignatureVerificationError):
+        return HttpResponse(status=400)
+
+    if event["type"] == "checkout.session.completed":
+        checkout_session = event["data"]["object"]
+
+        if checkout_session["payment_status"] == "paid":
+            booking_id = checkout_session.get("client_reference_id")
+
+            booking = Booking.objects.filter(id=booking_id).first()
+
+            if booking:
+                booking.payment_status = "paid"
+                booking.save(update_fields=["payment_status"])
+
+    return HttpResponse(status=200)
