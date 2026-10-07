@@ -1,0 +1,24 @@
+{% extends "repose/base.html" %}
+
+{% block title %}Payment Cancelled | Repose Spa & Wellness{% endblock %}
+
+{% block meta_description %}
+Your payment was not completed and your booking has not been confirmed.
+{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Payment Cancelled</h1>
+
+  <p>
+    Your payment was not completed, so your booking has not been confirmed.
+  </p>
+
+  <p>
+    You can start a new booking whenever you're ready.
+  </p>
+
+  <a href="{% url 'booking' %}">Book Again</a>
+  <a href="{% url 'home' %}">Return Home</a>
+</section>
+{% endblock %}
