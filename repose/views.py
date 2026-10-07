@@ -241,8 +241,9 @@ def booking_review(request):
                     "quantity": quantity,
                 }
             ],
-            success_url=request.build_absolute_uri(
-                "/book/success/"
+            success_url=(
+                request.build_absolute_uri("/book/success/")
+                + "?session_id={CHECKOUT_SESSION_ID}"
             ),
             cancel_url=request.build_absolute_uri(
                 "/book/review/"
@@ -281,4 +282,21 @@ def account(request):
 
 
 def booking_success(request):
-    return render(request, "repose/booking_success.html")
+    session_id = request.GET.get("session_id")
+
+    if session_id:
+        checkout_session = stripe.checkout.Session.retrieve(session_id)
+
+        if checkout_session.payment_status == "paid":
+            booking_id = checkout_session.client_reference_id
+
+            booking = Booking.objects.filter(id=booking_id).first()
+
+            if booking:
+                booking.payment_status = "paid"
+                booking.save(update_fields=["payment_status"])
+
+    return render(
+        request,
+        "repose/booking_success.html",
+    )
