@@ -246,7 +246,7 @@ def booking_review(request):
                 + "?session_id={CHECKOUT_SESSION_ID}"
             ),
             cancel_url=request.build_absolute_uri(
-                "/book/review/"
+                "/book/cancelled/"
             ),
         )
 
@@ -299,4 +299,25 @@ def booking_success(request):
     return render(
         request,
         "repose/booking_success.html",
+    )
+
+
+def booking_cancelled(request):
+    booking_id = request.session.get("pending_booking_id")
+
+    if booking_id:
+        booking = Booking.objects.filter(
+            id=booking_id,
+            payment_status="pending",
+        ).first()
+
+        if booking:
+            booking.payment_status = "cancelled"
+            booking.save(update_fields=["payment_status"])
+
+        request.session.pop("pending_booking_id", None)
+
+    return render(
+        request,
+        "repose/booking_cancelled.html",
     )
