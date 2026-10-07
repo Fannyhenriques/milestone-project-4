@@ -202,9 +202,54 @@ def booking_review(request):
             booking_time=time.fromisoformat(step_two["booking_time"]),
             guest_name=step_three["guest_name"],
             guest_email=step_three["guest_email"],
+            payment_status="pending",
         )
 
         request.session["pending_booking_id"] = booking.id
+
+        if booking.booking_type == "treatment":
+            unit_price = booking.treatment.price
+            quantity = booking.number_of_guests
+            item_name = booking.treatment.name
+
+        elif booking.booking_type == "package":
+            unit_price = booking.package.price
+            quantity = (
+                booking.number_of_guests
+                // booking.package.guests_per_package
+            )
+            item_name = booking.package.name
+
+        else:
+            unit_price = 49
+            quantity = booking.number_of_guests
+            item_name = "Spa Access"
+
+        checkout_session = stripe.checkout.Session.create(
+            mode="payment",
+            client_reference_id=str(booking.id),
+            customer_email=booking.guest_email,
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "gbp",
+                        "product_data": {
+                            "name": item_name,
+                        },
+                        "unit_amount": int(unit_price * 100),
+                    },
+                    "quantity": quantity,
+                }
+            ],
+            success_url=request.build_absolute_uri(
+                "/book/success/"
+            ),
+            cancel_url=request.build_absolute_uri(
+                "/book/review/"
+            ),
+        )
+
+        return redirect(checkout_session.url, code=303)
 
     context = {
         "booking_type": step_one["booking_type"],
