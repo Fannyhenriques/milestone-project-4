@@ -1,11 +1,19 @@
-from bookings.models import Booking
 from datetime import date, time
-from bookings.forms import BookingForm, BookingDetailsForm, BookingGuestForm
-from services.models import Package, Treatment
+
+import stripe
+
+from django.conf import settings
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
+
+from bookings.forms import BookingForm, BookingDetailsForm, BookingGuestForm
+from bookings.models import Booking
+from services.models import Package, Treatment
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def home(request):
