@@ -1,3 +1,4 @@
+from decimal import Decimal
 from datetime import date, time, datetime, timedelta
 
 import stripe
@@ -9,6 +10,7 @@ from .forms import RegistrationForm
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 
 from bookings.forms import BookingForm, BookingDetailsForm, BookingGuestForm
 from bookings.models import Booking
@@ -237,6 +239,20 @@ def booking_review(request):
 
         if booking.booking_type == "treatment":
             unit_price = booking.treatment.price
+
+            membership = None
+
+            if request.user.is_authenticated:
+                membership = getattr(request.user, "membership", None)
+
+            if (
+                membership
+                and membership.is_active
+                and membership.start_date <= timezone.localdate()
+                and membership.end_date >= timezone.localdate()
+            ):
+                unit_price = unit_price * Decimal("0.85")
+
             quantity = booking.number_of_guests
             item_name = booking.treatment.name
 
