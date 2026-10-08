@@ -13,14 +13,14 @@ Review your booking details before continuing to payment.
   <div>
     <h2>Booking</h2>
 
-    <p>Booking type: {{ booking_type|title }}</p>
-
-    {% if treatment %}
-    <p>Treatment: {{ treatment.name }}</p>
-    {% endif %}
-
-    {% if package %}
-    <p>Package: {{ package.name }}</p>
+    <p> Selected booking choice:
+      {% if booking_type == "spa" %}
+      Spa Access
+      {% elif treatment %}
+      {{ treatment.name }}
+      {% elif package %}
+      {{ package.name }}
+    </p>
     {% endif %}
   </div>
 
