@@ -51,7 +51,8 @@ class Booking(models.Model):
     )
 
     number_of_guests = models.PositiveIntegerField(default=1)
-    guest_name = models.CharField(max_length=100)
+    guest_first_name = models.CharField(max_length=50)
+    guest_last_name = models.CharField(max_length=50)
     guest_email = models.EmailField()
     booking_date = models.DateField()
     booking_time = models.TimeField()
@@ -71,4 +72,7 @@ class Booking(models.Model):
         return 0
 
     def __str__(self):
-        return f"{self.guest_name} - {self.booking_date}"
+        return(
+            f"{self.guest_first_name} "
+            f"{self.guest_last_name} - {self.booking_date}"
+        )
