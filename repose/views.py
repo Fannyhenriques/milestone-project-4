@@ -351,4 +351,17 @@ def stripe_webhook(request):
                 booking.payment_status = "paid"
                 booking.save(update_fields=["payment_status"])
 
+    elif event["type"] == "checkout.session.expired":
+        checkout_session = event["data"]["object"]
+        booking_id = checkout_session.get("client_reference_id")
+
+        booking = Booking.objects.filter(
+            id=booking_id,
+            payment_status="pending",
+        ).first()
+
+        if booking:
+            booking.payment_status = "cancelled"
+            booking.save(update_fields=["payment_status"])
+
     return HttpResponse(status=200)
