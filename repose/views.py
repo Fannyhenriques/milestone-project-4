@@ -161,7 +161,8 @@ def booking_guest(request):
 
         if form.is_valid():
             request.session["booking_step_three"] = {
-                "guest_name": form.cleaned_data["guest_name"],
+                "guest_first_name": form.cleaned_data["guest_first_name"],
+                "guest_last_name": form.cleaned_data["guest_last_name"],
                 "guest_email": form.cleaned_data["guest_email"],
             }
 
@@ -221,7 +222,8 @@ def booking_review(request):
             number_of_guests=step_two["number_of_guests"],
             booking_date=date.fromisoformat(step_two["booking_date"]),
             booking_time=time.fromisoformat(step_two["booking_time"]),
-            guest_name=step_three["guest_name"],
+            guest_first_name=step_three["guest_first_name"],
+            guest_last_name=step_three["guest_last_name"],
             guest_email=step_three["guest_email"],
             payment_status="pending",
         )
@@ -280,7 +282,8 @@ def booking_review(request):
         "number_of_guests": step_two["number_of_guests"],
         "booking_date": step_two["booking_date"],
         "booking_time": step_two["booking_time"],
-        "guest_name": step_three["guest_name"],
+        "guest_first_name": step_three["guest_first_name"],
+        "guest_last_name": step_three["guest_last_name"],
         "guest_email": step_three["guest_email"],
         "booking_time_display": booking_time_display,
     }

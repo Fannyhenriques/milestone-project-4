@@ -128,6 +128,12 @@ class BookingGuestForm(forms.ModelForm):
     class Meta:
         model = Booking
         fields = [
-            "guest_name",
+            "guest_first_name",
+            "guest_last_name",
             "guest_email",
         ]
+        labels = {
+            "guest_first_name": "First name",
+            "guest_last_name": "Last name",
+            "guest_email": "Email",
+        }
