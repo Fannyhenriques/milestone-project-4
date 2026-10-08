@@ -132,6 +132,7 @@ def booking_details(request):
         form = BookingDetailsForm(
             request.POST,
             booking_data=booking_data,
+            user=request.user,
         )
 
         if form.is_valid():
@@ -142,9 +143,11 @@ def booking_details(request):
             }
 
             return redirect("booking_guest")
+
     else:
         form = BookingDetailsForm(
             booking_data=booking_data,
+            user=request.user,
         )
 
     return render(
@@ -262,21 +265,31 @@ def booking_review(request):
     total_price = unit_price * quantity
 
     if request.method == "POST":
-        booking = Booking.objects.create(
-            user=request.user if request.user.is_authenticated else None,
-            booking_type=step_one["booking_type"],
-            treatment=treatment,
-            package=package,
-            number_of_guests=step_two["number_of_guests"],
-            booking_date=date.fromisoformat(step_two["booking_date"]),
-            booking_time=time.fromisoformat(step_two["booking_time"]),
-            guest_first_name=step_three["guest_first_name"],
-            guest_last_name=step_three["guest_last_name"],
-            guest_email=step_three["guest_email"],
-            payment_status="pending",
-        )
+        booking = None
+        pending_booking_id = request.session.get("pending_booking_id")
 
-        request.session["pending_booking_id"] = booking.id
+        if pending_booking_id:
+            booking = Booking.objects.filter(
+                id=pending_booking_id,
+                payment_status="pending",
+            ).first()
+
+        if not booking:
+            booking = Booking.objects.create(
+                user=request.user if request.user.is_authenticated else None,
+                booking_type=step_one["booking_type"],
+                treatment=treatment,
+                package=package,
+                number_of_guests=step_two["number_of_guests"],
+                booking_date=date.fromisoformat(step_two["booking_date"]),
+                booking_time=time.fromisoformat(step_two["booking_time"]),
+                guest_first_name=step_three["guest_first_name"],
+                guest_last_name=step_three["guest_last_name"],
+                guest_email=step_three["guest_email"],
+                payment_status="pending",
+            )
+
+            request.session["pending_booking_id"] = booking.id
 
         checkout_session = stripe.checkout.Session.create(
             mode="payment",
