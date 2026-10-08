@@ -1,4 +1,4 @@
-from datetime import date, time
+from datetime import date, time, datetime, timedelta
 
 import stripe
 
@@ -193,6 +193,25 @@ def booking_review(request):
     if step_one["package_id"]:
         package = Package.objects.get(id=step_one["package_id"])
 
+    start_time = time.fromisoformat(step_two["booking_time"])
+
+    if step_one["booking_type"] == "spa":
+        duration = 180
+    elif step_one["booking_type"] == "treatment" and treatment:
+        duration = treatment.duration
+    elif step_one["booking_type"] == "package" and package:
+        duration = package.duration
+    else:
+        duration = 0
+
+    start_datetime = datetime.combine(date.today(), start_time)
+    end_datetime = start_datetime + timedelta(minutes=duration)
+
+    booking_time_display = (
+        f"{start_datetime.strftime('%H:%M')} - "
+        f"{end_datetime.strftime('%H:%M')}"
+    )
+
     if request.method == "POST":
         booking = Booking.objects.create(
             user=request.user if request.user.is_authenticated else None,
@@ -263,6 +282,7 @@ def booking_review(request):
         "booking_time": step_two["booking_time"],
         "guest_name": step_three["guest_name"],
         "guest_email": step_three["guest_email"],
+        "booking_time_display": booking_time_display,
     }
 
     return render(
