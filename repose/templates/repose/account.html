@@ -9,8 +9,55 @@
   <p>Welcome, {{ user.username }}.</p>
 
   <section>
-    <h2>My Bookings</h2>
-    <p>Your upcoming and previous bookings will appear here.</p>
+    <h2>My upcoming Bookings</h2>
+
+    {% if bookings %}
+    {% for booking in bookings %}
+    <article>
+      <h3>
+        {% if booking.booking_type == "spa" %}
+        Spa Access
+        {% elif booking.treatment %}
+        {{ booking.treatment.name }}
+        {% elif booking.package %}
+        {{ booking.package.name }}
+        {% endif %}
+      </h3>
+
+      <p>Date: {{ booking.booking_date }}</p>
+      <p>Time: {{ booking.booking_time|time:"H:i" }}</p>
+      <p>Guests: {{ booking.number_of_guests }}</p>
+    </article>
+    {% endfor %}
+    {% else %}
+    <p>You do not have any confirmed bookings yet.</p>
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Previous Bookings</h2>
+
+    {% if previous_bookings %}
+    {% for booking in previous_bookings %}
+    <article>
+      <h3>
+        {% if booking.booking_type == "spa" %}
+        Spa Access
+        {% elif booking.treatment %}
+        {{ booking.treatment.name }}
+        {% elif booking.package %}
+        {{ booking.package.name }}
+        {% endif %}
+      </h3>
+
+      <p>Date: {{ booking.booking_date }}</p>
+      <p>Time: {{ booking.booking_time|time:"H:i" }}</p>
+      <p>Guests: {{ booking.number_of_guests }}</p>
+    </article>
+    {% endfor %}
+    {% else %}
+    <p>You do not have any previous bookings.</p>
+    {% endif %}
   </section>
 
   <section>
