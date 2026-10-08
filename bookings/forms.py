@@ -15,6 +15,27 @@ class BookingForm(forms.ModelForm):
             "package",
         ]
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        booking_type = cleaned_data.get("booking_type")
+        treatment = cleaned_data.get("treatment")
+        package = cleaned_data.get("package")
+
+        if booking_type == "treatment" and not treatment:
+            self.add_error(
+                "treatment",
+                "Please select a treatment.",
+            )
+
+        if booking_type == "package" and not package:
+            self.add_error(
+                "package",
+                "Please select a package.",
+            )
+
+        return cleaned_data
+
 
 class BookingDetailsForm(forms.ModelForm):
     number_of_guests = forms.TypedChoiceField(
