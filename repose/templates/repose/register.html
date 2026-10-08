@@ -20,19 +20,37 @@ Create a Repose Spa & Wellness account to manage bookings and access membership 
     {{ form.non_field_errors }}
 
     <div>
-      <label for="{{ form.username.id_for_label }}">Username</label>
+      {{ form.first_name.label_tag }}
+      {{ form.first_name }}
+      {{ form.first_name.errors }}
+    </div>
+
+    <div>
+      {{ form.last_name.label_tag }}
+      {{ form.last_name }}
+      {{ form.last_name.errors }}
+    </div>
+
+    <div>
+      {{ form.username.label_tag }}
       {{ form.username }}
       {{ form.username.errors }}
     </div>
 
     <div>
-      <label for="{{ form.password1.id_for_label }}">Password</label>
+      {{ form.email.label_tag }}
+      {{ form.email }}
+      {{ form.email.errors }}
+    </div>
+
+    <div>
+      {{ form.password1.label_tag }}
       {{ form.password1 }}
       {{ form.password1.errors }}
     </div>
 
     <div>
-      <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+      {{ form.password2.label_tag }}
       {{ form.password2 }}
       {{ form.password2.errors }}
     </div>
