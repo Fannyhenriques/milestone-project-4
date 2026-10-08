@@ -157,7 +157,10 @@ def booking_guest(request):
         return redirect("booking_details")
 
     if request.method == "POST":
-        form = BookingGuestForm(request.POST)
+        form = BookingGuestForm(
+            request.POST,
+            user=request.user,
+        )
 
         if form.is_valid():
             request.session["booking_step_three"] = {
@@ -168,7 +171,9 @@ def booking_guest(request):
 
             return redirect("booking_review")
     else:
-        form = BookingGuestForm()
+        form = BookingGuestForm(
+            user=request.user,
+        )
 
     return render(
         request,
