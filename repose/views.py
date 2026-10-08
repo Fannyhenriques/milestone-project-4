@@ -5,7 +5,7 @@ import stripe
 from django.conf import settings
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from .forms import RegistrationForm
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -72,7 +72,7 @@ def register(request):
     next_page = request.GET.get("next")
 
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
 
         if form.is_valid():
             user = form.save()
@@ -83,7 +83,7 @@ def register(request):
 
             return redirect("account")
     else:
-        form = UserCreationForm()
+        form = RegistrationForm()
 
     return render(
         request,
