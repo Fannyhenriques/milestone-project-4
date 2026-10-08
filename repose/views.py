@@ -220,6 +220,47 @@ def booking_review(request):
         f"{end_datetime.strftime('%H:%M')}"
     )
 
+    booking_type = step_one["booking_type"]
+    member_discount = False
+    original_unit_price = None
+
+    if booking_type == "treatment":
+        unit_price = treatment.price
+        quantity = step_two["number_of_guests"]
+        item_name = treatment.name
+
+        membership = None
+
+        if request.user.is_authenticated:
+            membership = getattr(request.user, "membership", None)
+
+        if (
+            membership
+            and membership.is_active
+            and membership.start_date <= timezone.localdate()
+            and membership.end_date >= timezone.localdate()
+        ):
+            original_unit_price = unit_price
+            unit_price = (
+                unit_price * Decimal("0.85")
+            ).quantize(Decimal("0.01"))
+            member_discount = True
+
+    elif booking_type == "package":
+        unit_price = package.price
+        quantity = (
+            step_two["number_of_guests"]
+            // package.guests_per_package
+        )
+        item_name = package.name
+
+    else:
+        unit_price = Decimal("49.00")
+        quantity = step_two["number_of_guests"]
+        item_name = "Spa Access"
+
+    total_price = unit_price * quantity
+
     if request.method == "POST":
         booking = Booking.objects.create(
             user=request.user if request.user.is_authenticated else None,
@@ -236,38 +277,6 @@ def booking_review(request):
         )
 
         request.session["pending_booking_id"] = booking.id
-
-        if booking.booking_type == "treatment":
-            unit_price = booking.treatment.price
-
-            membership = None
-
-            if request.user.is_authenticated:
-                membership = getattr(request.user, "membership", None)
-
-            if (
-                membership
-                and membership.is_active
-                and membership.start_date <= timezone.localdate()
-                and membership.end_date >= timezone.localdate()
-            ):
-                unit_price = unit_price * Decimal("0.85")
-
-            quantity = booking.number_of_guests
-            item_name = booking.treatment.name
-
-        elif booking.booking_type == "package":
-            unit_price = booking.package.price
-            quantity = (
-                booking.number_of_guests
-                // booking.package.guests_per_package
-            )
-            item_name = booking.package.name
-
-        else:
-            unit_price = 49
-            quantity = booking.number_of_guests
-            item_name = "Spa Access"
 
         checkout_session = stripe.checkout.Session.create(
             mode="payment",
@@ -307,6 +316,11 @@ def booking_review(request):
         "guest_last_name": step_three["guest_last_name"],
         "guest_email": step_three["guest_email"],
         "booking_time_display": booking_time_display,
+        "unit_price": unit_price,
+        "original_unit_price": original_unit_price,
+        "quantity": quantity,
+        "total_price": total_price,
+        "member_discount": member_discount,
     }
 
     return render(
