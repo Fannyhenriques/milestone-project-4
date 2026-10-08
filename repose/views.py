@@ -346,11 +346,28 @@ def booking_review(request):
 @login_required
 def account(request):
     membership = getattr(request.user, "membership", None)
+    today = timezone.localdate()
+
+    upcoming_bookings = Booking.objects.filter(
+        user=request.user,
+        payment_status="paid",
+        booking_date__gte=today,
+    ).order_by("booking_date", "booking_time")
+
+    previous_bookings = Booking.objects.filter(
+        user=request.user,
+        payment_status="paid",
+        booking_date__lt=today,
+    ).order_by("-booking_date", "-booking_time")
 
     return render(
         request,
         "repose/account.html",
-        {"membership": membership},
+        {
+            "membership": membership,
+            "upcoming_bookings": upcoming_bookings,
+            "previous_bookings": previous_bookings,
+        },
     )
 
 
