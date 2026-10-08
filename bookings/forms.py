@@ -127,7 +127,7 @@ class BookingDetailsForm(forms.ModelForm):
                     (guests, str(guests))
                     for guests in range(
                         guests_per_package,
-                        guests_per_package * 4,
+                        7,
                         guests_per_package,
                     )
                 ]
