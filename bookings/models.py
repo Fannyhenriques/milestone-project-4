@@ -14,7 +14,6 @@ class Booking(models.Model):
     PAYMENT_STATUS_CHOICES = [
         ("pending", "Pending"),
         ("paid", "Paid"),
-        ("failed", "Failed"),
         ("cancelled", "Cancelled"),
     ]
 
