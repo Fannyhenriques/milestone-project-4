@@ -158,3 +158,15 @@ class BookingGuestForm(forms.ModelForm):
             "guest_last_name": "Last name",
             "guest_email": "Email",
         }
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if user and user.is_authenticated:
+            self.fields["guest_first_name"].initial = user.first_name
+            self.fields["guest_last_name"].initial = user.last_name
+            self.fields["guest_email"].initial = user.email
+
+            self.fields["guest_first_name"].disabled = True
+            self.fields["guest_last_name"].disabled = True
+            self.fields["guest_email"].disabled = True
