@@ -34,6 +34,25 @@ Review your booking details before continuing to payment.
     <p>Email: {{ guest_email }}</p>
   </div>
 
+  <div>
+    <h2>Price</h2>
+
+    {% if member_discount %}
+    <p>Standard price: £{{ original_unit_price }}</p>
+    <p>Member discount: 15%</p>
+    <p>Member price: £{{ unit_price }} per treatment</p>
+
+    {% elif booking_type == "package" %}
+    <p>Price per package: £{{ unit_price }}</p>
+    <p>Number of packages: {{ quantity }}</p>
+
+    {% else %}
+    <p>Price per person: £{{ unit_price }}</p>
+    {% endif %}
+
+    <p><strong>Total: £{{ total_price }}</strong></p>
+  </div>
+
   <form method="POST">
     {% csrf_token %}
     <button type="submit">Continue to Payment</button>
