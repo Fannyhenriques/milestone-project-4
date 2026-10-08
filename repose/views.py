@@ -304,6 +304,13 @@ def booking_success(request):
     )
 
 
+def booking_failed(request):
+    return render(
+        request,
+        "repose/booking_failed.html",
+    )
+
+
 def booking_cancelled(request):
     booking_id = request.session.get("pending_booking_id")
 
