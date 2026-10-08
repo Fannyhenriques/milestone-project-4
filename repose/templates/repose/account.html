@@ -11,8 +11,8 @@
   <section>
     <h2>My upcoming Bookings</h2>
 
-    {% if bookings %}
-    {% for booking in bookings %}
+    {% if upcoming_bookings %}
+    {% for booking in upcoming_bookings %}
     <article>
       <h3>
         {% if booking.booking_type == "spa" %}
