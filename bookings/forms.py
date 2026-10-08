@@ -56,8 +56,11 @@ class BookingDetailsForm(forms.ModelForm):
             "booking_time": forms.Select(),
         }
 
-    def __init__(self, *args, booking_data=None, **kwargs):
+    def __init__(self, *args, booking_data=None, user=None, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.booking_data = booking_data or {}
+        self.user = user
 
         self.fields["booking_date"].widget.attrs["min"] = (
             timezone.localdate().isoformat()
@@ -87,6 +90,21 @@ class BookingDetailsForm(forms.ModelForm):
             ]
 
         elif booking_type == "treatment":
+            membership = None
+
+            if user and user.is_authenticated:
+                membership = getattr(user, "membership", None)
+
+            if (
+                membership
+                and membership.is_active
+                and membership.start_date <= timezone.localdate()
+                and membership.end_date >= timezone.localdate()
+            ):
+                self.fields["number_of_guests"].choices = [
+                    (1, "1"),
+                ]
+
             self.fields["booking_time"].widget.choices = [
                 ("09:00", "09:00"),
                 ("10:00", "10:00"),
