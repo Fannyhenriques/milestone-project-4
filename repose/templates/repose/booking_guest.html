@@ -16,9 +16,15 @@ Enter your contact details to continue your booking at Repose Spa & Wellness.
     {{ form.non_field_errors }}
 
     <div>
-      {{ form.guest_name.label_tag }}
-      {{ form.guest_name }}
-      {{ form.guest_name.errors }}
+      {{ form.guest_first_name.label_tag }}
+      {{ form.guest_first_name }}
+      {{ form.guest_first_name.errors }}
+    </div>
+
+    <div>
+      {{ form.guest_last_name.label_tag }}
+      {{ form.guest_last_name }}
+      {{ form.guest_last_name.errors }}
     </div>
 
     <div>
