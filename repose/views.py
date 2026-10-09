@@ -499,10 +499,11 @@ def stripe_webhook(request):
         checkout_session = event["data"]["object"]
 
         if checkout_session["payment_status"] == "paid":
-            payment_type = checkout_session.get("metadata", {}).get("payment_type")
+            metadata = checkout_session["metadata"].to_dict()
+            payment_type = metadata.get("payment_type")
 
             if payment_type == "membership":
-                user_id = checkout_session.get("metadata", {}).get("user_id")
+                user_id = metadata.get("user_id")
 
                 if user_id:
                     user = User.objects.filter(id=user_id).first()
@@ -520,7 +521,7 @@ def stripe_webhook(request):
                             },
                         )
             else:
-                booking_id = checkout_session.get("client_reference_id")
+                booking_id = checkout_session["client_reference_id"]
                 booking = Booking.objects.filter(id=booking_id).first()
 
                 if booking:
@@ -529,7 +530,7 @@ def stripe_webhook(request):
 
     elif event["type"] == "checkout.session.expired":
         checkout_session = event["data"]["object"]
-        booking_id = checkout_session.get("client_reference_id")
+        booking_id = checkout_session["client_reference_id"]
 
         booking = Booking.objects.filter(
             id=booking_id,
