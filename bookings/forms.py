@@ -15,6 +15,28 @@ class BookingForm(forms.ModelForm):
             "package",
         ]
 
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.user = user
+
+        membership = None
+
+        if user and user.is_authenticated:
+            membership = getattr(user, "membership", None)
+
+        if (
+            membership
+            and membership.is_active
+            and membership.start_date <= timezone.localdate()
+            and membership.end_date >= timezone.localdate()
+        ):
+            self.fields["booking_type"].choices = [
+                choice
+                for choice in self.fields["booking_type"].choices
+                if choice[0] != "spa"
+            ]
+
     def clean(self):
         cleaned_data = super().clean()
 
@@ -32,6 +54,23 @@ class BookingForm(forms.ModelForm):
             self.add_error(
                 "package",
                 "Please select a package.",
+            )
+
+        membership = None
+
+        if self.user and self.user.is_authenticated:
+            membership = getattr(self.user, "membership", None)
+
+        if (
+            booking_type == "spa"
+            and membership
+            and membership.is_active
+            and membership.start_date <= timezone.localdate()
+            and membership.end_date >= timezone.localdate()
+        ):
+            self.add_error(
+                "booking_type",
+                "Spa access is included with your membership and does not require a booking.",
             )
 
         return cleaned_data
