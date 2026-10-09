@@ -494,13 +494,33 @@ def stripe_webhook(request):
         checkout_session = event["data"]["object"]
 
         if checkout_session["payment_status"] == "paid":
-            booking_id = checkout_session.get("client_reference_id")
+            payment_type = checkout_session.get("metadata", {}).get("payment_type")
 
-            booking = Booking.objects.filter(id=booking_id).first()
+            if payment_type == "membership":
+                user_id = checkout_session.get("metadata", {}).get("user_id")
 
-            if booking:
-                booking.payment_status = "paid"
-                booking.save(update_fields=["payment_status"])
+                if user_id:
+                    user = User.objects.filter(id=user_id).first()
+
+                    if user:
+                        start_date = timezone.localdate()
+                        end_date = start_date + timedelta(days=365)
+
+                        Membership.objects.update_or_create(
+                            user=user,
+                            defaults={
+                                "start_date": start_date,
+                                "end_date": end_date,
+                                "is_active": True,
+                            },
+                        )
+            else:
+                booking_id = checkout_session.get("client_reference_id")
+                booking = Booking.objects.filter(id=booking_id).first()
+
+                if booking:
+                    booking.payment_status = "paid"
+                    booking.save(update_fields=["payment_status"])
 
     elif event["type"] == "checkout.session.expired":
         checkout_session = event["data"]["object"]
