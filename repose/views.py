@@ -11,10 +11,12 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from bookings.forms import BookingForm, BookingDetailsForm, BookingGuestForm
 from bookings.models import Booking
 from services.models import Package, Treatment
+from memberships.models import Membership
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -65,6 +67,40 @@ def membership(request):
         "repose/membership.html",
         {"membership": membership},
     )
+
+
+@login_required
+def become_member(request):
+    if request.method != "POST":
+        return redirect("membership")
+
+    checkout_session = stripe.checkout.Session.create(
+        mode="payment",
+        customer_email=request.user.email,
+        metadata={
+            "payment_type": "membership",
+            "user_id": str(request.user.id),
+        },
+        line_items=[
+            {
+                "price_data": {
+                    "currency": "gbp",
+                    "product_data": {
+                        "name": "Repose Annual Membership",
+                    },
+                    "unit_amount": 99900,
+                },
+                "quantity": 1,
+            }
+        ],
+        success_url=(
+            request.build_absolute_uri("/book/success/")
+            + "?session_id={CHECKOUT_SESSION_ID}"
+        ),
+        cancel_url=request.build_absolute_uri("/book/cancelled/"),
+    )
+
+    return redirect(checkout_session.url, code=303)
 
 
 def register(request):
@@ -378,13 +414,40 @@ def booking_success(request):
         checkout_session = stripe.checkout.Session.retrieve(session_id)
 
         if checkout_session.payment_status == "paid":
-            booking_id = checkout_session.client_reference_id
+            metadata = checkout_session.metadata.to_dict()
+            payment_type = metadata.get("payment_type")
 
-            booking = Booking.objects.filter(id=booking_id).first()
+            if payment_type == "membership":
+                user_id = metadata.get("user_id")
 
-            if booking:
-                booking.payment_status = "paid"
-                booking.save(update_fields=["payment_status"])
+                if user_id:
+                    user = User.objects.filter(id=user_id).first()
+
+                    if user:
+                        start_date = timezone.localdate()
+                        end_date = start_date + timedelta(days=365)
+
+                        Membership.objects.update_or_create(
+                            user=user,
+                            defaults={
+                                "start_date": start_date,
+                                "end_date": end_date,
+                                "is_active": True,
+                            },
+                        )
+
+            else:
+                booking_id = checkout_session.client_reference_id
+
+                booking = Booking.objects.filter(
+                    id=booking_id
+                ).first()
+
+                if booking:
+                    booking.payment_status = "paid"
+                    booking.save(
+                        update_fields=["payment_status"]
+                    )
 
     return render(
         request,
