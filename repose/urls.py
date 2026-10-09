@@ -28,4 +28,5 @@ urlpatterns = [
     path("book/success/", views.booking_success, name="booking_success",),
     path("book/cancelled/", views.booking_cancelled, name="booking_cancelled",),
     path("stripe/webhook/", views.stripe_webhook, name="stripe_webhook",),
+    path("membership/join/", views.become_member, name="become_member",),
 ]

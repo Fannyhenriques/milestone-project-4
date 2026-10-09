@@ -38,7 +38,7 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
   <a href="{% url 'account' %}">View My Membership</a>
 
   {% else %}
-  <p>£399 per year</p>
+  <p>£999 per year</p>
 
   <p>
     Your membership begins as soon as your payment is completed and remains active for 12 months.
@@ -52,7 +52,10 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
   </p>
 
   {% if user.is_authenticated %}
-  <a href="#">Become a Member</a>
+  <form method="post" action="{% url 'become_member' %}">
+    {% csrf_token %}
+    <button type="submit">Become a Member</button>
+  </form>
   {% else %}
   <a href="{% url 'register' %}?next=membership">
     Create an Account to Join
