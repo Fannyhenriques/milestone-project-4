@@ -55,7 +55,7 @@ class BookingForm(forms.ModelForm):
                 "package",
                 "Please select a package.",
             )
-
+        
         membership = None
 
         if self.user and self.user.is_authenticated:
@@ -200,6 +200,24 @@ class BookingDetailsForm(forms.ModelForm):
             )
 
         return booking_date
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        booking_date = cleaned_data.get("booking_date")
+        booking_time = cleaned_data.get("booking_time")
+
+        if booking_date and booking_time:
+            if booking_date == timezone.localdate():
+                current_time = timezone.localtime().time()
+
+                if booking_time <= current_time:
+                    self.add_error(
+                        "booking_time",
+                        "Please select a future time.",
+                    )
+
+        return cleaned_data
 
 
 class BookingGuestForm(forms.ModelForm):
