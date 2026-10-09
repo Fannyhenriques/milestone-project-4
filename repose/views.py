@@ -135,7 +135,10 @@ def register(request):
 
 def booking(request):
     if request.method == "POST":
-        form = BookingForm(request.POST)
+        form = BookingForm(
+            request.POST,
+            user=request.user,
+        )
 
         if form.is_valid():
             treatment = form.cleaned_data["treatment"]
@@ -149,7 +152,9 @@ def booking(request):
 
             return redirect("booking_details")
     else:
-        form = BookingForm()
+        form = BookingForm(
+            user=request.user,
+        )
 
     return render(
         request,
