@@ -3,7 +3,7 @@
 {% block title %}Payment Cancelled | Repose Spa & Wellness{% endblock %}
 
 {% block meta_description %}
-Your payment was not completed and your booking has not been confirmed.
+Your payment was not completed and your purchase has not been confirmed.
 {% endblock %}
 
 {% block content %}
@@ -11,14 +11,15 @@ Your payment was not completed and your booking has not been confirmed.
   <h1>Payment Cancelled</h1>
 
   <p>
-    Your payment was not completed, so your booking has not been confirmed.
+    Your payment was not completed, so your purchase has not been confirmed.
   </p>
 
   <p>
-    You can start a new booking whenever you're ready.
+    You can start a new booking or membership signup whenever you're ready.
   </p>
 
-  <a href="{% url 'booking' %}">Book Again</a>
+  <a href="{% url 'booking' %}">Start a New Booking</a>
+  <a href="{% url 'membership' %}">Return to Membership Signup</a>
   <a href="{% url 'home' %}">Return Home</a>
 </section>
 {% endblock %}
