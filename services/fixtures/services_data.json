@@ -1,0 +1,144 @@
+[
+{
+  "model": "services.treatment",
+  "pk": 1,
+  "fields": {
+    "name": "Classic Massage",
+    "description": "A classic massage designed to release muscular tension and encourage deep relaxation. The pressure and techniques are tailored to your needs, whether you prefer a firmer, more focused massage or a gentler treatment to help you slow down and unwind.",
+    "category": "massage",
+    "duration": 50,
+    "price": "65.00",
+    "is_active": true
+  }
+},
+{
+  "model": "services.treatment",
+  "pk": 2,
+  "fields": {
+    "name": "Deep Tissue Massage",
+    "description": "A full-body restorative massage created to ease tired, tense and overworked muscles. Using firm pressure and targeted massage techniques, the treatment focuses on areas where tension tends to build up, making it ideal after physical activity or long hours spent sitting at a desk.",
+    "category": "massage",
+    "duration": 60,
+    "price": "75.00",
+    "is_active": true
+  }
+},
+{
+  "model": "services.treatment",
+  "pk": 3,
+  "fields": {
+    "name": "Body Scrub",
+    "description": "A full-body invigorating salt scrub designed to refresh the skin and stimulate circulation. The treatment gently removes dull surface cells, leaving your skin feeling incredibly soft, smooth and radiant.",
+    "category": "body",
+    "duration": 30,
+    "price": "45.00",
+    "is_active": false
+  }
+},
+{
+  "model": "services.treatment",
+  "pk": 4,
+  "fields": {
+    "name": "Mineral Body Wrap",
+    "description": "A warming full-body wrap designed to soothe tired, stiff muscles and support recovery after physical activity. While the wrap takes effect, enjoy a relaxing face and scalp massage. The treatment is completed with a mineral-rich body cream blended with aromatic oils, leaving your skin soft and your body feeling restored.",
+    "category": "body",
+    "duration": 60,
+    "price": "70.00",
+    "is_active": true
+  }
+},
+{
+  "model": "services.treatment",
+  "pk": 5,
+  "fields": {
+    "name": "Repose Signature Facial",
+    "description": "A personalised facial experience beginning with a professional skin analysis, followed by gentle exfoliation, deep cleansing and a circulation-boosting facial massage. A nourishing mask is then applied to replenish and care for the skin. The experience is completed with a relaxing arm and hand massage. Suitable for all skin types.",
+    "category": "facial",
+    "duration": 60,
+    "price": "75.00",
+    "is_active": true
+  }
+},
+{
+  "model": "services.treatment",
+  "pk": 6,
+  "fields": {
+    "name": "Glow Facial",
+    "description": "A deeply hydrating facial designed to restore moisture and natural radiance. Ideal for dull, tired or dehydrated skin, this treatment helps revive the complexion and enhance its natural glow. The treatment is tailored to your individual skin needs and combines gentle exfoliation, replenishing products and targeted care to leave the complexion feeling soft, smooth and refreshed.",
+    "category": "facial",
+    "duration": 45,
+    "price": "60.00",
+    "is_active": true
+  }
+},
+{
+  "model": "services.package",
+  "pk": 1,
+  "fields": {
+    "name": "Repose Luxe",
+    "description": "Combine spa access with a treatment of your choice for a complete wellness experience. Enjoy time in our spa and fitness facilities before or after a 50- or 60-minute treatment.",
+    "included": "Access to spa and fitness facilities\r\nOne treatment of your choice\r\nBathrobe, towels and slippers\r\nWater, tea and fruit buffet",
+    "price": "115.00",
+    "guests_per_package": 1,
+    "duration": 240,
+    "time_period": "flexible",
+    "is_active": true
+  }
+},
+{
+  "model": "services.package",
+  "pk": 2,
+  "fields": {
+    "name": "Repose for Two",
+    "description": "A spa experience designed for two. The package includes spa access for two guests followed by a relaxing duo massage in the same treatment room.",
+    "included": "Access to spa and fitness facilities for two guests\r\nDuo massage in the same treatment room\r\nBathrobes, towels and slippers\r\nWater, tea and fruit buffet",
+    "price": "210.00",
+    "guests_per_package": 2,
+    "duration": 240,
+    "time_period": "flexible",
+    "is_active": true
+  }
+},
+{
+  "model": "services.package",
+  "pk": 3,
+  "fields": {
+    "name": "After Work Spa",
+    "description": "Unwind after the day with evening spa access and a glass of prosecco or a non-alcoholic sparkling alternative. A perfect way to spend the evening with friends or colleagues.",
+    "included": "Evening spa access\r\nAccess to spa and fitness facilities\r\nOne glass of prosecco or non-alcoholic sparkling alternative\r\nBathrobes, towels and slippers\r\nWater, tea and fruit buffet",
+    "price": "65.00",
+    "guests_per_package": 1,
+    "duration": 180,
+    "time_period": "flexible",
+    "is_active": true
+  }
+},
+{
+  "model": "services.package",
+  "pk": 4,
+  "fields": {
+    "name": "Breakfast Spa",
+    "description": "Start your day with a fresh breakfast followed by access to our spa, wellness and fitness facilities. A calm and refreshing way to begin the morning.",
+    "included": "Breakfast\r\nMorning spa access\r\nAccess to spa and fitness facilities\r\nBathrobes, towels and slippers\r\nWater, tea and fruit buffet",
+    "price": "65.00",
+    "guests_per_package": 1,
+    "duration": 210,
+    "time_period": "flexible",
+    "is_active": true
+  }
+},
+{
+  "model": "services.package",
+  "pk": 5,
+  "fields": {
+    "name": "Spa & Dine",
+    "description": "Combine your spa visit with a dining experience at Repose. Choose between morning spa followed by lunch, or afternoon spa followed by dinner.",
+    "included": "Morning or afternoon spa access\r\nLunch or dinner in our dining area, depending on selected package\r\nAccess to spa and fitness facilities\r\nBathrobes, towels and slippers\r\nWater, tea and fruit buffet",
+    "price": "85.00",
+    "guests_per_package": 1,
+    "duration": 240,
+    "time_period": "flexible",
+    "is_active": true
+  }
+}
+]
