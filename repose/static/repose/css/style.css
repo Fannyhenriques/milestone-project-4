@@ -250,6 +250,22 @@
 /* ====================================
    FORMS
 ==================================== */
+
+.form-page {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.form-card {
+  width: 100%;
+  max-width: 42rem;
+  background-color: var(--color-primary);
+  padding: var(--space-sm);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+}
+
 .form-card-header {
   text-align: center;
   padding-top: var(--space-sm);
@@ -300,6 +316,69 @@
   border-radius: 0.25rem;
 }
 
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.form-group select {
+  padding-right: 2.5rem;
+  letter-spacing: 0.02rem;
+  cursor: pointer;
+  appearance: none;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-text) 50%),
+    linear-gradient(135deg, var(--color-text) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1rem) 50%,
+    calc(100% - 0.7rem) 50%;
+  background-size: 0.3rem 0.3rem;
+  background-repeat: no-repeat;
+}
+
+.form-group select:hover {
+  border-color: var(--color-text);
+}
+
+.form-group input[type="date"] {
+  position: relative;
+  cursor: pointer;
+  padding-right: 2.5rem;
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+
+.form-group:has(input[type="date"]) {
+  position: relative;
+}
+
+.form-group:has(input[type="date"])::after {
+  content: "";
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.75rem;
+  width: 1rem;
+  height: 1rem;
+  pointer-events: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M16 3v4M8 3v4M3 10h18'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+
 .form-footer-text {
   margin-top: var(--space-md);
   margin-bottom: var(--space-md);
@@ -334,6 +413,16 @@
   margin: 0.4rem 0;
   font-family: "Times New Roman", serif;
   font-size: 1rem;
+}
+
+.review-total {
+  margin-top: var(--space-sm);
+  font-size: 1.2rem;
+}
+
+.review-payment {
+  display: flex;
+  justify-content: center;
 }
 
 /* ====================================
