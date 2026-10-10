@@ -466,6 +466,30 @@
   font-weight: 700;
 }
 
+.confirmation-actions {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+  padding-bottom: var(--space-md);
+}
+
+.confirmation-actions .form-button {
+  display: inline-block;
+  width: 90%;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+}
+
+.styled-form,
+.review-payment,
+.confirmation-actions {
+  padding-bottom: var(--space-md);
+}
+
 /* ====================================
    CARDS & GRIDS
 ==================================== */
