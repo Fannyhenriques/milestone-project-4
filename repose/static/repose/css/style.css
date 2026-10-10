@@ -2,6 +2,25 @@
    VARIABLES
 ==================================== */
 
+:root {
+  --color-background: #e8e7e7;
+  --color-text: #1a1a1a;
+
+  --color-primary: #ffffff;
+  --color-secondary: #333333;
+
+  --color-accent: #040495;
+  --color-highlight: #dfddd1;
+
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 5rem;
+  --space-xxl: 6rem;
+}
+
 /* ====================================
    BASE
 ==================================== */
