@@ -318,9 +318,23 @@
    CONTENT SECTIONS
 ==================================== */
 
-/* ====================================
-   EMPTY STATES & MESSAGES
-==================================== */
+
+.review-section {
+  width: 80%;
+  margin: 0 auto var(--space-md);
+}
+
+.review-section h2 {
+  margin-bottom: var(--space-xs);
+  text-transform: uppercase;
+  font-size: 1.4rem;
+}
+
+.review-section p {
+  margin: 0.4rem 0;
+  font-family: "Times New Roman", serif;
+  font-size: 1rem;
+}
 
 /* ====================================
    FOOTER
