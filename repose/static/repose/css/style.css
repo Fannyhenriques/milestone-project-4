@@ -250,6 +250,65 @@
 /* ====================================
    FORMS
 ==================================== */
+.form-card-header {
+  text-align: center;
+  padding-top: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.form-card-header h1 {
+  margin: 0 0 var(--space-md);
+  font-size: 2rem;
+}
+
+.form-card-header p {
+  margin: 1rem;
+}
+
+.styled-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 80%;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text);
+  background-color: var(--color-primary);
+  border: 1px solid rgba(26, 26, 26, 0.25);
+  border-radius: 0.25rem;
+}
+
+.form-footer-text {
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.form-footer-text a {
+  font-weight: 700;
+}
 
 /* ====================================
    CARDS & GRIDS
