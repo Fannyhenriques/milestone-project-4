@@ -7,33 +7,44 @@ Enter your contact details to continue your booking at Repose Spa & Wellness.
 {% endblock %}
 
 {% block content %}
-<section>
-  <h1>Guest Details</h1>
+<section class="form-page">
+  <div class="form-card">
+    <div class="form-card-header">
+      <h1>Guest Details</h1>
 
-  <form method="POST">
-    {% csrf_token %}
-
-    {{ form.non_field_errors }}
-
-    <div>
-      {{ form.guest_first_name.label_tag }}
-      {{ form.guest_first_name }}
-      {{ form.guest_first_name.errors }}
+      <p> Enter the contact details for this booking. </p>
     </div>
 
-    <div>
-      {{ form.guest_last_name.label_tag }}
-      {{ form.guest_last_name }}
-      {{ form.guest_last_name.errors }}
-    </div>
+    <form method="POST" class="styled-form">
+      {% csrf_token %}
 
-    <div>
-      {{ form.guest_email.label_tag }}
-      {{ form.guest_email }}
-      {{ form.guest_email.errors }}
-    </div>
+      {{ form.non_field_errors }}
 
-    <button type="submit">Continue</button>
-  </form>
+      <div class="form-group">
+        {{ form.guest_first_name.label_tag }}
+        {{ form.guest_first_name }}
+        {{ form.guest_first_name.errors }}
+      </div>
+
+      <div class="form-group">
+        {{ form.guest_last_name.label_tag }}
+        {{ form.guest_last_name }}
+        {{ form.guest_last_name.errors }}
+      </div>
+
+      <div class="form-group">
+        {{ form.guest_email.label_tag }}
+        {{ form.guest_email }}
+        {{ form.guest_email.errors }}
+      </div>
+
+      <div class="btn-container">
+        <a href="{% url 'home' %}" class="button">
+          Cancel
+        </a>
+        <button type="submit" class="button form-button">Continue</button>
+      </div>
+    </form>
+  </div>
 </section>
 {% endblock %}
