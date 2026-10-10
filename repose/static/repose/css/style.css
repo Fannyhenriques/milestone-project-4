@@ -34,6 +34,41 @@
 ==================================== */
 
 /* ====================================
+   HEADER 
+==================================== */
+
+
+.site-header {
+  background-color: var(--color-highlight);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.site-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-block: var(--space-md);
+}
+
+.site-title h1 {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-size: 3.5rem;
+  margin: 0;
+}
+
+.site-title p {
+  font-weight: 500;
+  font-size: 1.3rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  margin: 0;
+}
 
 /* ====================================
    NAVIGATION
