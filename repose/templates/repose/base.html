@@ -71,35 +71,36 @@
   </main>
 
   <footer>
-    <section>
+    <section class="footer-content">
       <h2>Contact us</h2>
-      <p>
+      <p>Mail:
         <a href="mailto:info@reposespa.com">info@reposespa.com</a>
       </p>
-      <p>
-        <a href="tel:+441234567890">+44 1234 567890</a>
-      </p>
-      <p>Address: 24 Willow Lane, London, W1K 4AB</p>
+      <p> Phone: +44 123 000 000 </p>
+      <p>Address: 68 Lotus Lane, London, N8 2BB </p>
       <p>Opening hours: Mon–Sun 09:00–21:00</p>
     </section>
 
-    <section>
+    <div class="footer-logo-wrapper">
+      <img class="footer-logo" src="{% static 'repose/images/favicon.png' %}" alt="Repose logo">
+    </div>
+
+    <section class="footer-content">
       <h2>Follow Us</h2>
-      <a href="#" aria-label="Visit Repose Spa on Facebook">
-        <img src="" alt="">
+      <div class="footer-social">
+        <a href="#" aria-label="Visit Repose Spa on Instagram">
+          <img class="footer-icon" src="{% static 'repose/images/instagram.png' %}" alt="Instagram ikon">
       </a>
 
-      <a href="#" aria-label="Visit Repose Spa on Instagram">
-        <img src="" alt="">
+        <a href="#" aria-label="Visit Repose Spa on Facebook">
+          <img class="footer-icon" src="{% static 'repose/images/facebook.png' %}" alt="Facebook ikon">
       </a>
 
       <a href="#" aria-label="Visit Repose Spa on Tripadvisor">
-        <img src="" alt="">
+          <img class="footer-icon" src="{% static 'repose/images/tripadvisor.png' %}" alt="Tripadvisor icon">
       </a>
+      </div>
     </section>
-
-    <p>&copy; Repose Spa & Wellness </p>
-
   </footer>
 
   {% block extra_js %}
