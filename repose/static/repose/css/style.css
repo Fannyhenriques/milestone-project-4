@@ -15,8 +15,50 @@
 ==================================== */
 
 /* ====================================
-   TYPOGRAPHY
+
+/* ====================================
+   NAVIGATION
 ==================================== */
+
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-sm);
+  height: 5rem;
+}
+
+/* Brand */
+
+.nav-brand {
+  display: inline-flex;
+  gap: var(--space-xs);
+  font-family: "Great Vibes", cursive;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--color-text);
+  text-decoration: none;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.logo-img {
+  width: 1.5rem;
+  height: 1.5rem;
+  object-fit: contain;
+  display: block;
+  transform: translateY(-0.2rem);
+}
+
+.nav-brand:hover,
+.nav-brand:focus-visible {
+  color: var(--color-text);
+  text-decoration: none;
+  transform: scale(1.05);
+  opacity: 0.85;
+}
 
 /* ====================================
    HEADER & NAVIGATION
