@@ -8,39 +8,44 @@ Book spa access, treatments and spa packages at Repose Spa & Wellness.
 {% endblock %}
 
 {% block content %}
-<section>
-  <h1>Book Your Visit</h1>
+<section class="form-page">
+  <div class="form-card">
 
-  <p>
-    Choose how you would like to experience Repose. Book spa access for <strong>£49 per person</strong>,
-    a treatment or one of our carefully curated packages.
-  </p>
+    <div class="form-card-header">
+      <h1>Book Your Visit</h1>
 
-  <form method="POST">
-    {% csrf_token %}
-
-    {{ form.non_field_errors }}
-
-    <div>
-      {{ form.booking_type.label_tag }}
-      {{ form.booking_type }}
-      {{ form.booking_type.errors }}
+      <p>
+        Choose how you would like to experience Repose. Book spa access for <strong>£49 per person</strong>,
+        a treatment or one of our carefully curated packages.
+      </p>
     </div>
 
-    <div id="treatment-field">
-      {{ form.treatment.label_tag }}
-      {{ form.treatment }}
-      {{ form.treatment.errors }}
-    </div>
+    <form method="POST" class="styled-form">
+      {% csrf_token %}
 
-    <div id="package-field">
-      {{ form.package.label_tag }}
-      {{ form.package }}
-      {{ form.package.errors }}
-    </div>
+      {{ form.non_field_errors }}
 
-    <button type="submit">Continue</button>
-  </form>
+      <div class="form-group">
+        {{ form.booking_type.label_tag }}
+        {{ form.booking_type }}
+        {{ form.booking_type.errors }}
+      </div>
+
+      <div id="treatment-field" class="form-group">
+        {{ form.treatment.label_tag }}
+        {{ form.treatment }}
+        {{ form.treatment.errors }}
+      </div>
+
+      <div id="package-field" class="form-group">
+        {{ form.package.label_tag }}
+        {{ form.package }}
+        {{ form.package.errors }}
+      </div>
+
+      <button type="submit" class="button form-button">Continue</button>
+    </form>
+  </div>
 </section>
 {% endblock %}
 
