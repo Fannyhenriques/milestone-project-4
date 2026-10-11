@@ -92,4 +92,24 @@ The booking journey follows the same principle by dividing the process into indi
 
 ---
 
+## Wireframes
+
+- The wireframes were created to establish the basic layout and structure of Repose Spa & Wellness before development.
+    Separate mobile, tablet and desktop layouts illustrate how the interface adapts to different screen sizes.
+
+<table>
+  <tr>
+    <th>Mobile</th>
+    <th>Tablet</th>
+    <th>Desktop</th>
+  </tr>
+  <tr>
+    <td><img src="documentation/images/responsive/wireframe-mobile.png" alt="Initial Repose mobile wireframe" width="200" height="auto"></td>
+    <td><img src="documentation/images/responsive/wireframe-tablet.png" alt="Initial Repose tablet wireframe" width="300" height="auto"></td>
+    <td><img src="documentation/images/responsive/wireframe-desktop.png" alt="Initial Repose desktop wireframe" width="400" height="auto"></td>
+  </tr>
+</table>
+
+
+---
 
