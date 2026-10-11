@@ -113,3 +113,55 @@ The booking journey follows the same principle by dividing the process into indi
 
 ---
 
+# Design & Accessibility
+
+## Navigation
+
+The main navigation provides access to Home, About Us, Treatments, Packages, Membership and Booking. Authentication-specific links change depending on whether the user is signed in.
+
+On smaller screens, navigation is displayed through a hamburger menu. JavaScript toggles the menu state and updates `aria-expanded`, while CSS controls the animation and visual transition from the hamburger icon to a close icon.
+
+## Layout
+
+Repose uses:
+
+- A shared Django base template with a consistent header and footer.
+- Reusable treatment, package, account and Home page cards.
+- Reusable form and button components.
+- Responsive grid layouts.
+- Clear content sections separated with subtle borders and spacing.
+- A mobile-first responsive design.
+
+### Colour Scheme
+
+The Repose colour palette was selected to create a calm, understated and editorial spa aesthetic.
+
+The main colours are stored as CSS custom properties:
+
+```css
+--color-background: #e8e7e7;
+--color-text: #1a1a1a;
+--color-primary: #ffffff;
+--color-secondary: #333333;
+--color-accent: #040495;
+--color-highlight: #dfddd1;
+```
+
+<p align="center">
+  <img
+    src="documentation/images/features/color-palette.png"
+    alt="Repose Spa & Wellness colour palette"
+    width="900"
+  >
+</p>
+
+### Typography
+
+Repose uses two Google Fonts:
+
+- **Cormorant Garamond** for the main interface and content.
+- **Great Vibes** for the Repose brand wordmark.
+
+Georgia and Times New Roman are used selectively for certain form controls and small metadata where browser rendering is clearer and more consistent.
+
+
