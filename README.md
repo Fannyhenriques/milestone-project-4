@@ -528,3 +528,48 @@ Accessibility considerations include:
 
 ---
 
+## User Stories
+
+### Visitor User Stories
+
+| User Story | Outcome |
+| --- | --- |
+| As a visitor, I want to understand what Repose offers so that I can decide whether the spa suits my needs. | The Home, About, Treatments, Packages and Membership pages explain the available services. |
+| As a visitor, I want to browse treatments so that I can compare available options. | Treatments are grouped by category with descriptions, duration and price. |
+| As a visitor, I want to browse spa packages so that I can choose a combined experience. | Package cards show descriptions, inclusions, duration and price. |
+| As a visitor, I want to understand the membership benefits before joining. | The Membership page describes access, discounts and annual pricing. |
+| As a visitor, I want to make a booking online so that I do not need to contact the spa manually. | A multi-step booking flow is available. |
+| As a visitor, I want invalid choices to be prevented so that I can complete a valid booking. | Backend validation checks service selection, dates, times and guest rules. |
+| As a visitor, I want to register so that I can access personalised features. | A Registration page is available. |
+| As a visitor, I want the site to work on my device. | The website uses a mobile-first responsive layout. |
+
+### Registered User Stories
+
+| User Story | Outcome |
+| --- | --- |
+| As a registered user, I want to log in securely so that I can access my account information. | Django authentication provides login and logout functionality. |
+| As a registered user, I want to view my upcoming bookings so that I can remember what I have reserved. | Confirmed future bookings appear under My Account. |
+| As a registered user, I want to view previous bookings so that I have a simple booking history. | Previous booking dates appear in a separate account section. |
+| As a registered user, I want to purchase a membership so that I can access member benefits. | Stripe Checkout activates a Membership record linked to the user. |
+| As a registered user, I want to see whether my membership is active. | My Account displays membership status and validity dates. |
+
+### Member User Stories
+
+| User Story | Outcome |
+| --- | --- |
+| As a member, I want my treatment discount applied automatically so that I receive the correct price. | Eligible standalone treatments receive a 15% discount. |
+| As a member, I want my benefit to remain personal to my membership. | Member treatment bookings are limited to one guest when the discount applies. |
+| As a member, I want to access the spa without making a separate booking so that I can use my complimentary membership benefit. | Active members receive complimentary spa access seven days a week, and the Spa Access booking option is removed from their booking flow. |
+
+### Administrator / Site Owner User Stories
+
+| User Story | Outcome |
+| --- | --- |
+| As an administrator, I want to manage treatments so that service information remains accurate. | Treatment records can be managed in Django Admin. |
+| As an administrator, I want to manage packages so that inclusions and pricing can be updated. | Package records can be managed in Django Admin. |
+| As an administrator, I want to review bookings so that customer reservations can be managed. | Booking records are available in Django Admin. |
+| As an administrator, I want to manage memberships so that active membership records can be reviewed. | Membership records are available in Django Admin. |
+| As the site owner, I want payment status to update reliably so that paid and abandoned bookings are distinguishable. | Stripe webhooks update completed and expired Checkout Sessions. |
+
+---
+
