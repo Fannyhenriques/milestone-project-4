@@ -8,32 +8,39 @@ Explore spa packages combining spa access with treatments, lunch or dinner at Re
 {% endblock %}
 
 {% block content %}
-<h1>Packages</h1>
 
-<p>
-  Looking to treat someone special to a romantic getaway, or spend a peaceful afternoon with friends? Discover our
-  carefully curated spa packages, designed to make your visit to Repose feel even more complete. Combine spa access
-  with a treatment, lunch or dinner and enjoy a thoughtfully planned wellness experience from start to finish.
-</p>
+<div class="hero">
+  <img class="hero-img" src="{% static 'repose/images/pool.jpg' %}" alt="Indoor pool at Repose Spa & Wellness">
+  <div class="hero-overlay"></div>
+</div>
+<div class="service-page">
+  <div class="service-intro">
+    <h1>Packages</h1>
+
+    <p>
+      Looking to treat someone special to a romantic getaway, or spend a peaceful afternoon with friends? Discover our
+      carefully curated spa packages, designed to make your visit to Repose feel even more complete. Combine spa access
+      with a treatment, lunch or dinner and enjoy a thoughtfully planned wellness experience from start to finish.
+    </p>
   </div>
 
   <div class="service-category">
     <div class="service-grid">
-  {% for package in packages %}
+      {% for package in packages %}
       <a href="{% url 'booking' %}" class="service-card service-card-link">
-    <h2>{{ package.name }}</h2>
-    <p>{{ package.description }}</p>
-    <h3>Includes</h3>
-    <ul>
-      {% for item in package.included_items %}
-      <li>{{ item }}</li>
-      {% endfor %}
-    </ul>
+        <h2>{{ package.name }}</h2>
+        <p>{{ package.description }}</p>
+        <h3>Includes</h3>
+        <ul>
+          {% for item in package.included_items %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
         <div class="service-meta">
-    <p>£{{ package.price }}</p>
+          <p>£{{ package.price }}</p>
         </div>
       </a>
-  {% endfor %}
+      {% endfor %}
     </div>
   </div>
 </div>

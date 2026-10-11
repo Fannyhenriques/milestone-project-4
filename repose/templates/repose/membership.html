@@ -9,77 +9,82 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
 
 {% block content %}
 
-<section>
-  <h1>Repose Membership</h1>
+<div class="hero">
+  <img class="hero-img" src="{% static 'repose/images/sauna-room.jpg' %}" alt="Sauna room at Repose Spa & Wellness">
+  <div class="hero-overlay"></div>
+</div>
+<section class="service-page">
+  <section class="content-section">
+    <h1>Repose Membership</h1>
 
-  <p>
-    Make wellbeing part of your everyday routine with a Repose membership.
-    Enjoy regular access to our spa, wellness and fitness facilities along
-    with exclusive benefits available throughout your membership.
-  </p>
-</section>
+    <p>
+      Make wellbeing part of your everyday routine with a Repose membership.
+      Enjoy regular access to our spa, wellness and fitness facilities along
+      with exclusive benefits available throughout your membership.
+    </p>
+  </section>
 
   <section class="content-section">
-  <h2>Membership Benefits</h2>
+    <h2>Membership Benefits</h2>
 
-  <ul>
-    <li>Complimentary spa access Monday–Friday, 09:00–21:00</li>
-    <li>Access to our fitness facilities Monday–Friday, 09:00–21:00</li>
-    <li>Complimentary yoga classes</li>
-    <li>15% off standalone treatments</li>
-    <li>Exclusive member offers</li>
-  </ul>
-</section>
+    <ul>
+      <li>Complimentary spa access Monday–Friday, 09:00–21:00</li>
+      <li>Access to our fitness facilities Monday–Friday, 09:00–21:00</li>
+      <li>Complimentary yoga classes</li>
+      <li>15% off standalone treatments</li>
+      <li>Exclusive member offers</li>
+    </ul>
+  </section>
 
   <section class="content-section">
-  <h2>Annual Membership</h2>
+    <h2>Annual Membership</h2>
 
-  {% if membership and membership.is_active %}
-  <p>You are currently a Repose member.</p>
+    {% if membership and membership.is_active %}
+    <p>You are currently a Repose member.</p>
     <a href="{% url 'account' %}" class="button">View My Membership</a>
 
-  {% else %}
+    {% else %}
     <p class="service-meta">£999 per year</p>
-  <p>
-    Your membership begins as soon as your payment is completed and remains active for 12 months.
-    Enjoy full access to your member benefits throughout the entire membership period.
-    Members are welcome to use the spa facilities during member opening hours without making a booking.
-  </p>
+    <p>
+      Your membership begins as soon as your payment is completed and remains active for 12 months.
+      Enjoy full access to your member benefits throughout the entire membership period.
+      Members are welcome to use the spa facilities during member opening hours without making a booking.
+    </p>
 
-  <p>
-    Packages can be booked separately at full price.
-    Yoga class schedules and bookings are available at reception.
-  </p>
+    <p>
+      Packages can be booked separately at full price.
+      Yoga class schedules and bookings are available at reception.
+    </p>
 
-  <p>
-    The annual membership is paid as a one-time payment.
+    <p>
+      The annual membership is paid as a one-time payment.
       If you would prefer to arrange a payment plan, please contact Repose Spa & Wellness and we will be happy to
       discuss
-    the available options with you.
-  </p>
+      the available options with you.
+    </p>
 
-  {% if user.is_authenticated %}
-  <form method="post" action="{% url 'become_member' %}">
-    {% csrf_token %}
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'become_member' %}">
+      {% csrf_token %}
       <button type="submit" class="button">Become a Member</button>
-  </form>
-  {% else %}
+    </form>
+    {% else %}
     <a href="{% url 'register' %}?next=membership" class="button">
-    Create an Account to Join
-  </a>
-  {% endif %}
+      Create an Account to Join
+    </a>
+    {% endif %}
 
-  {% endif %}
-</section>
+    {% endif %}
+  </section>
 
-{% if not user.is_authenticated %}
+  {% if not user.is_authenticated %}
   <section class="content-section">
-  <h2>Already a Member?</h2>
+    <h2>Already a Member?</h2>
 
-  <p>
-    Sign in to view your membership, access member benefits and manage
-    your account.
-  </p>
+    <p>
+      Sign in to view your membership, access member benefits and manage
+      your account.
+    </p>
 
     <a href="{% url 'login' %}">Login</a>
   </section>

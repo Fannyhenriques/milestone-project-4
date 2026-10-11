@@ -8,77 +8,85 @@ Explore relaxing massages, facials and body treatments available at Repose Spa &
 {% endblock %}
 
 {% block content %}
-<h1>Treatments</h1>
 
-<p>
+<div class="hero">
+  <img class="hero-img" src="{% static 'repose/images/face-mask.jpg' %}" alt="Face treatment at Repose Spa & Wellness">
+  <div class="hero-overlay"></div>
+</div>
+<section class="service-page">
+  <section class="content-section">
+    <div class="service-intro">
+      <h1>Treatments</h1>
+
+      <p>
         At Repose Spa & Wellness, we offer a carefully selected range of face and body treatments designed to help you
         relax
-  and recharge. Treat yourself or someone you love to a massage, facial or body scrub. Our spa services
-  are available to guests aged 13 and over.
-</p>
+        and recharge. Treat yourself or someone you love to a massage, facial or body scrub. Our spa services
+        are available to guests aged 13 and over.
+      </p>
 
-<p>
+      <p>
         If you would like to learn more about what we offer or need help choosing the option that suits you best,
         please
         feel
         free to contact us or speak to our team at reception. If you would like to combine a treatment with spa
         access,
-  explore our available packages.
-</p>
+        explore our available packages.
+      </p>
 
-<p>
-  Repose members receive 15% off all standalone treatments.
-</p>
+      <p>
+        Repose members receive 15% off all standalone treatments.
+      </p>
 
     </div>
 
     <section class="service-category">
-  <h2>Massage</h2>
+      <h2>Massage</h2>
 
       <div class="service-grid">
-  {% for treatment in massages %}
+        {% for treatment in massages %}
         <a href="{% url 'booking' %}" class="service-card service-card-link">
-    <h3>{{ treatment.name }}</h3>
-    <p>{{ treatment.description }}</p>
+          <h3>{{ treatment.name }}</h3>
+          <p>{{ treatment.description }}</p>
           <div class="service-meta">
-    <p>{{ treatment.duration }} minutes</p>
+            <p>{{ treatment.duration }} minutes</p>
             <p>£{{ treatment.price }}</p>
           </div>
         </a>
-  {% endfor %}
+        {% endfor %}
       </div>
-</section>
+    </section>
 
     <section class="service-category">
-  <h2>Body Treatments</h2>
+      <h2>Body Treatments</h2>
 
       <div class="service-grid">
-  {% for treatment in body_treatments %}
+        {% for treatment in body_treatments %}
         <a href="{% url 'booking' %}" class="service-card service-card-link">
-    <h3>{{ treatment.name }}</h3>
-    <p>{{ treatment.description }}</p>
+          <h3>{{ treatment.name }}</h3>
+          <p>{{ treatment.description }}</p>
           <div class="service-meta">
-    <p>{{ treatment.duration }} minutes</p>
-    <p>£{{ treatment.price }}</p>
+            <p>{{ treatment.duration }} minutes</p>
+            <p>£{{ treatment.price }}</p>
           </div>
         </a>
-  {% endfor %}
+        {% endfor %}
       </div>
-</section>
+    </section>
 
     <section class="service-category">
-  <h2>Facials</h2>
+      <h2>Facials</h2>
       <div class="service-grid">
-  {% for treatment in facials %}
+        {% for treatment in facials %}
         <a href="{% url 'booking' %}" class="service-card service-card-link">
-    <h3>{{ treatment.name }}</h3>
-    <p>{{ treatment.description }}</p>
+          <h3>{{ treatment.name }}</h3>
+          <p>{{ treatment.description }}</p>
           <div class="service-meta">
-    <p>{{ treatment.duration }} minutes</p>
-    <p>£{{ treatment.price }}</p>
+            <p>{{ treatment.duration }} minutes</p>
+            <p>£{{ treatment.price }}</p>
           </div>
         </a>
-  {% endfor %}
+        {% endfor %}
       </div>
     </section>
 
