@@ -1,4 +1,5 @@
 {% extends "repose/base.html" %}
+{% load static %}
 
 {% block title %}Home | Repose Spa{% endblock %}
 
@@ -8,6 +9,12 @@ packages and wellness memberships.
 {% endblock %}
 
 {% block content %}
-<h1>Repose Spa & Wellness</h1>
-<p>Rest. Restore. Reconnect.</p>
+<div class="hero">
+  <img class="hero-img" src="{% static 'repose/images/hero-img.jpg' %}"
+    alt="Relaxing spa interior at Repose Spa & Wellness">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p>Rest • Restore • Reconnect </p>
+  </div>
+</div>
 {% endblock %}
