@@ -1,4 +1,5 @@
 {% extends "repose/base.html" %}
+{% load static %}
 
 {% block title %}Treatments | Repose Spa & Wellness{% endblock %}
 
@@ -29,46 +30,58 @@ Explore relaxing massages, facials and body treatments available at Repose Spa &
   Repose members receive 15% off all standalone treatments.
 </p>
 
-<section>
+    </div>
+
+    <section class="service-category">
   <h2>Massage</h2>
 
+      <div class="service-grid">
   {% for treatment in massages %}
-  <article>
+        <a href="{% url 'booking' %}" class="service-card service-card-link">
     <h3>{{ treatment.name }}</h3>
     <p>{{ treatment.description }}</p>
+          <div class="service-meta">
     <p>{{ treatment.duration }} minutes</p>
-    <p>£{{ treatment.price }} </p>
-  </article>
+            <p>£{{ treatment.price }}</p>
+          </div>
+        </a>
   {% endfor %}
-
+      </div>
 </section>
 
-<section>
+    <section class="service-category">
   <h2>Body Treatments</h2>
 
+      <div class="service-grid">
   {% for treatment in body_treatments %}
-  <article>
+        <a href="{% url 'booking' %}" class="service-card service-card-link">
     <h3>{{ treatment.name }}</h3>
     <p>{{ treatment.description }}</p>
+          <div class="service-meta">
     <p>{{ treatment.duration }} minutes</p>
     <p>£{{ treatment.price }}</p>
-  </article>
+          </div>
+        </a>
   {% endfor %}
-
+      </div>
 </section>
 
-<section>
+    <section class="service-category">
   <h2>Facials</h2>
-
+      <div class="service-grid">
   {% for treatment in facials %}
-  <article>
+        <a href="{% url 'booking' %}" class="service-card service-card-link">
     <h3>{{ treatment.name }}</h3>
     <p>{{ treatment.description }}</p>
+          <div class="service-meta">
     <p>{{ treatment.duration }} minutes</p>
     <p>£{{ treatment.price }}</p>
-  </article>
+          </div>
+        </a>
   {% endfor %}
+      </div>
+    </section>
 
+  </section>
 </section>
-
 {% endblock %}
