@@ -50,7 +50,7 @@ def packages(request):
     packages = Package.objects.filter(is_active=True)
 
     return render(
-        request, 
+        request,
         "repose/packages.html",
         {"packages": packages}
     )

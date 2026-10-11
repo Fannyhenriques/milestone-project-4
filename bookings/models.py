@@ -72,7 +72,7 @@ class Booking(models.Model):
         return 0
 
     def __str__(self):
-        return(
+        return (
             f"{self.guest_first_name} "
             f"{self.guest_last_name} - {self.booking_date}"
         )

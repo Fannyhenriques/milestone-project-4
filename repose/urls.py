@@ -12,13 +12,13 @@ urlpatterns = [
     path("membership/", views.membership, name="membership"),
     path("register/", views.register, name="register"),
     path(
-    "login/",
-    auth_views.LoginView.as_view(
-        template_name="repose/login.html",
-        redirect_authenticated_user=True,
+        "login/",
+        auth_views.LoginView.as_view(
+            template_name="repose/login.html",
+            redirect_authenticated_user=True,
+        ),
+        name="login",
     ),
-    name="login",
-),
     path("account/", views.account, name="account"),
     path("book/", views.booking, name="booking"),
     path("book/details/", views.booking_details, name="booking_details"),
@@ -26,7 +26,11 @@ urlpatterns = [
     path("book/review/", views.booking_review, name="booking_review"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("book/success/", views.booking_success, name="booking_success",),
-    path("book/cancelled/", views.booking_cancelled, name="booking_cancelled",),
+    path(
+        "book/cancelled/",
+        views.booking_cancelled,
+        name="booking_cancelled",
+    ),
     path("stripe/webhook/", views.stripe_webhook, name="stripe_webhook",),
     path("membership/join/", views.become_member, name="become_member",),
 ]
