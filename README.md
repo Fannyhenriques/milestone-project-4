@@ -396,6 +396,40 @@ Upcoming and previous bookings are shown in separate sections using the same reu
 
 If the user has an active membership, the membership start and end dates are displayed. Otherwise, a call to action links to the Membership page.
 
+### Custom 404 Page
+
+A custom 404 page is displayed when a user attempts to visit a route that does not exist. It uses the shared Repose layout and provides a clear link back to the Home page.
+
+<p align="center">
+  <img
+    src="documentation/images/features/404-page.png"
+    alt="Custom Repose 404 page with return to home button"
+    width="700"
+  >
+</p>
+
+### Django Admin
+
+Django Admin provides authorised administrators with full CRUD functionality for the application's database records.
+
+Administrators can:
+
+- **Create** new treatments, packages, bookings and membership records.
+- **Read** and review existing records and their related data.
+- **Update** service details, prices, availability, bookings and memberships.
+- **Delete** records that are no longer required.
+
+This allows the site owner to manage the spa's services and operational data through the admin interface without editing the application code directly.
+
+<p align="center">
+  <img
+    src="documentation/images/features/django-admin.png"
+    alt="Django Admin interface for Repose Spa & Wellness"
+    width="900"
+  >
+</p>
+
+---
 
 ---
 
