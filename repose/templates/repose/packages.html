@@ -1,4 +1,5 @@
 {% extends "repose/base.html" %}
+{% load static %}
 
 {% block title %}Packages | Repose Spa & Wellness{% endblock %}
 
@@ -14,10 +15,12 @@ Explore spa packages combining spa access with treatments, lunch or dinner at Re
   carefully curated spa packages, designed to make your visit to Repose feel even more complete. Combine spa access
   with a treatment, lunch or dinner and enjoy a thoughtfully planned wellness experience from start to finish.
 </p>
+  </div>
 
-<div>
+  <div class="service-category">
+    <div class="service-grid">
   {% for package in packages %}
-  <article>
+      <a href="{% url 'booking' %}" class="service-card service-card-link">
     <h2>{{ package.name }}</h2>
     <p>{{ package.description }}</p>
     <h3>Includes</h3>
@@ -26,10 +29,12 @@ Explore spa packages combining spa access with treatments, lunch or dinner at Re
       <li>{{ item }}</li>
       {% endfor %}
     </ul>
+        <div class="service-meta">
     <p>£{{ package.price }}</p>
-  </article>
+        </div>
+      </a>
   {% endfor %}
-
+    </div>
+  </div>
 </div>
-
 {% endblock %}
