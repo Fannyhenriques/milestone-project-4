@@ -640,6 +640,36 @@ a.service-card-link:focus-visible {
   justify-content: center;
 }
 
+.content-section {
+  padding-block: var(--space-sm);
+  border-bottom: 1px solid rgba(26, 26, 26, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.content-section:last-child {
+  border-bottom: none;
+}
+
+.content-section a:not(.button):not(.service-card-link) {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.content-section a.button,
+a.button {
+  text-decoration: none;
+}
+
+.active-membership {
+  max-width: 32rem;
+  margin: var(--space-md) auto;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-accent);
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.04);
+}
+
 /* ====================================
    FOOTER
 ==================================== */

@@ -1,4 +1,5 @@
 {% extends "repose/base.html" %}
+{% load static %}
 
 {% block title %}Membership | Repose Spa & Wellness{% endblock %}
 
@@ -18,7 +19,7 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
   </p>
 </section>
 
-<section>
+  <section class="content-section">
   <h2>Membership Benefits</h2>
 
   <ul>
@@ -30,16 +31,15 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
   </ul>
 </section>
 
-<section>
+  <section class="content-section">
   <h2>Annual Membership</h2>
 
   {% if membership and membership.is_active %}
   <p>You are currently a Repose member.</p>
-  <a href="{% url 'account' %}">View My Membership</a>
+    <a href="{% url 'account' %}" class="button">View My Membership</a>
 
   {% else %}
-  <p>£999 per year</p>
-
+    <p class="service-meta">£999 per year</p>
   <p>
     Your membership begins as soon as your payment is completed and remains active for 12 months.
     Enjoy full access to your member benefits throughout the entire membership period.
@@ -61,10 +61,10 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
   {% if user.is_authenticated %}
   <form method="post" action="{% url 'become_member' %}">
     {% csrf_token %}
-    <button type="submit">Become a Member</button>
+      <button type="submit" class="button">Become a Member</button>
   </form>
   {% else %}
-  <a href="{% url 'register' %}?next=membership">
+    <a href="{% url 'register' %}?next=membership" class="button">
     Create an Account to Join
   </a>
   {% endif %}
@@ -73,7 +73,7 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
 </section>
 
 {% if not user.is_authenticated %}
-<section>
+  <section class="content-section">
   <h2>Already a Member?</h2>
 
   <p>
@@ -81,7 +81,8 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
     your account.
   </p>
 
-  <a href="{% url 'login' %}">Sign In</a>
+    <a href="{% url 'login' %}">Login</a>
+  </section>
 </section>
 {% endif %}
 {% endblock %}
