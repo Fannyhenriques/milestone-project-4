@@ -757,3 +757,46 @@ The `Membership` model represents an annual Repose membership and is linked one-
 
 ---
 
+## Technologies Used
+
+### Languages
+
+- **HTML5** - page structure and semantic content.
+- **CSS3** - custom styling, responsive design, animations and layout.
+- **JavaScript** - hamburger navigation, dynamic booking fields and date picker interaction.
+- **Python** - server-side application logic and validation.
+
+### Frameworks and Libraries
+
+| Technology | Purpose |
+| --- | --- |
+| Django 4.2 | Full-stack web framework |
+| Stripe | Hosted Checkout and payment webhooks |
+| Gunicorn | Production web server |
+| WhiteNoise | Static-file serving in production |
+| dj-database-url | Production database configuration |
+| psycopg2-binary | PostgreSQL database adapter |
+
+### Database
+
+| Environment | Database |
+| --- | --- |
+| Local development | SQLite |
+| Production | PostgreSQL through Heroku Postgres |
+
+### Tools
+
+| Tool | Purpose |
+| --- | --- |
+| Git | Version control |
+| GitHub | Repository hosting and deployment integration |
+| Visual Studio Code | Development environment |
+| Chrome Developer Tools | Debugging and responsive testing |
+| Django Admin | Database administration |
+| Heroku | Deployment and production hosting |
+| Stripe Dashboard | Checkout and webhook configuration |
+| Stripe CLI | Local webhook forwarding and payment testing |
+
+---
+
+
