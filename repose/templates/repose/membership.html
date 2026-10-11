@@ -10,7 +10,8 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
 {% block content %}
 
 <div class="hero">
-  <img class="hero-img" src="{% static 'repose/images/sauna-room.jpg' %}" alt="Sauna room at Repose Spa & Wellness">
+  <img class="hero-img" src="{% static 'repose/images/sauna-room.jpg' %}" alt="Sauna room at Repose Spa & Wellness"
+    fetchpriority="high" loading="eager" decoding="async">
   <div class="hero-overlay"></div>
 </div>
 <section class="service-page">
@@ -28,8 +29,8 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
     <h2>Membership Benefits</h2>
 
     <ul>
-      <li>Complimentary spa access Monday–Friday, 09:00–21:00</li>
-      <li>Access to our fitness facilities Monday–Friday, 09:00–21:00</li>
+      <li>Complimentary spa access Monday–Sunday, 09:00–21:00</li>
+      <li>Access to our fitness facilities Monday–Sunday, 09:00–21:00</li>
       <li>Complimentary yoga classes</li>
       <li>15% off standalone treatments</li>
       <li>Exclusive member offers</li>
@@ -88,6 +89,6 @@ Become a Repose member and enjoy spa access, treatment discounts, fitness facili
 
     <a href="{% url 'login' %}">Login</a>
   </section>
+  {% endif %}
 </section>
-{% endif %}
 {% endblock %}
