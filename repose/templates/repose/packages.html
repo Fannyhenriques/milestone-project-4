@@ -10,7 +10,8 @@ Explore spa packages combining spa access with treatments, lunch or dinner at Re
 {% block content %}
 
 <div class="hero">
-  <img class="hero-img" src="{% static 'repose/images/pool.jpg' %}" alt="Indoor pool at Repose Spa & Wellness">
+  <img class="hero-img" src="{% static 'repose/images/pool.jpg' %}" alt="Indoor pool at Repose Spa & Wellness"
+    fetchpriority="high" loading="eager" decoding="async">
   <div class="hero-overlay"></div>
 </div>
 <div class="service-page">
