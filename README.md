@@ -484,4 +484,47 @@ Repose uses two Google Fonts:
 
 Georgia and Times New Roman are used selectively for certain form controls and small metadata where browser rendering is clearer and more consistent.
 
+### Responsive Design
+
+Repose was developed using a mobile-first approach. Base styles are written for smaller screens and progressively enhanced through `min-width` media queries.
+
+The main breakpoints currently used are:
+
+```css
+435px
+700px
+900px
+1168px
+1265px
+```
+
+These breakpoints were chosen based on where individual layouts required more space rather than forcing every component to use one universal breakpoint. For example, the full desktop navigation remains visible until the available space becomes too narrow, at which point it changes directly to the hamburger menu.
+
+Responsive behaviour includes:
+
+- Hamburger navigation on smaller screens.
+- Single-column service and Home card layouts on mobile.
+- Two-column card grids on larger screens.
+- Responsive forms and action buttons.
+- Footer layout changing from stacked content to a single row.
+- Responsive hero imagery, typography and spacing.
+
+Detailed responsive testing will be documented in [TESTING.md](TESTING.md).
+
+### Accessibility
+
+Accessibility considerations include:
+
+- Semantic HTML elements and heading structure.
+- Descriptive form labels.
+- Backend validation in addition to browser-level constraints.
+- Keyboard-accessible links and buttons.
+- `:focus-visible` styles for interactive elements.
+- `aria-label`, `aria-controls` and `aria-expanded` on the mobile navigation toggle.
+- Alternative text for meaningful images.
+- Reduced-motion support for the hero animation through `prefers-reduced-motion`.
+- Clear colour contrast between text, controls and backgrounds.
+- A custom 404 page that provides a clear route back to the website.
+
+---
 
