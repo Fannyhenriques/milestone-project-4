@@ -1091,4 +1091,23 @@ To create an independent copy of the repository:
 - **Python linter** - Python code quality and style checks.
 - [Lighthouse](https://developer.chrome.com/docs/lighthouse/) - Performance, accessibility, best-practice and SEO testing.
 
+### Content
+
+ChatGPT was used to help refine and structure some written content throughout the project.
+
+### Design & Planning
+
+- [Lucidchart](https://www.lucidchart.com/) - used to create the Entity Relationship Diagram.
+- [Am I Responsive?](https://ui.dev/amiresponsive) - used to create the responsive website preview displayed at the top of the README.
+- [Coolors](https://coolors.co/) - used to display colour palette.
+- [FreeWWW](https://www.freewww.com/) - used for wireframes.
+
+### Media
+
+- [Unsplash](https://unsplash.com/) - used for spa and wellness photography.
+- [Pexels](https://www.pexels.com/) - used for spa and wellness photography.
+- [Flaticon](https://www.flaticon.com/) - used for all icons throughout the website.
+
+
+Images were resized or cropped where required to fit hero images, cards and responsive layouts.
 
