@@ -326,6 +326,34 @@ For active members booking a standalone treatment, the 15% member discount is re
 
 The user can cancel and return to the website or continue to Stripe Checkout.
 
+### Stripe Checkout
+
+Stripe Checkout is used for secure test-mode payments for both bookings and memberships.
+
+<p align="center">
+  <img
+    src="documentation/images/features/stripe-checkout.png"
+    alt="Stripe Checkout payment page for a Repose booking"
+    width="700"
+  >
+</p>
+
+Declined card payments are handled directly by Stripe's hosted checkout page, allowing the user to retry without leaving the payment flow.
+
+### Payment Success and Cancellation
+
+After successful payment, the user is returned to a confirmation page. The application also verifies the Stripe Checkout Session and updates the related booking or membership.
+
+<p align="center">
+  <img
+    src="documentation/images/features/payment-success.png"
+    alt="Repose payment success confirmation page"
+    width="700"
+  >
+</p>
+
+If the user cancels the Checkout flow, a cancellation page explains that the purchase was not completed.
+
 
 ---
 
