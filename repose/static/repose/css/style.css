@@ -932,10 +932,6 @@ footer a {
     margin-top: var(--space-md);
   }
 
-  .form-card {
-    padding: var(--space-lg);
-  }
-
   .form-group input,
   .form-group select,
   .form-group textarea {
@@ -954,6 +950,10 @@ footer a {
 @media screen and (min-width: 555px) {
   .btn-container {
     flex-direction: row;
+  }
+
+  .form-card {
+    padding: var(--space-lg);
   }
 }
 
