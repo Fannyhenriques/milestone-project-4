@@ -651,3 +651,21 @@ Accessibility considerations include:
 
 ---
 
+## Future Features & Improvements
+
+Possible future improvements include:
+
+- **Email-based login** - allow customers to sign in with their email address rather than Django's default username-based authentication.
+- **Online booking management** - allow authenticated users to cancel or reschedule eligible bookings from My Account.
+- **Back navigation within the booking flow** - allow users to return to earlier booking steps while preserving session data.
+- **Booking confirmation emails** - send transactional confirmation emails after successful booking and membership payments.
+- **Live availability and capacity management** - track how many places remain for each date and time slot and prevent overbooking.
+- **Treatment or package preselection** - automatically preselect the relevant treatment or package when a user enters the booking flow through a service card, reducing the number of steps required.
+- **Online membership payment plans** - allow users to choose between a one-time annual payment and supported instalment options.
+- **Expanded member area** - provide additional membership history, offers and account management.
+- **Real payment mode** - move Stripe from test mode to live mode if the project were used by a real business.
+- **Automated booking reminders** - send reminders before upcoming appointments.
+- **More detailed administrative availability controls** - allow staff to block specific dates or time slots.
+
+---
+
