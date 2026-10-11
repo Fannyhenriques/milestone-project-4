@@ -431,6 +431,84 @@ This allows the site owner to manage the spa's services and operational data thr
 
 ---
 
+# Booking & Membership Development
+
+## Multi-Step Booking Approach
+
+The booking feature was developed in stages to keep the project structure clear and manageable. The first booking page was initially created as a simple interface to establish the intended flow before adding the full Django form and database logic.
+
+The final process separates booking into multiple stages so users are not presented with one large form. This also allows validation to happen at the correct point in the journey.
+
+## Session Handling
+
+The first booking step captures the booking type and, where relevant, the selected Treatment or Package database ID.
+
+After validation, only simple values are stored temporarily in the user's session rather than complete Django model objects. These values are then used to rebuild the booking information during later steps of the booking process.
+
+This keeps the multi-step flow organised while avoiding premature database records before enough booking information has been collected.
+
+## Member Spa Access Rule
+
+Active Repose members receive complimentary spa access seven days a week as part of their annual membership.
+
+When an authenticated user enters the booking process, the application checks their membership status. If the user has an active membership, Spa Access is excluded from the available booking options, since this service is already included in their membership.
+
+This prevents members from unnecessarily purchasing spa access while keeping treatment and package bookings available.
+
+## Membership Architecture
+
+Membership is implemented as an optional upgrade to a normal user account rather than a separate authentication type.
+
+A `Membership` record is connected to Django's existing `User` model through a `OneToOneField`. This keeps authentication simple while allowing membership-specific information and benefits to be linked directly to an account.
+
+A membership stores its start date, end date and active status. After successful Stripe payment, the membership is created or updated for the authenticated user and remains active for 12 months.
+
+## Member Treatment Booking Rule
+
+The 15% standalone treatment discount is intended to be a personal membership benefit.
+
+To prevent a member from using their discount for several guests in one treatment booking, an active member is limited to one guest when booking a standalone treatment. Non-members can book treatments for multiple guests at the standard price.
+
+This rule is enforced in the backend booking logic rather than relying only on the displayed form choices.
+
+## Package Guest Rules
+
+Packages can define how many guests are included in one package through the `guests_per_package` field.
+
+For example, Repose for Two represents one package for two guests. Valid booking quantities are therefore restricted to multiples of two: 2, 4 or 6 guests.
+
+This prevents a two-person package from being incorrectly booked for a single guest and ensures pricing can be calculated using the correct number of package units.
+
+## Stripe Checkout & Webhooks
+
+Stripe Checkout is used for booking and membership payments in test mode.
+
+When a booking payment begins:
+
+1. The booking is saved with a `pending` payment status.
+2. A Stripe Checkout Session is created.
+3. The booking ID is passed through `client_reference_id` so Stripe events can be matched to the correct database record.
+4. The user is redirected to Stripe Checkout.
+5. After successful payment, the success view retrieves the Checkout Session and verifies that Stripe reports the payment as paid.
+6. A Stripe webhook independently processes Checkout events so the database can still be updated even if the user closes the browser or does not return to the success page.
+
+Webhook requests are verified using the Stripe signing secret stored in an environment variable.
+
+The webhook listens for:
+
+- `checkout.session.completed`
+- `checkout.session.expired`
+
+## Payment Status Flow
+
+Booking payments use three states:
+
+- `pending` - a booking has been created but payment has not yet been confirmed.
+- `paid` - Stripe confirms that payment completed successfully.
+- `cancelled` - the user cancels the flow or the Stripe Checkout Session expires while the booking is still pending.
+
+A separate `failed` state was considered during development. It was removed because Stripe Checkout already handles card declines within the hosted checkout page and allows the user to retry immediately. Keeping a second Django failure flow would have duplicated Stripe's existing responsibility.
+
 ---
 
 # Design & Accessibility
