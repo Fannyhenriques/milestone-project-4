@@ -235,7 +235,7 @@ li {
 
 .nav-links a:not(.button) {
   color: var(--color-text);
-  font-size: 1.3rem;
+  font-size: 1rem;
   text-decoration: none;
   letter-spacing: 0.03rem;
   font-weight: 600;
@@ -356,7 +356,7 @@ li {
   color: var(--color-secondary);
 }
 
-.nav-logout .button,
+.button,
 .nav-booking {
   padding: 0.5rem 1.1rem;
   margin: 0;
@@ -366,13 +366,14 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: var(--space-sm);
 }
 
 .btn-container .button {
   min-width: 8rem;
-  box-sizing: border-box;
   padding: 0.6rem 0.7rem;
+  box-sizing: border-box;
 }
 
 /* ====================================
@@ -536,7 +537,6 @@ li {
 }
 
 .styled-form,
-.review-payment,
 .confirmation-actions {
   padding-bottom: var(--space-md);
 }
@@ -942,16 +942,18 @@ footer a {
     padding: 0.7rem 0.85rem;
   }
 
-  .btn-container {
-    flex-direction: row;
-  }
-
   .form-card-header h1 {
     font-size: 2.4rem;
   }
 
   .confirmation-actions .form-button {
     width: 80%;
+  }
+}
+
+@media screen and (min-width: 555px) {
+  .btn-container {
+    flex-direction: row;
   }
 }
 
@@ -1058,12 +1060,12 @@ footer a {
     transform: none;
   }
 
-  .nav-links a:not(.button) {
-    font-size: 1rem;
-  }
-
   .nav-booking {
     margin-top: 0;
+  }
+
+  .nav-links a:not(.button) {
+    font-size: 1.1rem;
   }
 
   footer {
