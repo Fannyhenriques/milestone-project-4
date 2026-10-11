@@ -17,4 +17,59 @@ packages and wellness memberships.
     <p>Rest • Restore • Reconnect </p>
   </div>
 </div>
+
+<div class="site-title">
+  <h1>Repose</h1>
+  <p>Spa & Wellness</p>
+</div>
+<div class="service-intro">
+  <p><i>
+      “Adopt the pace of nature: Her secret is patience.”
+    </i></p>
+  <img src="{% static 'repose/images/favicon.png' %}" alt="Repose logo">
+  <p>
+    At Repose Spa & Wellness, calm surroundings, thoughtful treatments and restorative experiences come together.
+    Whether
+    you seek quiet relaxation, time with someone you love or simply a moment to reset, your visit is yours to shape.
+  </p>
+</div>
+
+<section class="service-page">
+  <div class="service-grid home-grid">
+
+    <a href="{% url 'about' %}" class="home-card">
+      <img src="{% static 'repose/images/swim.jpg' %}" alt="Person swimming in pool at Repose Spa">
+      <div class="home-card-overlay"></div>
+      <div class="home-card-content">
+        <h2>Learn more</h2>
+      </div>
+    </a>
+
+    <a href="{% url 'treatments' %}" class="home-card">
+      <img src="{% static 'repose/images/treatment-room.jpg' %}" alt="Spa treatment room at Repose Spa & Wellness">
+      <div class="home-card-overlay"></div>
+      <div class="home-card-content">
+        <h2>Treatments</h2>
+      </div>
+    </a>
+
+    <a href="{% url 'packages' %}" class="home-card">
+      <img src="{% static 'repose/images/couple.jpg' %}" alt="Spa package experience at Repose Spa & Wellness">
+      <div class="home-card-overlay"></div>
+      <div class="home-card-content">
+        <h2>Packages</h2>
+      </div>
+    </a>
+
+    <a href="{% url 'membership' %}" class="home-card">
+      <img src="{% static 'repose/images/yoga.jpg' %}" alt="Yoga at Repose Spa & Wellness">
+      <div class="home-card-overlay"></div>
+      <div class="home-card-content">
+        <h2>Membership</h2>
+      </div>
+    </a>
+
+  </div>
+</section>
+
 {% endblock %}
