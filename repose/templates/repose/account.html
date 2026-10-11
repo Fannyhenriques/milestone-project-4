@@ -5,16 +5,16 @@
 {% block content %}
 <section class="service-page">
   <div class="service-intro">
-  <h1>My Account</h1>
+    <h1>My Account</h1>
 
-  <p>Welcome, {{ user.username }}.</p>
+    <p>Welcome, {{ user.username }}.</p>
 
-  <p>
-    Need to change or cancel your booking?
-    Please contact us at
-    <a href="mailto:info@reposespa.com">info@reposespa.com</a>
+    <p>
+      Need to change or cancel your booking?
+      Please contact us at
+      <a href="mailto:info@reposespa.com">info@reposespa.com</a>
       or <b>+44 123 000 000</b>.
-  </p>
+    </p>
   </div>
 
   <section class="account-section">
@@ -22,23 +22,23 @@
 
     {% if upcoming_bookings %}
     <div class="service-grid">
-    {% for booking in upcoming_bookings %}
+      {% for booking in upcoming_bookings %}
       <article class="service-card">
-      <h3>
-        {% if booking.booking_type == "spa" %}
-        Spa Access
-        {% elif booking.treatment %}
-        {{ booking.treatment.name }}
-        {% elif booking.package %}
-        {{ booking.package.name }}
-        {% endif %}
-      </h3>
+        <h3>
+          {% if booking.booking_type == "spa" %}
+          Spa Access
+          {% elif booking.treatment %}
+          {{ booking.treatment.name }}
+          {% elif booking.package %}
+          {{ booking.package.name }}
+          {% endif %}
+        </h3>
 
-      <p>Date: {{ booking.booking_date }}</p>
-      <p>Time: {{ booking.booking_time|time:"H:i" }}</p>
-      <p>Guests: {{ booking.number_of_guests }}</p>
-    </article>
-    {% endfor %}
+        <p>Date: {{ booking.booking_date }}</p>
+        <p>Time: {{ booking.booking_time|time:"H:i" }}</p>
+        <p>Guests: {{ booking.number_of_guests }}</p>
+      </article>
+      {% endfor %}
     </div>
     {% else %}
     <p>You do not have any confirmed bookings yet.</p>
@@ -50,23 +50,23 @@
 
     {% if previous_bookings %}
     <div class="service-grid">
-    {% for booking in previous_bookings %}
+      {% for booking in previous_bookings %}
       <article class="service-card">
-      <h3>
-        {% if booking.booking_type == "spa" %}
-        Spa Access
-        {% elif booking.treatment %}
-        {{ booking.treatment.name }}
-        {% elif booking.package %}
-        {{ booking.package.name }}
-        {% endif %}
-      </h3>
+        <h3>
+          {% if booking.booking_type == "spa" %}
+          Spa Access
+          {% elif booking.treatment %}
+          {{ booking.treatment.name }}
+          {% elif booking.package %}
+          {{ booking.package.name }}
+          {% endif %}
+        </h3>
 
-      <p>Date: {{ booking.booking_date }}</p>
-      <p>Time: {{ booking.booking_time|time:"H:i" }}</p>
-      <p>Guests: {{ booking.number_of_guests }}</p>
-    </article>
-    {% endfor %}
+        <p>Date: {{ booking.booking_date }}</p>
+        <p>Time: {{ booking.booking_time|time:"H:i" }}</p>
+        <p>Guests: {{ booking.number_of_guests }}</p>
+      </article>
+      {% endfor %}
     </div>
     {% else %}
     <p>You do not have any previous bookings.</p>
