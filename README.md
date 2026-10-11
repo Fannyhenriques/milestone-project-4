@@ -113,6 +113,89 @@ The booking journey follows the same principle by dividing the process into indi
 
 ---
 
+# Application Features
+
+## Core Features
+
+Repose includes:
+
+- Full CRUD functionality for administrative data management, allowing authorised administrators to create, read, update and delete treatments, packages, bookings, memberships and other relevant records through Django Admin.
+- Public pages for About, Treatments, Packages and Membership information.
+- Database-driven treatment and package content.
+- User registration, login and logout.
+- Responsive mobile-first navigation with an animated hamburger menu.
+- Multi-step booking for spa access, treatments and packages.
+- Date, time and guest selection with backend validation.
+- Stripe Checkout for booking and membership payments.
+- Stripe webhooks for completed and expired Checkout Sessions.
+- Personal account page showing upcoming bookings, previous bookings and membership status.
+- Annual membership purchase linked directly to the authenticated user.
+- Automatic member treatment discount rules.
+- Django Admin management for application data.
+- Custom 404 page for invalid URLs.
+
+## Site Pages
+
+### Home Page
+
+The Home page introduces the Repose brand through a large hero image and introductory content. Four fully clickable image cards provide access to About Us, Treatments, Packages and Membership, with subtle hover effects to improve visual feedback and navigation.
+
+<p align="center">
+  <img
+    src="documentation/images/features/homepage.png"
+    alt="Repose Spa & Wellness homepage"
+    width="700"
+  >
+</p>
+
+<p align="center">
+  <img
+    src="documentation/images/features/homepage-cards.png"
+    alt="Repose homepage feature cards linking to the main site sections"
+    width="700"
+  >
+</p>
+
+On larger screens, navigation links are displayed horizontally to provide a clear and accessible layout. On smaller screens, the navigation collapses into a hamburger menu to prevent overcrowding and maintain a clean, user-friendly design.
+
+The navigation also adapts based on the user's authentication status. Visitors who are not logged in can access the Login and Register pages, while authenticated users are presented with a My Account option instead.
+
+
+<table>
+  <tr>
+    <th>Desktop - Logged In</th>
+    <th>Desktop - Logged Out</th>
+    <th>Mobile Navigation</th>
+  </tr>
+  <tr>
+    <td>
+      <img
+        src="documentation/images/features/navbar-desktop-loggedin.png"
+        alt="Repose desktop navigation for logged-in users"
+        width="300"
+      >
+    </td>
+    <td>
+      <img
+        src="documentation/images/features/navbar-desktop-loggedout.png"
+        alt="Repose desktop navigation for logged-out users"
+        width="300"
+      >
+    </td>
+    <td>
+      <img
+        src="documentation/images/features/navbar-mobile.png"
+        alt="Repose mobile navigation with hamburger menu"
+        width="300"
+      >
+    </td>
+  </tr>
+</table>
+
+
+
+---
+
 # Design & Accessibility
 
 ## Navigation
