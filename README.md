@@ -799,6 +799,30 @@ The `Membership` model represents an annual Repose membership and is linked one-
 
 ---
 
+## Testing
+
+Detailed testing documentation is available in
+
+[TESTING.md](TESTING.md)
+
+Testing includes:
+
+- Manual feature testing.
+- User-story testing.
+- Authentication testing.
+- Booking validation testing.
+- Membership functionality testing.
+- Stripe Checkout and webhook testing.
+- Responsive testing.
+- Browser compatibility testing.
+- Accessibility testing.
+- HTML validation.
+- CSS validation.
+- JavaScript validation.
+- Python linting.
+- Lighthouse testing.
+
+---
 
 ## Deployment
 
