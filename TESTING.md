@@ -345,3 +345,192 @@ Accessibility was considered throughout development and reviewed as part of Ligh
 The Lighthouse accessibility results are documented separately below. Manual test cases not independently verified are marked as "Not tested".
 
 ---
+
+## Code Validation
+
+### HTML Validation
+
+All rendered HTML pages were validated using the [W3C Nu HTML Checker](https://validator.w3.org/nu/). Identified structural warnings were addressed and the pages were revalidated.
+
+Django templates were validated using their rendered HTML rather than raw template files.
+
+| Page | Result | Validation |
+|---|---|---|
+| Home | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2F) |
+| About | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fabout%2F) |
+| Treatments | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Ftreatments%2F) |
+| Packages | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fpackages%2F) |
+| Membership | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fmembership%2F) |
+| Booking | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fbook%2F) |
+| Booking Details | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fbook%2Fdetails%2F) |
+| Guest Details | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fbook%2Fguest%2F) |
+| Booking Review | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fbook%2Freview%2F) |
+| Registration | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fregister%2F) |
+| Login | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Flogin%2F) |
+| My Account | Pass | [W3C Validator](https://validator.w3.org/nu/?doc=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Faccount%2F) |
+| Custom 404 | Pass | Validated using rendered HTML via text input, as the page correctly returns HTTP 404. |
+
+**Note:** The custom 404 page could not be validated directly by URL because the server correctly returned an HTTP 404 status. Instead, its rendered HTML was submitted manually using the validator's text input option.
+
+### CSS Validation
+
+The deployed pages were tested using the [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/).
+
+All tested pages passed CSS validation successfully.
+
+| Page | Result | Validation |
+|---|---|---|
+| Home | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| About | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fabout%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| Treatments | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Ftreatments%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| Packages | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fpackages%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| Membership | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fmembership%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| My Account | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Faccount%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| Book | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fbook%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| Booking Details | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fbook%2Fdetails%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| Guest Details | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fbook%2Fguest%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| Booking Review | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fbook%2Freview%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| Login | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Flogin%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+| Register | Pass | [View result](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Frepose-cff44b1bb103.herokuapp.com%2Fregister%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=sv) |
+
+### JavaScript Validation
+
+JavaScript files were validated using [JSHint](https://jshint.com/) with ES6 enabled.
+
+| File / Functionality | Result |
+|---|---|
+| Hamburger navigation | Pass – No warnings with ES6 enabled in JSHint. |
+| Booking form interaction | Pass – No warnings with ES6 enabled in JSHint. |
+
+### Python Validation
+
+Python files were validated using the [CI Python Linter](https://pep8ci.herokuapp.com/) to check compliance with PEP 8 coding standards. Minor spacing issues were corrected during validation.
+
+| File | Result |
+|---|---|
+| `repose/views.py` | Pass |
+| `repose/forms.py` | Pass |
+| `repose/urls.py` | Pass |
+| `bookings/models.py` | Pass |
+| `bookings/forms.py` | Pass |
+| `services/models.py` | Pass |
+
+The following screenshots show examples of the Python validation results.
+
+<p align="center">
+  <img
+    src="documentation/testing/py-validator-models.png"
+    alt="Python validation results for model files"
+    width="700"
+  >
+</p>
+
+<p align="center">
+  <img
+    src="documentation/testing/py-validator-view.png"
+    alt="Python validation results for view files"
+    width="700"
+  >
+</p>
+
+---
+
+## Lighthouse Testing
+
+Lighthouse testing was performed on the deployed Heroku application using Google Chrome Developer Tools.
+
+The following categories were evaluated:
+
+- Performance
+- Accessibility
+- Best Practices
+- SEO
+
+### Lighthouse Results
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+|---|---:|---:|---:|---:|
+| Home | 78 | 100 | 100 | 91 |
+| Treatments | 88 | 100 | 100 | 100 |
+| Packages | 82 | 100 | 100 | 100 |
+| My Account | 99 | 100 | 100 | 100 |
+| Booking | 98 | 100 | 100 | 100 |
+
+### Test Observations
+
+- Performance scores varied between Lighthouse runs, particularly on pages containing large hero images. Tests were conducted in both regular Chrome browsing sessions and Incognito mode, where performance results were sometimes higher.
+- These variations may be influenced by factors such as network conditions, server response times, browser extensions, caching and image loading.
+- Pages with fewer large images, such as Booking and My Account, consistently achieved higher performance scores during testing.
+- Image loading was improved during development by introducing lazy loading for below-the-fold images and prioritising the loading of hero images.
+- Further optimisation of image file sizes and formats, such as converting large images to WebP, has been identified as a potential future improvement.
+
+### Lighthouse Evidence
+
+**Home**
+
+<p align="center">
+  <img src="documentation/testing/lighthouse-home.png"
+       alt="Lighthouse results for the Home page"
+       width="500">
+</p>
+
+**Treatments**
+
+<p align="center">
+  <img src="documentation/testing/lighthouse-treatments.png"
+       alt="Lighthouse results for the Treatments page"
+       width="500">
+</p>
+
+**Packages**
+
+<p align="center">
+  <img src="documentation/testing/lighthouse-packages.png"
+       alt="Lighthouse results for the Packages page"
+       width="500">
+</p>
+
+**My Account**
+
+<p align="center">
+  <img src="documentation/testing/lighthouse-account.png"
+       alt="Lighthouse results for the My Account page"
+       width="500">
+</p>
+
+**Booking**
+
+<p align="center">
+  <img src="documentation/testing/lighthouse-booking.png"
+       alt="Lighthouse results for the Booking page"
+       width="700">
+</p>
+
+---
+
+## Deployment Testing
+
+The deployed Heroku version was tested separately from the local development environment.
+
+| Test | Expected Result | Actual Result | Status |
+|---|---|---|---|
+| Open deployed Home page | Website loads successfully | Worked as expected | Pass |
+| Static CSS | Styles load with `DEBUG=False` | Worked as expected | Pass |
+| Static images | Images load correctly | Worked as expected | Pass |
+| Custom 404 | Invalid URL displays styled custom error page | Worked as expected | Pass |
+| PostgreSQL data | Treatments and packages load from production database | Worked as expected | Pass |
+| Django Admin | Admin dashboard and model lists load successfully | Worked as expected after runtime fix | Pass |
+| Registration/Login | Authentication works in production | Worked as expected | Pass |
+| Booking flow | Booking can be completed on deployed site | Worked as expected | Pass |
+| Stripe Checkout | Deployed site redirects to Stripe test Checkout | Worked as expected | Pass |
+| Stripe webhook | Production webhook receives and processes successful payment | Worked as expected | Pass |
+| Membership purchase | Membership can be purchased in Stripe test mode | Worked as expected | Pass |
+| My Account | Paid booking and membership information display correctly | Worked as expected | Pass |
+
+### Deployment Issue Resolved During Testing
+
+During initial deployment, Heroku selected Python 3.14.8. The application itself loaded, but some Django Admin model-list pages returned a server error.
+
+A `.python-version` file was added to the project root specifying Python 3.12. After redeployment, the Django Admin interface worked correctly.
+
+---
