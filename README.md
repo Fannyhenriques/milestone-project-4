@@ -261,6 +261,71 @@ Visitors who wish to purchase a membership must first create an account. If they
 
 For active members, the purchase button is replaced with a link to their membership information under My Account.
 
+### Booking Step One
+
+The first booking step allows the user to choose between:
+
+- Spa Access
+- Treatment
+- Package
+
+When Treatment or Package is selected, JavaScript displays the corresponding service field while hiding the irrelevant field.
+The available booking options depend on the user's membership status. For authenticated users with an active membership, the Spa Access option is removed, as complimentary spa access is already included in their membership. These users can still book treatments and packages, with a 15% discount applied to eligible standalone treatments.
+
+<p align="center">
+  <img
+    src="documentation/images/features/booking-step-one.png"
+    alt="First step of the Repose booking form"
+    width="700"
+  >
+</p>
+
+After successful validation, the booking type and related treatment or package ID are stored temporarily in the session and the user continues to the booking details step.
+
+### Booking Details
+
+The Booking Details page collects the booking date, time and guest quantity.
+
+Available times depend on the selected booking type and service. Backend validation prevents users from selecting past dates or invalid same-day times.
+
+<p align="center">
+  <img
+    src="documentation/images/features/booking-details.png"
+    alt="Repose booking details form with date time and guest selection"
+    width="700"
+  >
+</p>
+
+The date field is enhanced so the date picker can be opened by clicking the field rather than only the browser calendar icon.
+
+### Guest Details
+
+Guest details are collected before the final review stage. Logged-in users can reuse account details, while guest users can enter the information required for the booking.
+
+<p align="center">
+  <img
+    src="documentation/images/features/guest-details.png"
+    alt="Repose guest details form"
+    width="700"
+  >
+</p>
+
+### Booking Review
+
+The Booking Review page provides a final summary before payment, including the selected service, date, time, guest quantity and total price.
+
+<p align="center">
+  <img
+    src="documentation/images/features/booking-review.png"
+    alt="Repose booking review page before Stripe payment"
+    width="700"
+  >
+</p>
+
+For active members booking a standalone treatment, the 15% member discount is reflected in the review price. Packages remain at full price.
+
+The user can cancel and return to the website or continue to Stripe Checkout.
+
 
 ---
 
