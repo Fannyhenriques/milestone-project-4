@@ -669,3 +669,27 @@ Possible future improvements include:
 
 ---
 
+## Entity Relationship Diagram
+
+The Entity Relationship Diagram below was created using **Lucidchart** and provides a simplified overview of the relationships between the main models used in Repose Spa & Wellness.
+
+<p align="center">
+  <img
+    src="documentation/images/features/repose-erd.png"
+    alt="Entity relationship diagram for the Repose Spa & Wellness application"
+    width="700"
+  >
+</p>
+
+The main relationships shown in the diagram are:
+
+- A **User** can have one **Membership**, which stores the membership status and validity period associated with that account.
+- A **User** can have multiple **Bookings**, allowing registered users to keep a record of their confirmed reservations.
+- A **Booking** can reference a **Treatment** when the selected booking type is a standalone treatment.
+- A **Booking** can reference a **Package** when the selected booking type is a spa package.
+- A **Spa Access** booking does not require a relationship with either a Treatment or Package, as the booking itself contains the information required for that booking type.
+
+These relationships allow the application to use a shared Booking model for different types of reservations while keeping treatments, packages and memberships as separate database entities.
+
+---
+
