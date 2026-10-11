@@ -7,21 +7,29 @@ Your booking at Repose Spa & Wellness has been confirmed.
 {% endblock %}
 
 {% block content %}
-<section>
-  <h1>Payment Confirmed</h1>
+<section class="form-page">
+  <div class="form-card">
 
-  <p>
-    Thank you for your purchase. Your payment was successful.
-  </p>
+    <div class="form-card-header">
+      <h1>Payment Confirmed</h1>
 
-  <p>
-    A confirmation with your purchase details will be sent to your email address.
-  </p>
+      <p>
+        Thank you for your purchase. Your payment was successful.
+      </p>
 
-  {% if user.is_authenticated %}
-  <a href="{% url 'account' %}">View My Account</a>
-  {% else %}
-  <a href="{% url 'home' %}">Return Home</a>
-  {% endif %}
+      <p>
+        A confirmation with your purchase details will be sent to your email address.
+      </p>
+
+    </div>
+
+    <div class="confirmation-actions">
+      {% if user.is_authenticated %}
+      <a href="{% url 'account' %}" class="button form-button">View My Account</a>
+      {% else %}
+      <a href="{% url 'home' %}" class="button form-button">Return Home</a>
+      {% endif %}
+    </div>
+  </div>
 </section>
 {% endblock %}
