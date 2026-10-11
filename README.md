@@ -354,6 +354,48 @@ After successful payment, the user is returned to a confirmation page. The appli
 
 If the user cancels the Checkout flow, a cancellation page explains that the purchase was not completed.
 
+### Registration Page
+
+Visitors can create an account through the Registration page. Registration is used for personalised account features and is required before purchasing a membership.
+
+<p align="center">
+  <img
+    src="documentation/images/features/register-page.png"
+    alt="Repose registration form"
+    width="700"
+  >
+</p>
+
+The registration form validates account details on the backend and prevents duplicate email addresses.
+
+### Login Page
+
+Existing users can log in using their username and password.
+
+<p align="center">
+  <img
+    src="documentation/images/features/login-page.png"
+    alt="Repose login form"
+    width="700"
+  >
+</p>
+
+### My Account Page
+
+The My Account page is available to authenticated users and provides a personal overview of bookings and membership status.
+
+Upcoming and previous bookings are shown in separate sections using the same reusable card layout as the treatment and package pages.
+
+<p align="center">
+  <img
+    src="documentation/images/features/account-page.png"
+    alt="Repose My Account page showing bookings and membership information"
+    width="700"
+  >
+</p>
+
+If the user has an active membership, the membership start and end dates are displayed. Otherwise, a call to action links to the Membership page.
+
 
 ---
 
