@@ -501,7 +501,7 @@ The following categories were evaluated:
 **Booking**
 
 <p align="center">
-  <img src="documentation/testing/lighthouse-booking.png"
+  <img src="documentation/testing/lighthouse-book.png"
        alt="Lighthouse results for the Booking page"
        width="700">
 </p>
