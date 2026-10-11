@@ -2,9 +2,9 @@
 
 <p align="center">
   <img
-    src="documentation/images/responsive/responsive-repose.png"
+    src="documentation/images/features/responsive-repose.png"
     alt="Responsive preview of the Repose Spa & Wellness website across multiple screen sizes"
-    width="900"
+    width="700"
   >
 </p>
 
@@ -17,4 +17,25 @@ The project was designed around a calm, minimal user experience that reflects th
 ## Live Site
 
 - [View the live Repose Spa & Wellness website](https://repose-cff44b1bb103.herokuapp.com/)
+
+---
+
+## Table of Contents
+
+- [User Experience](#user-experience)
+- [Wireframes](#wireframes)
+- [Application Features](#application-features)
+- [Booking & Membership Development](#booking--membership-development)
+- [Design & Accessibility](#design--accessibility)
+- [User Stories](#user-stories)
+- [Future Features & Improvements](#future-features--improvements)
+- [Entity Relationship Diagram](#entity-relationship-diagram)
+- [Data Model](#data-model)
+- [Technologies Used](#technologies-used)
+- [Testing](#testing)
+- [Bugs](#bugs)
+- [Deployment](#deployment)
+- [Credits](#credits)
+
+---
 
