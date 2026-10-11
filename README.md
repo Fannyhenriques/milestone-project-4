@@ -1068,4 +1068,27 @@ To create an independent copy of the repository:
 
 ---
 
+## Credits
+
+### Code and Documentation
+
+- [Django 4.2 Documentation](https://docs.djangoproject.com/en/4.2/) - Reference for models, forms, views, authentication, sessions, validation, admin and timezone handling.
+- [Stripe Documentation](https://docs.stripe.com/) - Reference for Checkout Sessions, test payments, metadata, webhooks and payment events.
+- [Heroku Dev Center](https://devcenter.heroku.com/) - Reference for deployment, Config Vars, Python runtime configuration and Heroku Postgres.
+- [WhiteNoise Documentation](https://whitenoise.readthedocs.io/) - Reference for production static file handling.
+- [Gunicorn Documentation](https://gunicorn.org/) - Reference for production web server configuration.
+- [dj-database-url](https://github.com/jazzband/dj-database-url) - Reference for configuring the production database from `DATABASE_URL`.
+- [MDN Web Docs](https://developer.mozilla.org/) - Reference for HTML, CSS, JavaScript, responsive design and accessibility.
+- [Stack Overflow - Making the HTML date input fully clickable](https://stackoverflow.com/questions/67967129/how-can-i-make-the-whole-html-date-field-clickable) - Reference for making the full calendar/date input clickable rather than only the browser calendar icon.
+- Code Institute course material - Django structure, testing and deployment.
+
+### Development and Testing Tools
+
+- **Chrome Developer Tools / Inspector** - Used for debugging, responsive testing, layout inspection and checking browser behaviour.
+- [W3C HTML Validator](https://validator.w3.org/) - HTML validation.
+- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) - CSS validation.
+- [JSHint](https://jshint.com/) - JavaScript validation and linting.
+- **Python linter** - Python code quality and style checks.
+- [Lighthouse](https://developer.chrome.com/docs/lighthouse/) - Performance, accessibility, best-practice and SEO testing.
+
 
