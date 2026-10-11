@@ -800,3 +800,214 @@ The `Membership` model represents an annual Repose membership and is linked one-
 ---
 
 
+## Deployment
+
+Repose Spa & Wellness is deployed on Heroku and uses PostgreSQL in production.
+
+The deployed application uses:
+
+- **Heroku** for cloud hosting.
+- **Heroku Postgres** for the production relational database.
+- **Gunicorn** as the production web server.
+- **WhiteNoise** for static-file serving.
+- **Stripe** in test mode for payments.
+- Environment variables for sensitive Django and Stripe configuration.
+
+The deployed application can be viewed here:
+
+- [Repose Spa & Wellness Live Site](https://repose-cff44b1bb103.herokuapp.com/)
+
+### Version Control
+
+Git was used throughout development, with GitHub used as the remote repository.
+
+The project was developed through small, descriptive commits. The Heroku application is connected to the GitHub repository so updates to the deployment branch can be deployed automatically.
+
+### Deployment Preparation
+
+Production dependencies include:
+
+```text
+gunicorn
+psycopg2-binary
+dj-database-url
+whitenoise
+stripe
+```
+
+The exact installed versions are stored in `requirements.txt`.
+
+A `Procfile` in the project root tells Heroku how to start the application:
+
+```text
+web: gunicorn config.wsgi
+```
+
+A `.python-version` file is used to define the supported Python runtime:
+
+```text
+3.12
+```
+
+### Environment Variables
+
+Sensitive values are stored as Heroku Config Vars and are not committed to GitHub.
+
+| Key | Purpose |
+| --- | --- |
+| `SECRET_KEY` | Django secret key |
+| `DEBUG` | Controls Django debug mode; set to `False` in production |
+| `DATABASE_URL` | Production PostgreSQL connection, provided through Heroku Postgres |
+| `STRIPE_PUBLIC_KEY` | Stripe test publishable key |
+| `STRIPE_SECRET_KEY` | Stripe test secret key |
+| `STRIPE_WEBHOOK_SECRET` | Verifies incoming Stripe webhook requests |
+
+### Static Files
+
+WhiteNoise is used to serve static assets in production.
+
+The WhiteNoise middleware is placed after Django's security middleware in `settings.py`, and a static root is configured so Django can collect production assets.
+
+Static files are collected during deployment using Django's `collectstatic` process.
+
+### Stripe Webhook Configuration
+
+A Stripe webhook endpoint is configured for the deployed application at:
+
+```text
+/stripe/webhook/
+```
+
+The endpoint listens for:
+
+```text
+checkout.session.completed
+checkout.session.expired
+```
+
+The deployed webhook signing secret is stored securely as a Heroku environment variable.
+
+During local development, Stripe CLI can forward events to the local Django server for webhook testing.
+
+### Heroku Deployment Steps
+
+1. Create a new Heroku application.
+2. Add Heroku Postgres to the application.
+3. Add the required Config Vars in Heroku Settings.
+4. Confirm the project contains `requirements.txt`, `Procfile` and `.python-version`.
+5. Connect the Heroku application to the GitHub repository through the Deploy tab.
+6. Select the `main` branch.
+7. Enable automatic deployment or deploy the branch manually.
+8. Run database migrations in the production environment.
+9. Create a Django superuser for administration.
+10. Load the initial services fixture into the production database.
+11. Configure the production Stripe webhook and add its signing secret to Heroku.
+12. Open the deployed application and test the booking, membership, static files, admin interface and payment flow.
+
+The initial Repose service data is stored in a Django fixture:
+
+```text
+services/fixtures/services_data.json
+```
+
+The fixture can be loaded into a new environment with:
+
+```bash
+python manage.py loaddata services_data
+```
+
+> The fixture should only be loaded when required to avoid duplicate or conflicting initial records.
+
+### Local Development
+
+To run Repose locally, Python and Git must be installed.
+
+#### Cloning
+
+1. Open the Repose GitHub repository.
+2. Select **Code** and copy the HTTPS, SSH or GitHub CLI URL.
+3. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Fannyhenriques/milestone-project-4.git
+   ```
+
+4. Enter the project directory:
+
+   ```bash
+   cd milestone-project-4
+   ```
+
+5. Create a virtual environment:
+
+   ```bash
+   python -m venv venv
+   ```
+
+6. Activate the virtual environment.
+
+   macOS / Linux:
+
+   ```bash
+   source venv/bin/activate
+   ```
+
+   Windows:
+
+   ```bash
+   venv\Scripts\activate
+   ```
+
+7. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+8. Configure the required environment variables for local development.
+
+9. Apply migrations:
+
+   ```bash
+   python manage.py migrate
+   ```
+
+10. Load the service fixture if required:
+
+    ```bash
+    python manage.py loaddata services_data
+    ```
+
+11. Create a superuser if administrator access is required:
+
+    ```bash
+    python manage.py createsuperuser
+    ```
+
+12. Start the development server:
+
+    ```bash
+    python manage.py runserver
+    ```
+
+13. Open:
+
+    ```text
+    http://127.0.0.1:8000/
+    ```
+
+The local project uses SQLite by default unless a different database connection is configured.
+
+### Forking
+
+To create an independent copy of the repository:
+
+1. Log in to GitHub.
+2. Open the Repose repository.
+3. Select **Fork**.
+4. Choose the account where the fork should be created.
+5. GitHub creates an independent copy that can be modified without affecting the original repository.
+
+---
+
+
