@@ -824,6 +824,40 @@ Testing includes:
 
 ---
 
+## Bugs
+
+### Fixed Bugs
+
+The following issues were identified and resolved during development.
+
+| Bug | Cause | Solution |
+| --- | --- | --- |
+| Treatments appeared under the wrong category | The template initially looped through all treatments without separating them by category. | The view was updated to filter Massage, Body Treatments and Facials separately, with individual template loops. |
+| Past booking dates could be selected | The booking date field initially had no minimum date and no backend rejection of past values. | Added a minimum date to the widget and backend `clean_booking_date()` validation. |
+| Same-day time validation used the wrong local time | Validation relied on the project's previous timezone configuration. | Set the project timezone to `Europe/London` and used timezone-aware `localdate()` and `localtime()` checks. |
+| Repose for Two could be selected for an invalid guest quantity | All packages originally shared the same 1-6 guest choices. | Added `guests_per_package` and generated valid guest choices in multiples of the package size. |
+| Booking could continue without a selected treatment or package | Selecting a booking type did not guarantee that the corresponding service had been selected. | Added custom `BookingForm.clean()` validation requiring the relevant service. |
+| Successful Stripe payment remained pending in Django | Stripe payment succeeded but the success flow did not initially update the related booking. | Added the Checkout Session ID to the success URL, retrieved the Stripe session and updated the booking after confirming `payment_status == "paid"`. |
+| Abandoned Stripe payments remained pending indefinitely | A booking was created before Stripe Checkout and could remain pending when the user closed the payment page. | Added `checkout.session.expired` webhook handling to mark still-pending bookings as cancelled. |
+| Stripe membership success raised an `AttributeError` | Stripe metadata was returned as a `StripeObject`, while the code attempted to use dictionary `.get()` access. | Converted Stripe metadata using `.to_dict()` and used Stripe-compatible access for other session values. |
+| Missing `{% endif %}` in `membership.html` | A conditional block was not closed correctly. | Added the missing template closing tag and verified the page rendered correctly. |
+| Heroku Django Admin returned a server error | Heroku initially deployed the project with Python 3.14.8, which caused compatibility problems in the project environment. | Added a root `.python-version` file specifying Python 3.12 and redeployed the application. |
+| Booking review buttons became vertically misaligned on wider screens | `.review-payment` inherited bottom padding, making its flex-item box taller than the neighbouring Cancel link when the action container switched to a row. | Removed `.review-payment` from the shared bottom-padding rule so both actions align correctly. |
+| 404 page appeared unstyled during local `DEBUG=False` testing | Local Django development server static-file behaviour differs when debug mode is disabled. | Verified the custom 404 page in the deployed Heroku environment where WhiteNoise serves static assets correctly. |
+
+### Current Limitations
+
+The following are intentional limitations rather than unresolved bugs:
+
+- Stripe remains in test mode and does not process real money.
+- Users cannot currently cancel or reschedule bookings through My Account.
+- Booking availability does not yet track real spa capacity for individual time slots.
+- Membership payment plans must be arranged directly with the spa rather than through the website.
+- Yoga class booking is handled outside the current web application.
+- The multi-step booking flow does not currently include a Back button between every stage.
+
+---
+
 ## Deployment
 
 Repose Spa & Wellness is deployed on Heroku and uses PostgreSQL in production.
