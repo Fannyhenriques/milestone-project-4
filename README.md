@@ -693,3 +693,67 @@ These relationships allow the application to use a shared Booking model for diff
 
 ---
 
+## Data Model
+
+Repose uses a relational database together with Django's built-in `User` model.
+
+### Treatment
+
+The `Treatment` model stores standalone spa treatments.
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `name` | CharField | Treatment name |
+| `description` | TextField | Treatment description |
+| `category` | CharField | Massage, body treatment or facial category |
+| `duration` | PositiveIntegerField | Treatment duration in minutes |
+| `price` | DecimalField | Treatment price |
+| `is_active` | BooleanField | Controls whether the treatment is available on the website |
+
+### Package
+
+The `Package` model stores combined spa experiences.
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `name` | CharField | Package name |
+| `description` | TextField | Package description |
+| `included` | TextField | Included items entered one per line |
+| `price` | DecimalField | Package price |
+| `guests_per_package` | PositiveIntegerField | Number of guests represented by one package |
+| `duration` | PositiveIntegerField | Package duration in minutes |
+| `time_period` | CharField | Used to control valid booking times |
+| `is_active` | BooleanField | Controls whether the package is available |
+
+The `included_items` property uses `splitlines()` to convert the stored text into a clean Python list for template display.
+
+### Booking
+
+The `Booking` model stores customer bookings and payment status.
+
+Key information includes:
+
+| Field | Purpose |
+| --- | --- |
+| User relationship | Links authenticated bookings to a user when available |
+| Booking type | Identifies spa access, treatment or package |
+| Treatment / Package relationship | Links the booking to the selected service where relevant |
+| Guest information | Stores booking contact information |
+| Booking date and time | Stores the selected reservation slot |
+| Number of guests | Stores booking quantity |
+| Payment status | Tracks pending, paid or cancelled payment state |
+| Created timestamp | Records when the booking was created |
+
+### Membership
+
+The `Membership` model represents an annual Repose membership and is linked one-to-one with a user account.
+
+| Field | Purpose |
+| --- | --- |
+| `user` | User who owns the membership |
+| `start_date` | Membership activation date |
+| `end_date` | Membership expiry date |
+| `is_active` | Current active status |
+
+---
+
