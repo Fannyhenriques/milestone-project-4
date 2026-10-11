@@ -3,7 +3,8 @@
 {% block title %}My Account | Repose Spa & Wellness{% endblock %}
 
 {% block content %}
-<section>
+<section class="service-page">
+  <div class="service-intro">
   <h1>My Account</h1>
 
   <p>Welcome, {{ user.username }}.</p>
@@ -12,16 +13,17 @@
     Need to change or cancel your booking?
     Please contact us at
     <a href="mailto:info@reposespa.com">info@reposespa.com</a>
-    or
-    <a href="tel:+441234567890">+44 1234 567890</a>.
+      or <b>+44 123 000 000</b>.
   </p>
+  </div>
 
-  <section>
+  <section class="account-section">
     <h2>My upcoming Bookings</h2>
 
     {% if upcoming_bookings %}
+    <div class="service-grid">
     {% for booking in upcoming_bookings %}
-    <article>
+      <article class="service-card">
       <h3>
         {% if booking.booking_type == "spa" %}
         Spa Access
@@ -37,17 +39,19 @@
       <p>Guests: {{ booking.number_of_guests }}</p>
     </article>
     {% endfor %}
+    </div>
     {% else %}
     <p>You do not have any confirmed bookings yet.</p>
     {% endif %}
   </section>
 
-  <section>
+  <section class="account-section">
     <h2>Previous Bookings</h2>
 
     {% if previous_bookings %}
+    <div class="service-grid">
     {% for booking in previous_bookings %}
-    <article>
+      <article class="service-card">
       <h3>
         {% if booking.booking_type == "spa" %}
         Spa Access
@@ -63,21 +67,24 @@
       <p>Guests: {{ booking.number_of_guests }}</p>
     </article>
     {% endfor %}
+    </div>
     {% else %}
     <p>You do not have any previous bookings.</p>
     {% endif %}
   </section>
 
-  <section>
+  <section class="account-section">
     <h2>Membership</h2>
 
     {% if membership and membership.is_active %}
-    <p>Your Repose membership is active.</p>
-    <p>Valid from {{ membership.start_date }} to {{ membership.end_date }}.</p>
+    <div class="active-membership">
+      <p>Your Repose membership is <b>active</b>.</p>
+      <p>Valid from: {{ membership.start_date }} to {{ membership.end_date }}.</p>
+    </div>
     {% else %}
 
     <p>You are not currently a Repose member.</p>
-    <a href="{% url 'membership' %}">Become a Member</a>
+    <a href="{% url 'membership' %}" class="button">Become a Member</a>
     {% endif %}
   </section>
 </section>

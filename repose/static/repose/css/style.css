@@ -612,6 +612,18 @@ a.service-card-link:focus-visible {
    CONTENT SECTIONS
 ==================================== */
 
+.account-section {
+  margin: 0 auto var(--space-lg);
+  text-align: center;
+}
+
+.account-section h2 {
+  margin-bottom: var(--space-md);
+}
+
+.account-section .button {
+  margin-top: var(--space-sm);
+}
 
 .review-section {
   width: 80%;
