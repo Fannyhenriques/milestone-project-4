@@ -193,6 +193,74 @@ The navigation also adapts based on the user's authentication status. Visitors w
 </table>
 
 
+### About Page
+
+The About page introduces Repose Spa & Wellness and provides visitors with information about the spa and its facilities.
+
+<p align="center">
+  <img
+    src="documentation/images/features/about-page.png"
+    alt="Repose Spa & Wellness About page"
+    width="700"
+  >
+</p>
+
+### Treatments Page
+
+The Treatments page displays active treatments retrieved from the database, organised into three categories: Massage, Body Treatments and Facials.
+
+Each treatment card displays the treatment name, description, duration and price. Clicking on a treatment card takes the user to the booking page, where they can select their booking type and preferred treatment.
+
+<p align="center">
+  <img
+    src="documentation/images/features/treatment-page.png"
+    alt="Repose treatments page showing treatment cards"
+    width="700"
+  >
+</p>
+
+- Repose members receive a 15% discount on standalone treatments. The discount is automatically applied during the booking process, ensuring that members receive the correct price.
+
+### Packages Page
+
+The Packages page displays spa packages retrieved from the database. Each package card presents a description, included services, duration and price.
+
+<p align="center">
+  <img
+    src="documentation/images/features/packages-page.png"
+    alt="Repose packages page showing available spa packages"
+    width="700"
+  >
+</p>
+
+- Package inclusions are stored as multi-line text and displayed as a list, allowing the content to be updated through Django Admin without modifying the template.
+
+### Membership Page
+
+The Membership page explains the annual Repose membership and its benefits.
+
+Membership benefits include:
+
+- Complimentary spa access Monday-Sunday, 09:00-21:00.
+- Access to fitness facilities Monday-Sunday.
+- Complimentary yoga classes.
+- 15% off standalone treatments.
+- Exclusive member offers.
+
+<p align="center">
+  <img
+    src="documentation/images/features/membership-page.png"
+    alt="Repose annual membership page"
+    width="700"
+  >
+</p>
+
+The annual membership costs £999 and is paid in a single payment through Stripe Checkout.
+
+Visitors who wish to purchase a membership must first create an account. If they are not registered, they are redirected to the registration page and then returned to the membership process to complete their purchase.
+
+For active members, the purchase button is replaced with a link to their membership information under My Account.
+
 
 ---
 
