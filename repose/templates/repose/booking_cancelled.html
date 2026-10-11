@@ -7,19 +7,27 @@ Your payment was not completed and your purchase has not been confirmed.
 {% endblock %}
 
 {% block content %}
-<section>
-  <h1>Payment Cancelled</h1>
+<section class="form-page">
+  <div class="form-card">
 
-  <p>
-    Your payment was not completed, so your purchase has not been confirmed.
-  </p>
+    <div class="form-card-header">
+      <h1>Payment Cancelled</h1>
 
-  <p>
-    You can start a new booking or membership signup whenever you're ready.
-  </p>
+      <p>
+        Your payment was not completed, so your purchase has not been confirmed.
+      </p>
 
-  <a href="{% url 'booking' %}">Start a New Booking</a>
-  <a href="{% url 'membership' %}">Return to Membership Signup</a>
-  <a href="{% url 'home' %}">Return Home</a>
+      <p>
+        You can start a new booking or membership signup whenever you're ready.
+      </p>
+    </div>
+
+    <div class="confirmation-actions">
+      <a href="{% url 'booking' %}" class="button form-button">Start a New Booking</a>
+      <a href="{% url 'membership' %}" class="button form-button">Return to Membership Signup</a>
+      <a href="{% url 'home' %}" class="button form-button">Return Home</a>
+    </div>
+
+  </div>
 </section>
 {% endblock %}
