@@ -245,3 +245,93 @@ class BookingGuestForm(forms.ModelForm):
             self.fields["guest_first_name"].disabled = True
             self.fields["guest_last_name"].disabled = True
             self.fields["guest_email"].disabled = True
+
+
+class BookingRescheduleForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ["booking_date", "booking_time"]
+        widgets = {
+            "booking_date": forms.DateInput(
+                format="%Y-%m-%d",
+                attrs={"type": "date"},
+            ),
+            "booking_time": forms.Select(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["booking_date"].widget.attrs["min"] = (
+            timezone.localdate().isoformat()
+        )
+
+        slots = []
+
+        if self.instance.booking_type == "spa":
+            slots = ["09:00", "13:00", "17:00"]
+
+        elif self.instance.booking_type == "treatment":
+            slots = [
+                "09:00", "10:00", "11:00",
+                "13:00", "14:00", "15:00",
+                "16:00", "17:00",
+            ]
+
+        elif self.instance.booking_type == "package":
+            package = self.instance.package
+
+            if package:
+                periods = {
+                    "morning": ["09:00"],
+                    "afternoon": ["13:00"],
+                    "evening": ["17:00"],
+                    "flexible": ["09:00", "13:00", "17:00"],
+                }
+                slots = periods.get(package.time_period, [])
+
+        self.allowed_slots = slots
+
+        self.fields["booking_time"].widget.choices = [
+            (slot, slot) for slot in slots
+        ]
+
+        if self.instance.pk and self.instance.booking_time:
+            self.initial["booking_time"] = (
+                self.instance.booking_time.strftime("%H:%M")
+            )
+
+    def clean_booking_date(self):
+        booking_date = self.cleaned_data["booking_date"]
+
+        if booking_date < timezone.localdate():
+            raise forms.ValidationError(
+                "Please select today or a future date."
+            )
+
+        return booking_date
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        booking_date = cleaned_data.get("booking_date")
+        booking_time = cleaned_data.get("booking_time")
+
+        if booking_time:
+            if booking_time.strftime("%H:%M") not in self.allowed_slots:
+                self.add_error(
+                    "booking_time",
+                    "Please select a valid booking time.",
+                )
+
+        if booking_date and booking_time:
+            if booking_date == timezone.localdate():
+                current_time = timezone.localtime().time()
+
+                if booking_time <= current_time:
+                    self.add_error(
+                        "booking_time",
+                        "Please select a future time.",
+                    )
+
+        return cleaned_data
