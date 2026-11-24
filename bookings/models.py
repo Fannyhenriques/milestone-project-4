@@ -36,6 +36,13 @@ class Booking(models.Model):
         default="pending",
     )
 
+    stripe_payment_intent_id = models.CharField(
+        max_length=255,
+        unique=True,
+        null=True,
+        blank=True,
+    )
+
     treatment = models.ForeignKey(
         Treatment,
         on_delete=models.SET_NULL,
@@ -75,4 +82,63 @@ class Booking(models.Model):
         return (
             f"{self.guest_first_name} "
             f"{self.guest_last_name} - {self.booking_date}"
+        )
+
+
+class CancellationRecord(models.Model):
+    REFUND_STATUS_CHOICES = [
+        ("processing", "Processing"),
+        ("pending", "Pending"),
+        ("succeeded", "Succeeded"),
+        ("failed", "Failed"),
+    ]
+
+    original_booking_id = models.PositiveBigIntegerField(
+        unique=True
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="cancellation_records",
+    )
+
+    booking_date = models.DateField()
+    booking_time = models.TimeField()
+
+    stripe_payment_intent_id = models.CharField(
+        max_length=255,
+    )
+
+    stripe_refund_id = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        unique=True,
+    )
+
+    refund_status = models.CharField(
+        max_length=20,
+        choices=REFUND_STATUS_CHOICES,
+        default="processing",
+    )
+
+    refund_amount = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
+
+    currency = models.CharField(
+        max_length=3,
+        default="gbp",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return (
+            f"Cancellation for booking {self.original_booking_id}"
         )
