@@ -37,6 +37,15 @@
         <p>Date: {{ booking.booking_date }}</p>
         <p>Time: {{ booking.booking_time|time:"H:i" }}</p>
         <p>Guests: {{ booking.number_of_guests }}</p>
+
+        <div class="btn-container">
+          <a href="{% url 'reschedule_booking' booking.id %}" class="button">
+            Reschedule
+          </a>
+          <button type="button" class="button" disabled>
+            Cancel Booking
+          </button>
+        </div>
       </article>
       {% endfor %}
     </div>
