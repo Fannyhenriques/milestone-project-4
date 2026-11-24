@@ -49,3 +49,34 @@ def reschedule_booking(request, booking_id):
             "is_rescheduling": True,
         },
     )
+
+
+@login_required
+def cancel_booking(request, booking_id):
+    booking = get_object_or_404(
+        Booking,
+        id=booking_id,
+        user=request.user,
+        payment_status="paid",
+    )
+
+    today = timezone.localdate()
+
+    if (
+        booking.booking_date < today
+        or (
+            booking.booking_date == today
+            and booking.booking_time <= timezone.localtime().time()
+        )
+    ):
+        raise Http404("This booking can no longer be cancelled.")
+
+    if request.method == "POST":
+        booking.delete()
+        return redirect("account")
+
+    return render(
+        request,
+        "repose/booking_cancel_confirm.html",
+        {"booking": booking},
+    )
