@@ -1,10 +1,20 @@
 {% extends "repose/base.html" %}
 {% load static %}
 
-{% block title %}Booking Details | Repose Spa & Wellness{% endblock %}
+{% block title %}
+{% if is_rescheduling %}
+Reschedule Booking | Repose Spa & Wellness
+{% else %}
+Booking Details | Repose Spa & Wellness
+{% endif %}
+{% endblock %}
 
 {% block meta_description %}
+{% if is_rescheduling %}
+Change the date and time of your Repose booking.
+{% else %}
 Choose the number of guests, date and time for your Repose booking.
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -12,20 +22,27 @@ Choose the number of guests, date and time for your Repose booking.
   <div class="form-card">
 
     <div class="form-card-header">
+      {% if is_rescheduling %}
+      <h1>Reschedule Booking</h1>
+      <p>Choose a new date and time for your visit.</p>
+      <p>Guests: {{ booking.number_of_guests }}</p>
+      {% else %}
       <h1>Booking Details</h1>
-
       <p> Choose the number of guests, date and time for your visit. </p>
+      {% endif %}
     </div>
     <form method="POST" class="styled-form">
       {% csrf_token %}
 
       {{ form.non_field_errors }}
 
+      {% if not is_rescheduling %}
       <div class="form-group">
         {{ form.number_of_guests.label_tag }}
         {{ form.number_of_guests }}
         {{ form.number_of_guests.errors }}
       </div>
+      {% endif %}
 
       <div class="form-group">
         {{ form.booking_date.label_tag }}
@@ -40,10 +57,19 @@ Choose the number of guests, date and time for your Repose booking.
       </div>
 
       <div class="btn-container">
+        {% if is_rescheduling %}
+        <a href="{% url 'account' %}" class="button">
+          Back to My Account
+        </a>
+        <button type="submit" class="button form-button">
+          Confirm Reschedule
+        </button>
+        {% else %}
         <a href="{% url 'home' %}" class="button">
           Cancel
         </a>
         <button type="submit" class="button form-button">Continue</button>
+        {% endif %}
       </div>
     </form>
   </div>
