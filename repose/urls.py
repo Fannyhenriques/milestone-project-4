@@ -1,3 +1,4 @@
+from bookings import views as booking_views
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
@@ -33,4 +34,9 @@ urlpatterns = [
     ),
     path("stripe/webhook/", views.stripe_webhook, name="stripe_webhook",),
     path("membership/join/", views.become_member, name="become_member",),
+    path(
+    "booking/<int:booking_id>/reschedule/",
+    booking_views.reschedule_booking,
+    name="reschedule_booking",
+),
 ]
