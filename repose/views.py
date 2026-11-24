@@ -450,9 +450,16 @@ def booking_success(request):
 
                 if booking:
                     booking.payment_status = "paid"
-                    booking.save(
-                        update_fields=["payment_status"]
+                    booking.stripe_payment_intent_id = (
+                        checkout_session.payment_intent
                     )
+                    booking.save(
+                        update_fields=[
+                            "payment_status",
+                            "stripe_payment_intent_id",
+                        ]
+                    )
+
 
     return render(
         request,
@@ -526,7 +533,15 @@ def stripe_webhook(request):
 
                 if booking:
                     booking.payment_status = "paid"
-                    booking.save(update_fields=["payment_status"])
+                    booking.stripe_payment_intent_id = (
+                        checkout_session["payment_intent"]
+                    )
+                    booking.save(
+                        update_fields=[
+                            "payment_status",
+                            "stripe_payment_intent_id",
+                        ]
+                    )
 
     elif event["type"] == "checkout.session.expired":
         checkout_session = event["data"]["object"]
