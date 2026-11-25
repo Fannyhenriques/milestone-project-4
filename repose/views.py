@@ -6,7 +6,6 @@ import stripe
 from django.conf import settings
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
-from .forms import RegistrationForm
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -14,9 +13,10 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from bookings.forms import BookingForm, BookingDetailsForm, BookingGuestForm
-from bookings.models import Booking
+from bookings.models import Booking, CancellationRecord
 from services.models import Package, Treatment
 from memberships.models import Membership
+from .forms import RegistrationForm
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -479,7 +479,6 @@ def booking_cancelled(request):
         if booking:
             booking.payment_status = "cancelled"
             booking.save(update_fields=["payment_status"])
-
         request.session.pop("pending_booking_id", None)
 
     return render(
@@ -499,7 +498,7 @@ def stripe_webhook(request):
             signature,
             settings.STRIPE_WEBHOOK_SECRET,
         )
-    except (ValueError, stripe.error.SignatureVerificationError):
+    except (ValueError, stripe.SignatureVerificationError):
         return HttpResponse(status=400)
 
     if event["type"] == "checkout.session.completed":
@@ -555,5 +554,57 @@ def stripe_webhook(request):
         if booking:
             booking.payment_status = "cancelled"
             booking.save(update_fields=["payment_status"])
+
+
+    elif event["type"] in (
+        "refund.created",
+        "refund.updated",
+        "refund.failed",
+    ):
+        refund = event["data"]["object"]
+        refund_id = refund["id"]
+
+        cancellation = CancellationRecord.objects.filter(
+            stripe_refund_id=refund_id,
+        ).first()
+
+        if not cancellation:
+            booking_id = (refund.get("metadata") or {}).get("booking_id")
+
+            if booking_id and str(booking_id).isdigit():
+                cancellation = CancellationRecord.objects.filter(
+                    original_booking_id=booking_id,
+                    stripe_payment_intent_id=refund.get("payment_intent"),
+                ).first()
+
+        if cancellation and cancellation.stripe_refund_id in (
+            None,
+            refund_id,
+        ):
+            status = refund.get("status")
+
+            if status in ("pending", "succeeded", "failed"):
+                if not (
+                    status == "pending"
+                    and cancellation.refund_status in (
+                        "succeeded",
+                        "failed",
+                    )
+                ):
+                    cancellation.refund_status = status
+
+            cancellation.stripe_refund_id = refund_id
+            cancellation.refund_amount = refund["amount"]
+            cancellation.currency = refund["currency"]
+
+            cancellation.save(
+                update_fields=[
+                    "stripe_refund_id",
+                    "refund_status",
+                    "refund_amount",
+                    "currency",
+                    "updated_at",
+                ]
+            )
 
     return HttpResponse(status=200)
