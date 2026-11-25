@@ -35,8 +35,13 @@ urlpatterns = [
     path("stripe/webhook/", views.stripe_webhook, name="stripe_webhook",),
     path("membership/join/", views.become_member, name="become_member",),
     path(
-    "booking/<int:booking_id>/reschedule/",
-    booking_views.reschedule_booking,
-    name="reschedule_booking",
-),
+        "booking/<int:booking_id>/reschedule/",
+        booking_views.reschedule_booking,
+        name="reschedule_booking",
+    ),
+    path(
+        "booking/<int:booking_id>/cancel/",
+        booking_views.cancel_booking,
+        name="cancel_booking",
+    ),
 ]
