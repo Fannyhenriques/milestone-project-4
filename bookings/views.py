@@ -1,10 +1,15 @@
+import stripe
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
 from .forms import BookingRescheduleForm
-from .models import Booking
+from .models import Booking, CancellationRecord
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 @login_required
@@ -72,8 +77,103 @@ def cancel_booking(request, booking_id):
         raise Http404("This booking can no longer be cancelled.")
 
     if request.method == "POST":
-        booking.delete()
-        return redirect("account")
+        if not booking.stripe_payment_intent_id:
+            return render(
+                request,
+                "repose/booking_cancel_confirm.html",
+                {
+                    "booking": booking,
+                    "error_message": (
+                        "This booking cannot be refunded automatically. "
+                        "Please contact us for assistance."
+                    ),
+                },
+            )
+
+        cancellation, created = CancellationRecord.objects.get_or_create(
+            original_booking_id=booking.id,
+            defaults={
+                "user": request.user,
+                "booking_date": booking.booking_date,
+                "booking_time": booking.booking_time,
+                "stripe_payment_intent_id": (
+                    booking.stripe_payment_intent_id
+                ),
+            },
+        )
+
+        if not created:
+            if (
+                cancellation.stripe_refund_id
+                and cancellation.refund_status in ("pending", "succeeded")
+            ):
+
+                booking.delete()
+                request.session["booking_cancellation_success"] = True
+                return redirect("cancellation_success")
+
+            return render(
+                request,
+                "repose/booking_cancel_confirm.html",
+                {
+                    "booking": booking,
+                    "error_message": (
+                        "A refund request is already being reviewed. "
+                        "Please contact us for assistance."
+                    ),
+                },
+            )
+
+        try:
+            refund = stripe.Refund.create(
+                payment_intent=booking.stripe_payment_intent_id,
+                reason="requested_by_customer",
+                metadata={"booking_id": str(booking.id)},
+                idempotency_key=f"repose-booking-refund-{booking.id}",
+            )
+
+        except stripe.error.StripeError:
+            return render(
+                request,
+                "repose/booking_cancel_confirm.html",
+                {
+                    "booking": booking,
+                    "error_message": (
+                        "We could not confirm the refund request. "
+                        "Your booking has not been cancelled. "
+                        "Please contact us for assistance."
+                    ),
+                },
+            )
+
+        cancellation.stripe_refund_id = refund.id
+        cancellation.refund_amount = refund.amount
+        cancellation.currency = refund.currency
+
+        if refund.status in ("pending", "succeeded", "failed"):
+            cancellation.refund_status = refund.status
+        else:
+            cancellation.refund_status = "processing"
+
+        cancellation.save()
+
+        if refund.status in ("pending", "succeeded"):
+            booking.delete()
+            request.session["booking_cancellation_success"] = True
+            return redirect("cancellation_success")
+
+        return render(
+            request,
+            "repose/booking_cancel_confirm.html",
+            {
+                "booking": booking,
+                "error_message": (
+                    "The refund could not be completed automatically. "
+                    "Your booking remains active. "
+                    "Please contact us for assistance."
+                ),
+            },
+        )
 
     return render(
         request,
