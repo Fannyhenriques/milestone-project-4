@@ -89,8 +89,10 @@ class CancellationRecord(models.Model):
     REFUND_STATUS_CHOICES = [
         ("processing", "Processing"),
         ("pending", "Pending"),
+        ("requires_action", "Requires Action"),
         ("succeeded", "Succeeded"),
         ("failed", "Failed"),
+        ("canceled", "Canceled"),
     ]
 
     original_booking_id = models.PositiveBigIntegerField(

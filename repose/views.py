@@ -588,7 +588,13 @@ def stripe_webhook(request):
 
             status = current_refund.status
 
-            if status in ("pending", "succeeded", "failed"):
+            if status in (
+                "pending",
+                "requires_action",
+                "succeeded",
+                "failed",
+                "canceled",
+            ):
                 cancellation.refund_status = status
             else:
                 cancellation.refund_status = "processing"

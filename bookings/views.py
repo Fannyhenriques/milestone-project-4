@@ -159,7 +159,13 @@ def cancel_booking(request, booking_id):
         cancellation.refund_amount = refund.amount
         cancellation.currency = refund.currency
 
-        if refund.status in ("pending", "succeeded", "failed"):
+        if refund.status in (
+            "pending",
+            "requires_action",
+            "succeeded",
+            "failed",
+            "canceled",
+        ):
             cancellation.refund_status = refund.status
         else:
             cancellation.refund_status = "processing"
