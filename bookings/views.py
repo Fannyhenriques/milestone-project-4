@@ -1,3 +1,5 @@
+import logging
+
 import stripe
 
 from django.conf import settings
@@ -8,6 +10,8 @@ from django.utils import timezone
 
 from .forms import BookingRescheduleForm
 from .models import Booking, CancellationRecord
+
+logger = logging.getLogger(__name__)
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -107,7 +111,6 @@ def cancel_booking(request, booking_id):
                 cancellation.stripe_refund_id
                 and cancellation.refund_status in ("pending", "succeeded")
             ):
-
                 booking.delete()
                 request.session["booking_cancellation_success"] = True
                 return redirect("cancellation_success")
@@ -132,15 +135,21 @@ def cancel_booking(request, booking_id):
                 idempotency_key=f"repose-booking-refund-{booking.id}",
             )
 
-        except stripe.error.StripeError:
+        except stripe.StripeError:
+            logger.exception(
+                "Stripe refund request could not be confirmed "
+                "for booking %s",
+                booking.id,
+            )
+
             return render(
                 request,
                 "repose/booking_cancel_confirm.html",
                 {
                     "booking": booking,
                     "error_message": (
-                        "We could not confirm the refund request. "
-                        "Your booking has not been cancelled. "
+                        "We could not confirm the refund status. "
+                        "Your booking remains active in our system. "
                         "Please contact us for assistance."
                     ),
                 },
