@@ -555,13 +555,12 @@ def stripe_webhook(request):
             booking.payment_status = "cancelled"
             booking.save(update_fields=["payment_status"])
 
-
     elif event["type"] in (
         "refund.created",
         "refund.updated",
         "refund.failed",
     ):
-        refund = event["data"]["object"]
+        refund = event["data"]["object"].to_dict()
         refund_id = refund["id"]
 
         cancellation = CancellationRecord.objects.filter(
@@ -581,17 +580,18 @@ def stripe_webhook(request):
             None,
             refund_id,
         ):
-            status = refund.get("status")
+
+            try:
+                current_refund = stripe.Refund.retrieve(refund_id)
+            except stripe.StripeError:
+                return HttpResponse(status=500)
+
+            status = current_refund.status
 
             if status in ("pending", "succeeded", "failed"):
-                if not (
-                    status == "pending"
-                    and cancellation.refund_status in (
-                        "succeeded",
-                        "failed",
-                    )
-                ):
-                    cancellation.refund_status = status
+                cancellation.refund_status = status
+            else:
+                cancellation.refund_status = "processing"
 
             cancellation.stripe_refund_id = refund_id
             cancellation.refund_amount = refund["amount"]
