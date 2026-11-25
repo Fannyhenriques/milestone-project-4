@@ -180,3 +180,17 @@ def cancel_booking(request, booking_id):
         "repose/booking_cancel_confirm.html",
         {"booking": booking},
     )
+
+
+@login_required
+def cancellation_success(request):
+    if not request.session.pop(
+        "booking_cancellation_success", False
+    ):
+        return redirect("account")
+
+    return render(
+        request,
+        "repose/booking_success.html",
+        {"is_cancellation": True},
+    )
