@@ -93,6 +93,7 @@ class CancellationRecord(models.Model):
         ("succeeded", "Succeeded"),
         ("failed", "Failed"),
         ("canceled", "Canceled"),
+        ("needs_review", "Needs Review"),
     ]
 
     original_booking_id = models.PositiveBigIntegerField(
@@ -110,8 +111,16 @@ class CancellationRecord(models.Model):
     booking_date = models.DateField()
     booking_time = models.TimeField()
 
+    service_name = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+    )
+
     stripe_payment_intent_id = models.CharField(
         max_length=255,
+        null=True,
+        blank=True,
     )
 
     stripe_refund_id = models.CharField(
