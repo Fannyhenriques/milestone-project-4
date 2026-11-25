@@ -109,7 +109,7 @@ def cancel_booking(request, booking_id):
         if not created:
             if (
                 cancellation.stripe_refund_id
-                and cancellation.refund_status in ("pending", "succeeded")
+                and cancellation.refund_status == "succeeded"
             ):
                 booking.delete()
                 request.session["booking_cancellation_success"] = True
@@ -172,10 +172,24 @@ def cancel_booking(request, booking_id):
 
         cancellation.save()
 
-        if refund.status in ("pending", "succeeded"):
+        if refund.status == "succeeded":
             booking.delete()
             request.session["booking_cancellation_success"] = True
             return redirect("cancellation_success")
+
+        if refund.status == "pending":
+            return render(
+                request,
+                "repose/booking_cancel_confirm.html",
+                {
+                    "booking": booking,
+                    "error_message": (
+                        "Your refund request is being processed. "
+                        "Your booking remains visible until the "
+                        "refund has been confirmed."
+                    ),
+                },
+            )
 
         return render(
             request,
