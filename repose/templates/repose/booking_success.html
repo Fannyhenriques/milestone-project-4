@@ -1,9 +1,19 @@
 {% extends "repose/base.html" %}
 
-{% block title %}Booking Confirmed | Repose Spa & Wellness{% endblock %}
+{% block title %}
+{% if is_cancellation %}
+Booking Cancelled | Repose Spa & Wellness
+{% else %}
+Booking Confirmed | Repose Spa & Wellness
+{% endif %}
+{% endblock %}
 
 {% block meta_description %}
+{% if is_cancellation %}
+Your Repose booking has been cancelled.
+{% else %}
 Your booking at Repose Spa & Wellness has been confirmed.
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -11,16 +21,27 @@ Your booking at Repose Spa & Wellness has been confirmed.
   <div class="form-card">
 
     <div class="form-card-header">
+      {% if is_cancellation %}
+      <h1>Booking Cancelled</h1>
+
+      <p>
+        Your booking has been successfully cancelled.
+      </p>
+      <p>
+        Your refund has been initiated and will be
+        returned to your original payment method.
+      </p>
+
+      {% else %}
       <h1>Payment Confirmed</h1>
 
       <p>
         Thank you for your purchase. Your payment was successful.
       </p>
-
       <p>
         A confirmation with your purchase details will be sent to your email address.
       </p>
-
+      {% endif %}
     </div>
 
     <div class="confirmation-actions">
