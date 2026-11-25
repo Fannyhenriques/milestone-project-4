@@ -1,0 +1,63 @@
+{% extends "repose/base.html" %}
+
+{% block title %}
+Cancel Booking | Repose Spa & Wellness
+{% endblock %}
+
+{% block meta_description %}
+Review and confirm your booking cancellation.
+{% endblock %}
+
+{% block content %}
+<section class="form-page">
+  <div class="form-card">
+
+    <div class="form-card-header">
+      <h1>Cancel Booking</h1>
+      <p>
+        If you confirm, your booking will be cancelled
+        and a refund will be requested through Stripe.
+        The refund will be returned to your original
+        payment method.
+      </p>
+    </div>
+
+    <div class="service-card">
+      <h2>
+        {% if booking.booking_type == "spa" %}
+        Spa Access
+        {% elif booking.treatment %}
+        {{ booking.treatment.name }}
+        {% elif booking.package %}
+        {{ booking.package.name }}
+        {% endif %}
+      </h2>
+
+      <p>Date: {{ booking.booking_date }}</p>
+      <p>Time: {{ booking.booking_time|time:"H:i" }}</p>
+      <p>Guests: {{ booking.number_of_guests }}</p>
+    </div>
+
+    <p>Are you sure you want to cancel this booking?</p>
+
+    {% if error_message %}
+    <p role="alert">{{ error_message }}</p>
+    {% endif %}
+
+    <form method="POST" class="styled-form">
+      {% csrf_token %}
+
+      <div class="btn-container">
+        <a href="{% url 'account' %}" class="button">
+          Go Back
+        </a>
+
+        <button type="submit" class="button form-button">
+          Confirm Cancellation
+        </button>
+      </div>
+    </form>
+
+  </div>
+</section>
+{% endblock %}
