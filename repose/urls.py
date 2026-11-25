@@ -1,6 +1,7 @@
-from bookings import views as booking_views
 from django.contrib.auth import views as auth_views
 from django.urls import path
+
+from bookings import views as booking_views
 
 from . import views
 
@@ -43,5 +44,11 @@ urlpatterns = [
         "booking/<int:booking_id>/cancel/",
         booking_views.cancel_booking,
         name="cancel_booking",
+    ),
+
+    path(
+        "booking/cancellation/success/",
+        booking_views.cancellation_success,
+        name="cancellation_success",
     ),
 ]
