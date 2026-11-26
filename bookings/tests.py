@@ -296,3 +296,155 @@ class BookingCancellationTests(TestCase):
         )
 
         mock_refund.assert_called_once()
+
+
+class BookingRescheduleTests(TestCase):
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username="testuser",
+            password="testpassword123",
+        )
+
+        self.booking = Booking.objects.create(
+            user=self.user,
+            booking_type="spa",
+            payment_status="paid",
+            number_of_guests=1,
+            guest_first_name="Test",
+            guest_last_name="User",
+            guest_email="test@example.com",
+            booking_date=timezone.localdate() + timedelta(days=7),
+            booking_time=time(13, 0),
+        )
+
+        self.reschedule_url = reverse(
+            "reschedule_booking",
+            args=[self.booking.id],
+        )
+
+    def test_user_can_reschedule_own_booking(self):
+        self.client.force_login(self.user)
+
+        new_date = timezone.localdate() + timedelta(days=8)
+
+        response = self.client.post(
+            self.reschedule_url,
+            {
+                "booking_date": new_date.isoformat(),
+                "booking_time": "17:00",
+            },
+        )
+
+        self.assertEqual(response.status_code, 302)
+
+        self.booking.refresh_from_db()
+
+        self.assertEqual(self.booking.booking_date, new_date)
+        self.assertEqual(self.booking.booking_time, time(17, 0))
+
+    def test_user_cannot_reschedule_another_users_booking(self):
+        other_user = get_user_model().objects.create_user(
+            username="otheruser",
+            password="testpassword123",
+        )
+
+        self.client.force_login(other_user)
+
+        response = self.client.post(
+            self.reschedule_url,
+            {
+                "booking_date": (
+                    timezone.localdate() + timedelta(days=8)
+                ).isoformat(),
+                "booking_time": "17:00",
+            },
+        )
+
+        self.assertEqual(response.status_code, 404)
+
+        self.booking.refresh_from_db()
+
+        self.assertEqual(
+            self.booking.booking_date,
+            timezone.localdate() + timedelta(days=7),
+        )
+        self.assertEqual(self.booking.booking_time, time(13, 0))
+
+    def test_cannot_reschedule_to_past_date(self):
+        self.client.force_login(self.user)
+
+        response = self.client.post(
+            self.reschedule_url,
+            {
+                "booking_date": (
+                    timezone.localdate() - timedelta(days=1)
+                ).isoformat(),
+                "booking_time": "17:00",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "booking_date",
+            response.context["form"].errors,
+        )
+
+        self.booking.refresh_from_db()
+
+        self.assertEqual(
+            self.booking.booking_date,
+            timezone.localdate() + timedelta(days=7),
+        )
+
+    def test_cannot_reschedule_to_invalid_time(self):
+        self.client.force_login(self.user)
+
+        response = self.client.post(
+            self.reschedule_url,
+            {
+                "booking_date": (
+                    timezone.localdate() + timedelta(days=8)
+                ).isoformat(),
+                "booking_time": "12:00",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "booking_time",
+            response.context["form"].errors,
+        )
+
+        self.booking.refresh_from_db()
+
+        self.assertEqual(self.booking.booking_time, time(13, 0))
+
+    def test_cannot_reschedule_past_booking(self):
+        self.client.force_login(self.user)
+
+        past_date = timezone.localdate() - timedelta(days=1)
+        self.booking.booking_date = past_date
+        self.booking.save()
+
+        response = self.client.post(
+            self.reschedule_url,
+            {
+                "booking_date": (
+                    timezone.localdate() + timedelta(days=8)
+                ).isoformat(),
+                "booking_time": "17:00",
+            },
+        )
+
+        self.assertEqual(response.status_code, 404)
+
+        self.booking.refresh_from_db()
+        self.assertEqual(self.booking.booking_date, past_date)
+        self.assertEqual(self.booking.booking_time, time(13, 0))
+
+    def test_login_required_for_rescheduling(self):
+        response = self.client.get(self.reschedule_url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("next=", response.url)
