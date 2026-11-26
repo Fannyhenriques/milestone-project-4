@@ -18,6 +18,14 @@
     </p>
   </div>
 
+  {% if messages %}
+  {% for message in messages %}
+  <div class="service-card" role="status">
+    <p>✅ {{ message }}</p>
+  </div>
+  {% endfor %}
+  {% endif %}
+
   <section class="account-section">
     <h2>Upcoming Bookings</h2>
 

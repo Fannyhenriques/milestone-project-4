@@ -8,6 +8,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.db import transaction
+from django.contrib import messages
 
 from .forms import BookingRescheduleForm
 from .models import Booking, CancellationRecord
@@ -45,6 +46,12 @@ def reschedule_booking(request, booking_id):
 
         if form.is_valid():
             form.save()
+            
+            messages.success(
+                request,
+                "Your booking has been successfully rescheduled."
+            )
+
             return redirect("account")
 
     else:
