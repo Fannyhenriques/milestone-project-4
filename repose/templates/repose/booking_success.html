@@ -27,19 +27,45 @@ Your booking at Repose Spa & Wellness has been confirmed.
       <p>
         Your booking has been successfully cancelled.
       </p>
+
+      {% if refund_status == "succeeded" %}
+      <h2>Refund Initiated</h2>
       <p>
-        Your refund has been initiated and will be
-        returned to your original payment method.
+        Your refund has been initiated.
+        You can track its status under Cancellations
+        in My Account.
       </p>
+
+      {% elif refund_status == "pending" %}
+      <h2>Refund Processing</h2>
+      <p>
+        Your refund is being processed.
+        You can track its status under Cancellations
+        in My Account.
+      </p>
+
+      {% elif refund_status == "failed" or refund_status == "canceled" %}
+      <h2>Refund Not Completed</h2>
+      <p>
+        Your booking has been cancelled, but your refund
+        could not be completed. Please contact us for
+        assistance.
+      </p>
+      {% else %}
+      <h2>Refund Requires Attention</h2>
+      <p>
+        We couldn't confirm your refund status.
+        Please contact us for assistance.
+      </p>
+      {% endif %}
 
       {% else %}
       <h1>Payment Confirmed</h1>
-
       <p>
         Thank you for your purchase. Your payment was successful.
       </p>
       <p>
-        A confirmation with your purchase details will be sent to your email address.
+        If you booked while signed in, you can view your booking under Upcoming Bookings in My Account.
       </p>
       {% endif %}
     </div>
