@@ -14,12 +14,7 @@ Review and confirm your booking cancellation.
 
     <div class="form-card-header">
       <h1>Cancel Booking</h1>
-      <p>
-        If you confirm, your booking will be cancelled
-        and a refund will be requested through Stripe.
-        The refund will be returned to your original
-        payment method.
-      </p>
+
     </div>
 
     <div class="service-card">
@@ -38,13 +33,17 @@ Review and confirm your booking cancellation.
       <p>Guests: {{ booking.number_of_guests }}</p>
     </div>
 
-    <p>Are you sure you want to cancel this booking?</p>
+    <p>
+      If you confirm, your booking will be cancelled.
+      A refund will be requested through
+      Stripe to your original payment method.
+    </p>
 
     {% if error_message %}
     <p role="alert">{{ error_message }}</p>
     {% endif %}
 
-    <form method="POST" class="styled-form">
+    <form method="POST" onsubmit="return confirm('Are you sure you want to cancel this booking?');" class="styled-form">
       {% csrf_token %}
 
       <div class="btn-container">
