@@ -194,8 +194,16 @@ def cancellation_success(request):
     ):
         return redirect("account")
 
+    refund_status = request.session.pop(
+        "cancellation_refund_status",
+        "needs_review",
+    )
+
     return render(
         request,
         "repose/booking_success.html",
-        {"is_cancellation": True},
+        {
+            "is_cancellation": True,
+            "refund_status": refund_status,
+        },
     )
