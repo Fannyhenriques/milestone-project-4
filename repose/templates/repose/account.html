@@ -10,7 +10,8 @@
     <p>Welcome, {{ user.username }}.</p>
 
     <p>
-      Need to change or cancel your booking?
+      Manage your upcoming bookings below.
+      Need assistance with a booking or refund?
       Please contact us at
       <a href="mailto:info@reposespa.com">info@reposespa.com</a>
       or <b>+44 123 000 000</b>.
@@ -18,7 +19,7 @@
   </div>
 
   <section class="account-section">
-    <h2>My upcoming Bookings</h2>
+    <h2>Upcoming Bookings</h2>
 
     {% if upcoming_bookings %}
     <div class="service-grid">
@@ -50,7 +51,7 @@
       {% endfor %}
     </div>
     {% else %}
-    <p>You do not have any confirmed bookings yet.</p>
+    <p>You do not have any upcoming bookings.</p>
     {% endif %}
   </section>
 
@@ -81,6 +82,54 @@
     <p>You do not have any previous bookings.</p>
     {% endif %}
   </section>
+
+
+  <section class="account-section">
+    <h2>Cancellations</h2>
+
+    {% if cancellations %}
+    <div class="service-grid">
+      {% for cancellation in cancellations %}
+      <article class="service-card">
+
+        <h3>{{ cancellation.service_name|default:"Booking" }}</h3>
+
+        <p>Date: {{ cancellation.booking_date }}</p>
+        <p>Time: {{ cancellation.booking_time|time:"H:i" }}</p>
+
+        <p>✅ Booking cancelled</p>
+
+        {% if cancellation.refund_status == "succeeded" %}
+        <p>
+          ✅ Your refund has been confirmed.
+        </p>
+
+        {% elif cancellation.refund_status == "pending" %}
+        <p>
+          🕒 Your refund is being processed.
+        </p>
+
+        {% elif cancellation.refund_status == "failed" or cancellation.refund_status == "canceled" %}
+        <p>
+          ❗ Your refund could not be completed.
+          Please contact us for assistance.
+        </p>
+
+        {% else %}
+        <p>
+          ⚠️ We couldn't confirm your refund status.
+          Please contact us for assistance.
+        </p>
+        {% endif %}
+
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>You do not have any cancelled bookings.</p>
+    {% endif %}
+  </section>
+
 
   <section class="account-section">
     <h2>Membership</h2>
