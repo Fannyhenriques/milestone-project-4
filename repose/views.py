@@ -401,6 +401,10 @@ def account(request):
         booking_date__lt=today,
     ).order_by("-booking_date", "-booking_time")
 
+    cancellations = CancellationRecord.objects.filter(
+        user=request.user,
+    ).order_by("-created_at")
+
     return render(
         request,
         "repose/account.html",
@@ -408,6 +412,7 @@ def account(request):
             "membership": membership,
             "upcoming_bookings": upcoming_bookings,
             "previous_bookings": previous_bookings,
+            "cancellations": cancellations,
         },
     )
 
