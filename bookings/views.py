@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.db import transaction
 
 from .forms import BookingRescheduleForm
 from .models import Booking, CancellationRecord
@@ -81,129 +82,104 @@ def cancel_booking(request, booking_id):
         raise Http404("This booking can no longer be cancelled.")
 
     if request.method == "POST":
-        if not booking.stripe_payment_intent_id:
-            return render(
-                request,
-                "repose/booking_cancel_confirm.html",
-                {
-                    "booking": booking,
-                    "error_message": (
-                        "This booking cannot be refunded automatically. "
-                        "Please contact us for assistance."
-                    ),
-                },
+        with transaction.atomic():
+            booking = get_object_or_404(
+                Booking.objects.select_for_update(),
+                id=booking_id,
+                user=request.user,
+                payment_status="paid",
             )
 
-        cancellation, created = CancellationRecord.objects.get_or_create(
-            original_booking_id=booking.id,
-            defaults={
-                "user": request.user,
-                "booking_date": booking.booking_date,
-                "booking_time": booking.booking_time,
-                "stripe_payment_intent_id": (
-                    booking.stripe_payment_intent_id
-                ),
-            },
-        )
+            today = timezone.localdate()
 
-        if not created:
             if (
-                cancellation.stripe_refund_id
-                and cancellation.refund_status == "succeeded"
+                booking.booking_date < today
+                or (
+                    booking.booking_date == today
+                    and booking.booking_time <= timezone.localtime().time()
+                )
             ):
-                booking.delete()
-                request.session["booking_cancellation_success"] = True
-                return redirect("cancellation_success")
+                raise Http404("This booking can no longer be cancelled.")
 
-            return render(
-                request,
-                "repose/booking_cancel_confirm.html",
-                {
-                    "booking": booking,
-                    "error_message": (
-                        "A refund request is already being reviewed. "
-                        "Please contact us for assistance."
+            if booking.booking_type == "spa":
+                service_name = "Spa Access"
+            elif booking.treatment:
+                service_name = booking.treatment.name
+            elif booking.package:
+                service_name = booking.package.name
+            else:
+                service_name = "Booking"
+
+            cancellation, created = CancellationRecord.objects.get_or_create(
+                original_booking_id=booking.id,
+                defaults={
+                    "user": request.user,
+                    "booking_date": booking.booking_date,
+                    "booking_time": booking.booking_time,
+                    "service_name": service_name,
+                    "stripe_payment_intent_id": (
+                        booking.stripe_payment_intent_id
                     ),
+                    "refund_status": "needs_review",
                 },
             )
 
-        try:
-            refund = stripe.Refund.create(
-                payment_intent=booking.stripe_payment_intent_id,
-                reason="requested_by_customer",
-                metadata={"booking_id": str(booking.id)},
-                idempotency_key=f"repose-booking-refund-{booking.id}",
-            )
-
-        except stripe.StripeError:
-            logger.exception(
-                "Stripe refund request could not be confirmed "
-                "for booking %s",
-                booking.id,
-            )
-
-            return render(
-                request,
-                "repose/booking_cancel_confirm.html",
-                {
-                    "booking": booking,
-                    "error_message": (
-                        "We could not confirm the refund status. "
-                        "Your booking remains active in our system. "
-                        "Please contact us for assistance."
-                    ),
-                },
-            )
-
-        cancellation.stripe_refund_id = refund.id
-        cancellation.refund_amount = refund.amount
-        cancellation.currency = refund.currency
-
-        if refund.status in (
-            "pending",
-            "requires_action",
-            "succeeded",
-            "failed",
-            "canceled",
-        ):
-            cancellation.refund_status = refund.status
-        else:
-            cancellation.refund_status = "processing"
-
-        cancellation.save()
-
-        if refund.status == "succeeded":
             booking.delete()
-            request.session["booking_cancellation_success"] = True
-            return redirect("cancellation_success")
 
-        if refund.status == "pending":
-            return render(
-                request,
-                "repose/booking_cancel_confirm.html",
-                {
-                    "booking": booking,
-                    "error_message": (
-                        "Your refund request is being processed. "
-                        "Your booking remains visible until the "
-                        "refund has been confirmed."
+        if created and cancellation.stripe_payment_intent_id:
+            try:
+                refund = stripe.Refund.create(
+                    payment_intent=cancellation.stripe_payment_intent_id,
+                    reason="requested_by_customer",
+                    metadata={
+                        "booking_id": str(cancellation.original_booking_id)
+                    },
+                    idempotency_key=(
+                        f"repose-booking-refund-"
+                        f"{cancellation.original_booking_id}"
                     ),
-                },
-            )
+                )
 
-        return render(
-            request,
-            "repose/booking_cancel_confirm.html",
-            {
-                "booking": booking,
-                "error_message": (
-                    "The refund could not be completed automatically. "
-                    "Your booking remains active. "
-                    "Please contact us for assistance."
-                ),
-            },
+            except stripe.StripeError:
+                logger.exception(
+                    "Stripe refund could not be confirmed "
+                    "for booking %s",
+                    cancellation.original_booking_id,
+                )
+
+            else:
+                refund_status = (
+                    refund.status
+                    if refund.status in (
+                        "pending",
+                        "requires_action",
+                        "succeeded",
+                        "failed",
+                        "canceled",
+                    )
+                    else "needs_review"
+                )
+
+                CancellationRecord.objects.filter(
+                    pk=cancellation.pk,
+                    refund_status="needs_review",
+                ).update(
+                    stripe_refund_id=refund.id,
+                    refund_amount=refund.amount,
+                    currency=refund.currency,
+                    refund_status=refund_status,
+                    updated_at=timezone.now(),
+                )
+
+        cancellation.refresh_from_db()
+
+        request.session["booking_cancellation_success"] = True
+        request.session["cancellation_refund_status"] = (
+            cancellation.refund_status
         )
 
+        return redirect("cancellation_success")
+    
     return render(
         request,
         "repose/booking_cancel_confirm.html",
