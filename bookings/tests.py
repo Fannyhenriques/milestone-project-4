@@ -1,4 +1,6 @@
 
+from .forms import BookingDetailsForm
+
 from datetime import time, timedelta
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
@@ -448,3 +450,67 @@ class BookingRescheduleTests(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertIn("next=", response.url)
+
+
+
+class BookingCreationValidationTests(TestCase):
+
+    def test_valid_spa_booking_details(self):
+        form = BookingDetailsForm(
+            data={
+                "number_of_guests": "2",
+                "booking_date": (
+                    timezone.localdate() + timedelta(days=7)
+                ).isoformat(),
+                "booking_time": "13:00",
+            },
+            booking_data={"booking_type": "spa"},
+        )
+
+        self.assertTrue(form.is_valid(), form.errors)
+
+    def test_invalid_spa_booking_time(self):
+        form = BookingDetailsForm(
+            data={
+                "number_of_guests": "2",
+                "booking_date": (
+                    timezone.localdate() + timedelta(days=7)
+                ).isoformat(),
+                "booking_time": "12:00",
+            },
+            booking_data={"booking_type": "spa"},
+        )
+
+        self.assertFalse(form.is_valid())
+        self.assertIn("booking_time", form.errors)
+
+
+    def test_cannot_book_past_date(self):
+        form = BookingDetailsForm(
+            data={
+                "number_of_guests": "2",
+                "booking_date": (
+                    timezone.localdate() - timedelta(days=1)
+                ).isoformat(),
+                "booking_time": "13:00",
+            },
+            booking_data={"booking_type": "spa"},
+        )
+
+        self.assertFalse(form.is_valid())
+        self.assertIn("booking_date", form.errors)
+
+    def test_cannot_book_too_many_guests(self):
+        form = BookingDetailsForm(
+            data={
+                "number_of_guests": "7",
+                "booking_date": (
+                    timezone.localdate() + timedelta(days=7)
+                ).isoformat(),
+                "booking_time": "13:00",
+            },
+            booking_data={"booking_type": "spa"},
+        )
+
+        self.assertFalse(form.is_valid())
+        self.assertIn("number_of_guests", form.errors)

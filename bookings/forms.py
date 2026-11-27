@@ -207,6 +207,18 @@ class BookingDetailsForm(forms.ModelForm):
         booking_date = cleaned_data.get("booking_date")
         booking_time = cleaned_data.get("booking_time")
 
+        if booking_time:
+            allowed_times = [
+                value
+                for value, label in self.fields["booking_time"].widget.choices
+            ]
+
+            if booking_time.strftime("%H:%M") not in allowed_times:
+                self.add_error(
+                    "booking_time",
+                    "Please select a valid booking time.",
+                )
+
         if booking_date and booking_time:
             if booking_date == timezone.localdate():
                 current_time = timezone.localtime().time()
